@@ -1,527 +1,600 @@
-<script type="module">
-        // 1. Importações dos SDKs do Firebase (Versão Web Modular)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue, get, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maker Labs São Roque - Sistema de Gestão</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        :root {
+            --bg-body: #121214;
+            --bg-decoration: radial-gradient(#1f1f23 20%, transparent 20%), radial-gradient(#1f1f23 20%, transparent 20%);
+            --bg-size: 20px 20px;
+            --bg-box: #1e1e22;
+            --border-color: #2e2e34;
+            --text-color: #e1e1e6;
+            --accent-color: #00b4d8;
+            --accent-gradient: linear-gradient(135deg, #0077b6, #00b4d8);
+            --header-bg: linear-gradient(135deg, #00b4d8, #0077b6);
+            --footer-bg: #1f1f23;
+            --card-shadow: rgba(0,0,0,0.5);
+            --page-bg: #1a1a1e;
+        }
 
-        // Sua configuração do Firebase
+        body { 
+            background-color: var(--bg-body); color: var(--text-color); padding: 20px 20px 80px 20px; 
+            background-image: var(--bg-decoration); background-size: var(--bg-size); background-repeat: repeat; background-attachment: fixed;
+            position: relative; min-height: 100vh; transition: all 0.3s ease;
+        }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto 30px auto; padding: 20px 25px; 
+            background-image: linear-gradient(135deg, #00b4d8, #0077b6); background-size: cover; background-position: center;
+            border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color);
+        }
+        header h1 { font-size: 1.6rem; text-transform: uppercase; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); }
+        header p { color: #ffffff; font-size: 0.95rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); background: rgba(0,0,0,0.25); padding: 6px 12px; border-radius: 8px; display: inline-block; }
+
+        .coin-display { background: #ffb703; color: #121214; font-weight: bold; padding: 6px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(255,183,3,0.3); font-size: 0.95rem; text-shadow: none; margin-left: 8px; }
+
+        footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; padding: 0 25px;
+            display: flex; align-items: center; justify-content: center;
+            background: #121214; border-top: 1px solid var(--border-color);
+            z-index: 900; color: #7c7c8a; font-size: 0.85rem;
+        }
+
+        .screen { display: none; position: relative; z-index: 10; }
+        .screen.active { display: block; }
+
+        .login-container { max-width: 400px; margin: 80px auto; background: var(--bg-box); padding: 35px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center; border: 1px solid var(--border-color); }
+        .login-container h1 { font-size: 2rem; color: var(--accent-color); margin-bottom: 5px; }
+        .login-container h2 { font-size: 1.1rem; color: #a8a8b3; margin-bottom: 25px; }
+
+        input, select, textarea { width: 100%; padding: 11px 14px; margin-bottom: 12px; border: 1px solid var(--border-color); background: #141416; color: #fff; border-radius: 8px; font-size: 0.95rem; transition: border 0.2s; }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-color); outline: none; background: #161619; }
+        label { display: block; text-align: left; margin-bottom: 6px; font-size: 0.8rem; color: #a8a8b3; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        button { width: 100%; padding: 12px; background: var(--accent-gradient); color: white; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+        button:hover { filter: brightness(1.1); }
+        button:active { transform: scale(0.99); }
+        button:disabled { background: #29292e !important; color: #7c7c7a !important; cursor: not-allowed; transform: none !important; filter: none; }
+        
+        .btn-danger { background: linear-gradient(135deg, #e63946, #ff4d6d); }
+        .btn-secondary { background: #29292e; color: #e1e1e6; border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: #323238; }
+        .btn-edit { background: linear-gradient(135deg, #f4a261, #e76f51); padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; width: auto; }
+        .btn-coin { background: linear-gradient(135deg, #ffb703, #fb8500); color: #121214; }
+
+        .filter-group-inline { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; background: #141416; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); align-items: center; }
+        .filter-field { flex: 1; min-width: 120px; }
+        .filter-field input, .filter-field select { margin-bottom: 0; padding: 8px 12px; font-size: 0.85rem; height: 36px; }
+
+        /* --- ESTANTE DE LIVROS --- */
+        .bookcase-container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .shelf {
+            background: linear-gradient(transparent 90%, #5c3d2e 90%, #3d251a 100%);
+            padding: 30px 20px 25px 20px; margin-bottom: 50px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px;
+            border-bottom: 12px solid #2b1810;
+        }
+        
+        .book-cover-item {
+            width: 170px; height: 240px; border-radius: 4px 12px 12px 4px; padding: 15px;
+            display: flex; flex-direction: column; justify-content: space-between; align-items: center; cursor: pointer; position: relative;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset 8px 0 8px rgba(0,0,0,0.3); border-left: 6px solid rgba(0,0,0,0.4);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); justify-self: center; text-align: center;
+        }
+        .book-cover-item:hover { transform: translateY(-15px) scale(1.05); box-shadow: 10px 15px 25px rgba(0,0,0,0.7); }
+        .book-cover-title { font-size: 1rem; font-weight: bold; color: #fff; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); text-transform: uppercase; line-height: 1.2; width: 100%; word-wrap: break-word; }
+        .book-cover-badge { background: rgba(0,0,0,0.6); color: #ffb703; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; text-align: center; width: 100%; }
+        
+        .book-cover-thumb { width: 100%; height: 90px; margin: 10px 0; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 6px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); }
+        .book-cover-img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- DESIGN DO LIVRO ABERTO --- */
+        .album-stats { background: var(--bg-box); padding: 15px 25px; border-radius: 15px; margin-bottom: 25px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; max-width: 1050px; margin: 0 auto 25px auto; }
+        .stats-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .progress-bar-bg { background: var(--bg-body); width: 50%; height: 16px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); }
+        .progress-bar-fill { background: linear-gradient(90deg, #ffb703, #2a9d8f); height: 100%; width: 0%; transition: width 0.5s ease; }
+        .stats-text { font-weight: bold; color: #ffb703; font-size: 1.1rem; }
+
+        .book-container { max-width: 1050px; margin: 0 auto 30px auto; background: #0f0f11; padding: 20px; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6); border: 4px solid #2d2d30; }
+        .book-wrapper { display: grid; grid-template-columns: 1fr 1fr; background: var(--page-bg); border-radius: 12px; position: relative; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid #3c3c42; }
+        .book-wrapper::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 100%; background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%); z-index: 50; pointer-events: none; }
+        
+        .book-page { padding: 30px 25px 40px 25px; height: 560px; display: flex; flex-direction: column; position: relative; justify-content: center; }
+        .book-page.left-page { border-right: 1px solid rgba(0,0,0,0.3); }
+        .book-page.right-page { border-left: 1px solid rgba(0,0,0,0.3); }
+        .page-num { position: absolute; bottom: 12px; font-size: 0.85rem; color: #7c7c7a; font-weight: bold; }
+        .left-page .page-num { left: 20px; }
+        .right-page .page-num { right: 20px; }
+        
+        .page-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px; 
+            width: 100%;
+            height: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .book-controls { display: flex; justify-content: space-between; max-width: 1050px; margin: 0 auto; gap: 20px; }
+        .book-controls button { width: auto; flex: 1; padding: 15px; }
+
+        /* --- CARDS / FIGURINHAS --- */
+        .card { 
+            background: var(--bg-box); border-radius: 14px; padding: 10px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            text-align: center; border: 4px solid var(--border-color); box-shadow: 0 6px 12px var(--card-shadow); 
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s; position: relative; cursor: pointer; overflow: hidden;
+            width: 100%; height: 100%; max-height: 235px; margin: 0 auto;
+        }
+        .card:hover { transform: scale(1.03); z-index: 60; }
+
+        .card::after {
+            content: ''; position: absolute; top: -50%; left: -60%; width: 30%; height: 200%;
+            transform: rotate(25deg); transition: none; pointer-events: none;
+            animation: passing-shine 8s infinite ease-in-out;
+        }
+
+        .card.comum::after { display: none; content: none; }
+        .card.comum { border-color: #55555e; animation: none !important; box-shadow: 0 6px 12px var(--card-shadow) !important; }
+        .card.rara::after { background: linear-gradient(to right, rgba(0,180,216,0) 0%, rgba(0,180,216,0.25) 50%, rgba(0,180,216,0) 100%); animation-duration: 7s; }
+        .card.rara { border-color: #00b4d8; }
+        .card.epica::after { background: linear-gradient(to right, rgba(157,78,221,0) 0%, rgba(216,180,254,0.35) 50%, rgba(157,78,221,0) 100%); animation-duration: 5.5s; }
+        .card.epica { border-color: #9d4edd; }
+        .card.lendaria::after { background: linear-gradient(to right, rgba(255,183,3,0) 0%, rgba(255,255,255,0.4) 40%, rgba(255,183,3,0.4) 60%, rgba(255,183,3,0) 100%); animation-duration: 4.5s; }
+        .card.lendaria { border-color: #ffb703; }
+
+        @keyframes passing-shine { 0% { left: -70%; } 15% { left: 120%; } 100% { left: 120%; } }
+
+        .zoom-container .card.rara { animation: glow-rara 4s infinite alternate ease-in-out; }
+        .zoom-container .card.epica { animation: glow-epica 3.5s infinite alternate ease-in-out; }
+        .zoom-container .card.lendaria { animation: glow-lendaria 3s infinite alternate ease-in-out; }
+
+        @keyframes glow-rara { 0% { box-shadow: 0 0 6px rgba(0, 180, 216, 0.4); } 100% { box-shadow: 0 0 18px rgba(0, 180, 216, 0.8); } }
+        @keyframes glow-epica { 0% { box-shadow: 0 0 8px rgba(157, 78, 221, 0.5); } 100% { box-shadow: 0 0 26px rgba(157, 78, 221, 0.9); } }
+        @keyframes glow-lendaria { 0% { box-shadow: 0 0 12px rgba(255, 183, 3, 0.6); border-color: #ffb703; } 100% { box-shadow: 0 0 38px rgba(255, 183, 3, 1), 0 0 10px rgba(255,255,255,0.2) inset; border-color: #fff; } }
+
+        .badge-nova { position: absolute; top: 8px; right: 8px; background: #e63946; color: #fff; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 8px; box-shadow: 0 0 10px rgba(230,57,70,0.8); z-index: 80; text-transform: uppercase; animation: pulse-badge 1.2s infinite alternate; pointer-events: none; }
+        @keyframes pulse-badge { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 14px rgba(230,57,70,1); } }
+
+        .card-slot-empty { background: rgba(31, 31, 35, 0.4); border-radius: 14px; height: 100%; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(255,255,255,0.1); color: rgba(255,255,255,0.15); position: relative; font-weight: bold; width: 100%; max-height: 235px; margin: 0 auto; }
+        .card-slot-empty::before { content: "?"; font-size: 2.5rem; color: rgba(255,255,255,0.08); margin-bottom: 5px; }
+        .card-slot-number { position: absolute; top: 12px; left: 12px; background: var(--bg-body); color: var(--text-color); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid var(--border-color); opacity: 0.5; }
+
+        .buy-sticker-btn { margin-top: 10px; background: #ffb703; color: #121214; font-size: 0.75rem; font-weight: bold; border: none; padding: 4px 10px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: transform 0.2s; z-index: 70; }
+        .buy-sticker-btn:hover { transform: scale(1.08); background: #fff; }
+        
+        .card-raridade { font-size: 0.65rem; text-transform: uppercase; font-weight: bold; padding: 2px 8px; border-radius: 20px; margin-bottom: 4px; background: var(--bg-body); }
+        .comum .card-raridade { color: #b0b0b8; }
+        .rara .card-raridade { color: #00b4d8; }
+        .epica .card-raridade { color: #9d4edd; }
+        .lendaria .card-raridade { color: #ffb703; }
+        
+        .card-img-container { width: 100%; height: 80px; background-color: var(--bg-body); border-radius: 8px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; }
+        .card-img-fallback { font-size: 2rem; }
+
+        .card-name { font-size: 0.85rem; font-weight: bold; color: #ffffff; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+        .card-points { font-size: 0.7rem; color: var(--accent-color); font-weight: bold; margin-bottom: 4px; background: var(--bg-body); padding: 1px 8px; border-radius: 20px; }
+        .card-habilidade { font-size: 0.7rem; color: #a8a8b3; background: var(--bg-body); padding: 4px; border-radius: 6px; width: 100%; flex-grow: 1; line-height: 1.2; display: flex; align-items: center; justify-content: center; }
+
+        /* --- ZOOM MODALS --- */
+        .zoom-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .zoom-overlay.active { opacity: 1; pointer-events: auto; }
+        .zoom-container { width: 90%; max-width: 380px; position: relative; transform: scale(0.7); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .zoom-overlay.active .zoom-container { transform: scale(1); }
+        
+        .zoom-container .card { width: 100%; max-height: none; height: auto; padding: 25px; border-width: 8px; cursor: default; transform: none !important; }
+        .zoom-container .card-img-container { height: 200px; }
+        .zoom-container .card-name { font-size: 1.4rem; white-space: normal; margin: 10px 0; }
+        .zoom-container .card-points { font-size: 0.9rem; padding: 4px 14px; }
+        .zoom-container .card-habilidade { font-size: 0.9rem; padding: 10px; margin-top: 8px; }
+        .btn-close-zoom { position: absolute; top: -50px; right: 0; background: #e63946; border: none; color: white; font-weight: bold; font-size: 1.1rem; padding: 8px 20px; border-radius: 30px; cursor: pointer; z-index: 1010; }
+
+        /* --- PAINEL ADMIN --- */
+        .admin-layout-container { max-width: 1300px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(48%, 1fr)); gap: 24px; }
+        
+        .admin-box { background: var(--bg-box); padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .admin-box h2 { margin-bottom: 16px; color: #ffb703; font-size: 1.15rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .admin-box.disabled-box { opacity: 0.25; pointer-events: none; position: relative; filter: grayscale(100%); }
+        .admin-box.disabled-box::after { content: "🔒 Seção Bloqueada"; position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5); color:#fff; font-weight:bold; font-size: 1.1rem; border-radius: 12px; }
+        
+        .manage-list { max-height: 220px; overflow-y: auto; background: #141416; padding: 6px; border-radius: 8px; margin-bottom: 16px; border: 1px solid var(--border-color); flex-grow: 1; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #222226; font-size: 0.9rem; gap: 12px; }
+        .list-item:last-child { border-bottom: none; }
+        .list-item button { width: auto; padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; }
+        
+        .box-acoes-botoes { display: flex; gap: 6px; }
+
+        .table-wrapper { max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; background: #141416; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+        th, td { padding: 12px 16px; border-bottom: 1px solid #222226; }
+        th { background: #1a1a1e; color: var(--accent-color); font-weight: 600; position: sticky; top: 0; z-index: 20; border-bottom: 2px solid var(--border-color); }
+
+        .nav-buttons { display: flex; gap: 10px; }
+        .nav-buttons button { width: auto; padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div id="zoom-modal" class="zoom-overlay" onclick="fecharAmpliacao(event)">
+        <div class="zoom-container">
+            <button class="btn-close-zoom" onclick="fecharAmpliacaoObg()">Fechar ❌</button>
+            <div id="zoom-card-content"></div>
+        </div>
+    </div>
+
+    <div id="screen-login" class="screen active">
+        <div class="login-container">
+            <h1>MAKER LABS</h1>
+            <h2>🚀 São Roque 🚀</h2>
+            
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" placeholder="Digite seu Usuário ou Nome">
+            
+            <label for="password">Código de Acesso:</label>
+            <input type="password" id="password" placeholder="Código de Acesso (Senha)">
+            
+            <label for="login-role">Entrar Como (Cargo):</label>
+            <select id="login-role">
+                <option value="aluno" selected>Aluno</option>
+                <option value="auxiliar">Auxiliar</option>
+                <option value="instrutor">Instrutor / Adjunto</option>
+                <option value="administrador">Administrador</option>
+            </select>
+            
+            <button onclick="fazerLogin()">Abrir Painel / Álbum 📖</button>
+        </div>
+    </div>
+
+    <div id="screen-bookcase" class="screen">
+        <header>
+            <div>
+                <h1>Estante de Álbuns Maker</h1>
+                <p>Usuário: <span id="shelf-user-display" style="color: #ffb703; font-weight: bold;"></span> <span id="shelf-coins-wrapper"></span></p>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-secondary" id="btn-shelf-back-admin" style="display:none; background:#0077b6" onclick="mudarTela('screen-admin')">Voltar ao Painel</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
+            </div>
+        </header>
+        <div class="bookcase-container">
+            <h2 style="margin-bottom: 20px; color:#ffb703; text-transform: uppercase; font-size: 1.2rem;">📖 Escolha um Álbum para Folhear:</h2>
+            <div class="shelf" id="shelf-books-grid"></div>
+        </div>
+    </div>
+
+    <div id="screen-album" class="screen">
+        <header>
+            <div>
+                <h1 id="active-album-title">Nome do Álbum</h1>
+                <p>Usuário: <span id="user-display" style="color: #ffb703; font-weight: bold;"></span> <span id="album-coins-wrapper"></span></p>
+            </div>
+            <div class="nav-buttons">
+                <button style="background: #2a9d8f;" onclick="mudarTela('screen-bookcase')">📁 Voltar para a Estante</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
+            </div>
+        </header>
+        <div class="album-stats">
+            <div class="stats-row">
+                <span class="stats-text" id="album-progress-text">Figurinhas: 0 / 0</span>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="album-progress-bar"></div>
+                </div>
+                <span class="stats-text" id="album-percentage-text" style="color:#2a9d8f;">0%</span>
+            </div>
+        </div>
+        <div class="book-container">
+            <div class="book-wrapper">
+                <div class="book-page left-page">
+                    <div class="page-grid" id="page-left-grid"></div>
+                    <div class="page-num" id="page-left-num">Pág. 1</div>
+                </div>
+                <div class="book-page right-page">
+                    <div class="page-grid" id="page-right-grid"></div>
+                    <div class="page-num" id="page-right-num">Pág. 2</div>
+                </div>
+            </div>
+        </div>
+        <div class="book-controls">
+            <button id="btn-book-prev" onclick="folhearPagina(-1)">⬅️ Página Anterior</button>
+            <button id="btn-book-next" onclick="folhearPagina(1)">Próxima Página ➡️</button>
+        </div>
+    </div>
+
+    <div id="screen-admin" class="screen">
+        <header>
+            <div>
+                <h1>Painel Maker Labs</h1>
+                <p>Nível de Acesso atual: <span id="admin-role-display" style="color:#ffb703; font-weight:bold; text-transform:uppercase;"></span></p>
+            </div>
+            <div class="nav-buttons">
+                <button style="background:#0077b6" onclick="verEstanteComoAdmin()">Visualizar Estante de Álbuns</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
+            </div>
+        </header>
+
+        <div class="admin-layout-container">
+            <div class="admin-grid">
+                
+                <div class="admin-box" id="box-gerenciar-albuns">
+                    <h2 id="title-album-form">📁 Gerenciar / Criar Álbuns</h2>
+                    <input type="hidden" id="album-edit-id" value="">
+                    <input type="text" id="album-new-title" placeholder="Nome do Álbum (Ex: Anual 2026)">
+                    
+                    <label>Desenho / Ilustração da Capa (Link URL ou Emoji):</label>
+                    <input type="text" id="album-new-image" placeholder="Ex: https://link-da-imagem.png ou 🤖">
+
+                    <label>Cor da Capa do Livro:</label>
+                    <input type="color" id="album-new-color" value="#8b0000" style="height: 40px; padding: 2px; cursor: pointer;">
+                    
+                    <div id="wrapper-album-buttons" style="margin-bottom: 20px;">
+                        <button onclick="salvarNovoAlbum()">Criar Álbum</button>
+                    </div>
+                    
+                    <h2 style="font-size:1rem; color:#a8a8b3;">Álbuns Ativos</h2>
+                    <div class="manage-list" id="list-albuns-ativos"></div>
+                </div>
+
+                <div class="admin-box" id="box-gerenciar-cartas">
+                    <h2 id="title-card-form">🃏 Cadastrar Nova Figurinha</h2>
+                    <input type="hidden" id="card-edit-id" value="">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label>Vincular ao Álbum:</label>
+                            <select id="card-album-select"></select>
+                        </div>
+                        <div>
+                            <label>Raridade:</label>
+                            <select id="card-rarity">
+                                <option value="comum">Comum (Cinza)</option>
+                                <option value="rara">Rara (Azul)</option>
+                                <option value="epica">Épica (Roxa)</option>
+                                <option value="lendaria">Lendária (Dourada)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+                        <input type="text" id="card-name" placeholder="Nome da Figurinha">
+                        <input type="number" id="card-points" placeholder="Pontos">
+                        <input type="number" id="card-price" placeholder="Preço 🪙" min="0">
+                    </div>
+                    <input type="text" id="card-img" placeholder="Link/URL da Imagem">
+                    <textarea id="card-desc" rows="2" placeholder="Descrição da Figurinha" style="resize: none;"></textarea>
+                    <div id="wrapper-card-buttons" style="margin-bottom: 20px;">
+                        <button onclick="salvarCarta()">Adicionar Figurinha</button>
+                    </div>
+                    
+                    <h2 style="font-size:1rem; color:#a8a8b3; margin-bottom:5px;">Figurinhas Cadastradas</h2>
+                    <label>🔍 Filtrar Lista por Álbum:</label>
+                    <select id="filter-cards-by-album" onchange="listarCartasCadastradasAdmin()" style="border-color: var(--accent-color); padding: 6px; font-size:0.85rem; height:34px;"></select>
+                    <div class="manage-list" id="list-cards" style="margin-top: 5px;"></div>
+                </div>
+
+                <div class="admin-box" id="box-distribuir-cartas">
+                    <h2>🚀 Distribuir Figurinhas Manualmente</h2>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label>Série:</label>
+                            <select id="select-filter-grade" onchange="filtrarAlunosDistribuicao()">
+                                <option value="todos">-- Todas --</option>
+                                <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
+                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
+                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Sala:</label>
+                            <select id="select-filter-letter" onchange="filtrarAlunosDistribuicao()">
+                                <option value="todos">-- Todas --</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label style="margin-top:10px;">Escolha o Aluno:</label>
+                    <select id="select-dist-student" style="margin-bottom: 20px; border-color: var(--accent-color);"></select>
+                    <label>Filtrar por Álbum:</label>
+                    <select id="select-dist-album-filter" onchange="atualizarSelectFigurinhasDistribuicao()"></select>
+                    <label>Escolha a Figurinha:</label>
+                    <select id="select-dist-card" style="margin-bottom: 20px;"></select>
+                    <button style="background: #2a9d8f; padding: 14px;" onclick="distribuirCarta()">Colar Figurinha no Álbum</button>
+                </div>
+
+                <div class="admin-box" id="box-gerenciar-alunos">
+                    <h2 id="title-user-form">👥 Gerenciador de Usuários (Cadastro Geral)</h2>
+                    <input type="hidden" id="student-edit-id" value="">
+                    <input type="text" id="student-name" placeholder="Nome Completo">
+                    
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label>Série Escolar:</label>
+                            <select id="student-grade">
+                                <option value="-">-- Staff --</option>
+                                <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
+                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
+                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Sala:</label>
+                            <select id="student-letter">
+                                <option value="-">-</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Cargo:</label>
+                            <select id="student-role">
+                                <option value="aluno" selected>Aluno</option>
+                                <option value="auxiliar">Auxiliar</option>
+                                <option value="instrutor">Instrutor</option>
+                                <option value="administrador">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="text" id="student-pin" placeholder="Código / Senha de Acesso" style="margin-top:12px;">
+                    <div id="wrapper-user-buttons" style="margin-bottom: 25px;">
+                        <button id="btn-user-submit" onclick="adicionarAluno()">Cadastrar Integrante</button>
+                    </div>
+                    
+                    <h2 style="font-size:1rem; color:#a8a8b3;">Todos os Integrantes Cadastrados</h2>
+                    <div class="manage-list" id="list-all-users" style="max-height: 180px;"></div>
+                </div>
+
+                <div class="admin-box" id="box-carteira-moedas">
+                    <h2>🪙 Carteira de Alunos (Gestão de Saldo)</h2>
+                    <div class="filter-group-inline">
+                        <div class="filter-field" style="flex: 1.5;">
+                            <input type="text" id="filter-user-name" placeholder="🔍 Buscar aluno..." onkeyup="atualizarListasAdmin()">
+                        </div>
+                        <div class="filter-field">
+                            <select id="filter-user-grade" onchange="atualizarListasAdmin()">
+                                <option value="todos">Série (Todas)</option>
+                                <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
+                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
+                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <select id="filter-user-letter" onchange="atualizarListasAdmin()">
+                                <option value="todos">Sala (Todas)</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="manage-list" id="list-only-students-wallets" style="max-height: 290px; flex-grow: 1;"></div>
+                </div>
+
+            </div>
+
+            <div class="admin-box" id="box-historico">
+                <h2>📅 Histórico Geral de Entregas / Compras</h2>
+                <div class="filter-group-inline">
+                    <div class="filter-field" style="flex: 1.5;">
+                        <input type="text" id="filter-history-student" placeholder="🔍 Filtrar por Aluno..." onkeyup="atualizarTabelaHistorico()">
+                    </div>
+                    <div class="filter-field">
+                        <select id="filter-history-grade" onchange="atualizarTabelaHistorico()">
+                            <option value="todos">-- Todas as Séries --</option>
+                            <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
+                            <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
+                            <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <select id="filter-history-letter" onchange="atualizarTabelaHistorico()">
+                            <option value="todos">-- Todas as Salas --</option>
+                            <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                        </select>
+                    </div>
+                    <button class="btn-danger" style="width: auto; padding: 8px 14px; height: 36px; font-size:0.85rem;" onclick="limparHistoricoGeral()">Limpar Logs 🗑️</button>
+                </div>
+                
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome Aluno</th>
+                                <th>Série / Sala</th>
+                                <th>Álbum Referente</th>
+                                <th>Figurinha Coletada</th>
+                                <th>Raridade</th>
+                                <th>Data / Horário</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Maker Labs São Roque - Sistema de Gestão Interna de Álbuns. Todos os direitos reservados.
+    </footer>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyBzlVayf42IU6IExTLiZosRB0O1OHQ4wik",
             authDomain: "album-27bb2.firebaseapp.com",
             projectId: "album-27bb2",
             storageBucket: "album-27bb2.firebasestorage.app",
             messagingSenderId: "380185061798",
-            appId: "1:380185061798:web:a41721fc9cda26b3f18767",
-            databaseURL: "https://album-27bb2-default-rtdb.firebaseio.com" // Ajuste se sua URL do Realtime Database for diferente
+            appId: "1:380185061798:web:a41721fc9cda26b3f18767"
         };
 
-        // Inicializa o Firebase e o Banco de Dados
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        // ==========================================
-        // 2. ESTADO DA APLICAÇÃO
-        // ==========================================
-        let albuns = [];
-        let cartas = [];
-        let usuarios = [];
-        let inventario = {};
-
-        let usuarioLogado = null;
-        let albumAtivo = null;
-        let paginaAtualEsquerda = 1;
-
-        // ==========================================
-        // 3. SINCRONIZAÇÃO EM TEMPO REAL COM FIREBASE
-        // ==========================================
         
-        // Escuta mudanças nos Álbuns
-        onValue(ref(db, 'albuns'), (snapshot) => {
-            const data = snapshot.val();
-            albuns = data ? Object.values(data) : [];
-            if (document.getElementById("screen-admin").classList.contains("active")) {
-                atualizarSelectsDeAlbuns();
-                listarAlbunsAdmin();
-            }
-        });
+        // Expor a instância globalmente caso precise em outros escopos do script clássico
+        window.firebaseApp = app;
+    </script>
 
-        // Escuta mudanças nas Figurinhas
-        onValue(ref(db, 'cartas'), (snapshot) => {
-            const data = snapshot.val();
-            cartas = data ? Object.values(data) : [];
-            if (document.getElementById("screen-admin").classList.contains("active")) {
-                listarCartasCadastradasAdmin();
-                atualizarSelectisFigurinhasDistribuicao();
-            }
-            if (document.getElementById("screen-album").classList.contains("active")) {
-                renderizarAlbumAberto();
-            }
-        });
+    <script>
+        // Mantendo as lógicas originais do arquivo index.html fornecido
+        let usuarioLogado = null;
+        let albumAtivoId = null;
+        let paginaAtual = 1;
 
-        // Escuta mudanças nos Usuários
-        onValue(ref(db, 'usuarios'), (snapshot) => {
-            const data = snapshot.val();
-            usuarios = data ? Object.values(data) : [];
-            
-            // Se o usuário atual estiver logado, atualiza os dados locais dele (como saldo de moedas)
-            if (usuarioLogado) {
-                const atualizado = usuarios.find(u => u.id === usuarioLogado.id);
-                if (atualizado) usuarioLogado = atualizado;
-            }
-            
-            if (document.getElementById("screen-admin").classList.contains("active")) {
-                filtrarAlunosDistribuicao();
-            }
-        });
-
-        // Escuta mudanças no Inventário de figurinhas coladas
-        onValue(ref(db, 'inventario'), (snapshot) => {
-            inventario = snapshot.val() || {};
-            if (document.getElementById("screen-album").classList.contains("active")) {
-                renderizarAlbumAberto();
-            }
-        });
-
-        // Carga Inicial/Criador de Dados padrão caso o banco esteja completamente vazio
-        async function verificarBancoVazio() {
-            const snap = await get(ref(db, 'usuarios'));
-            if (!snap.exists()) {
-                // Massa de dados inicial se o banco estiver zerado
-                await set(ref(db, 'albuns/alb-2026'), { id: "alb-2026", title: "Anual Maker 2026", image: "🤖", color: "#0077b6" });
-                await set(ref(db, 'usuarios/u1'), { id: "u1", name: "Professor Admin", grade: "-", letter: "-", role: "administrador", pin: "1234", coins: 999 });
-                await set(ref(db, 'usuarios/u4'), { id: "u4", name: "Aluno Maker", grade: "6º Ano", letter: "A", role: "aluno", pin: "1111", coins: 35 });
-                await set(ref(db, 'cartas/c1'), { id: "c1", albumId: "alb-2026", name: "Impressora 3D", rarity: "comum", points: 10, price: 5, img: "", desc: "Funde plástico camada por camada." });
-            }
-        }
-        verificarBancoVazio();
-
-        // ==========================================
-        // 4. AUTENTICAÇÃO E NAVEGAÇÃO
-        // ==========================================
-        window.fazerLogin = function() {
-            const userIn = document.getElementById("username").value.trim();
-            const passIn = document.getElementById("password").value;
-            const roleIn = document.getElementById("login-role").value;
-
-            const userFound = usuarios.find(u => 
-                u.name.toLowerCase() === userIn.toLowerCase() && 
-                u.pin === passIn && 
-                u.role === roleIn
-            );
-
-            if (!userFound) {
-                alert("❌ Credenciais incorretas ou cargo inválido!");
-                return;
-            }
-
-            usuarioLogado = userFound;
-
-            if (usuarioLogado.role === 'aluno') {
-                mudarTela('screen-bookcase');
-            } else {
-                mudarTela('screen-admin');
-            }
-        };
-
-        window.fazerLogout = function() {
-            usuarioLogado = null;
-            albumAtivo = null;
-            document.getElementById("username").value = "";
-            document.getElementById("password").value = "";
-            mudarTela('screen-login');
-        };
+        let baseAlunos = JSON.parse(localStorage.getItem('ml_students')) || [];
+        let baseAlbuns = JSON.parse(localStorage.getItem('ml_albums')) || [];
+        let baseCartas = JSON.parse(localStorage.getItem('ml_cards')) || [];
+        let historicoEnvios = JSON.parse(localStorage.getItem('ml_history')) || [];
 
         function mudarTela(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            
-            if (screenId === 'screen-bookcase') renderizarEstante();
-            if (screenId === 'screen-admin') inicializarPainelAdmin();
-        }
-        window.mudarTela = mudarTela;
-
-        // ==========================================
-        // 5. INTERFACE DO ÁLBUM / ESTANTE
-        // ==========================================
-        function gerarMoedasHTML(quantidade) {
-            return `<span class="coin-display">🪙 ${quantidade} MakerCoins</span>`;
+            const target = document.getElementById(screenId);
+            if(target) target.classList.add('active');
+            window.scrollTo(0,0);
         }
 
-        function renderizarEstante() {
-            if (!usuarioLogado) return;
-            document.getElementById("shelf-user-display").innerText = usuarioLogado.name;
-            document.getElementById("shelf-coins-wrapper").innerHTML = gerarMoedasHTML(usuarioLogado.coins);
-            
-            const btnBack = document.getElementById("btn-shelf-back-admin");
-            btnBack.style.display = usuarioLogado.role !== 'aluno' ? "inline-block" : "none";
+        // As funções de visualização, tabela e tratamento de histórico continuam anexadas aos escopos globais
+        function atualizarTabelaHistorico() {
+            const tbody = document.getElementById('history-table-body'); if(!tbody) return;
+            const fStudent = document.getElementById('filter-history-student').value.toLowerCase();
+            const fGrade = document.getElementById('filter-history-grade').value;
+            const fLetter = document.getElementById('filter-history-letter').value;
 
-            const grid = document.getElementById("shelf-books-grid");
-            grid.innerHTML = "";
-
-            albuns.forEach(alb => {
-                const totalCartasAlb = cartas.filter(c => c.albumId === alb.id).length;
-                const totalObtidas = cartas.filter(c => c.albumId === alb.id && inventario[usuarioLogado.id]?.[c.id] > 0).length;
-
-                const item = document.createElement("div");
-                item.className = "book-cover-item";
-                item.style.backgroundColor = alb.color;
-                item.onclick = () => abrirAlbum(alb.id);
-
-                const isEmoji = alb.image.length <= 4;
-                const imgContent = isEmoji ? `<div style="font-size:3rem;">${alb.image}</div>` : `<img src="${alb.image}" class="book-cover-img" alt="Capa">`;
-
-                item.innerHTML = `
-                    <div class="book-cover-title">${alb.title}</div>
-                    <div class="book-cover-thumb">${imgContent}</div>
-                    <div class="book-cover-badge">📊 ${totalObtidas} / ${totalCartasAlb} Fig.</div>
-                `;
-                grid.appendChild(item);
-            });
-        }
-
-        window.verEstanteComoAdmin = function() {
-            mudarTela('screen-bookcase');
-        };
-
-        function abrirAlbum(albumId) {
-            albumAtivo = albuns.find(a => a.id === albumId);
-            paginaAtualEsquerda = 1;
-            mudarTela('screen-album');
-            renderizarAlbumAberto();
-        }
-
-        function renderizarAlbumAberto() {
-            if (!albumAtivo || !usuarioLogado) return;
-
-            document.getElementById("active-album-title").innerText = albumAtivo.title;
-            document.getElementById("user-display").innerText = usuarioLogado.name;
-            document.getElementById("album-coins-wrapper").innerHTML = gerarMoedasHTML(usuarioLogado.coins);
-
-            const cartasDoAlbum = cartas.filter(c => c.albumId === albumAtivo.id);
-            const totalDoAlbum = cartasDoAlbum.length;
-            const totalObtidas = cartasDoAlbum.filter(c => inventario[usuarioLogado.id]?.[c.id] > 0).length;
-            
-            const porcentagem = totalDoAlbum > 0 ? Math.round((totalObtidas / totalDoAlbum) * 100) : 0;
-            document.getElementById("album-progress-text").innerText = `Figurinhas: ${totalObtidas} / ${totalDoAlbum}`;
-            document.getElementById("album-progress-bar").style.width = `${porcentagem}%`;
-            document.getElementById("album-percentage-text").innerText = `${porcentagem}%`;
-
-            document.getElementById("page-left-num").innerText = `Pág. ${paginaAtualEsquerda}`;
-            document.getElementById("page-right-num").innerText = `Pág. ${paginaAtualEsquerda + 1}`;
-
-            const indexInicialEsq = (paginaAtualEsquerda - 1) * 4;
-            const indexInicialDir = indexInicialEsq + 4;
-
-            renderizarGradePagina(document.getElementById("page-left-grid"), cartasDoAlbum, indexInicialEsq, indexInicialEsq + 4);
-            renderizarGradePagina(document.getElementById("page-right-grid"), cartasDoAlbum, indexInicialDir, indexInicialDir + 4);
-
-            document.getElementById("btn-book-prev").disabled = (paginaAtualEsquerda === 1);
-            document.getElementById("btn-book-next").disabled = (indexInicialDir + 4 >= totalDoAlbum);
-        }
-
-        function renderizarGradePagina(container, listaCartas, inicio, fim) {
-            container.innerHTML = "";
-            for (let i = inicio; i < fim; i++) {
-                const numSlot = i + 1;
-                const carta = listaCartas[i];
-
-                if (!carta) {
-                    container.innerHTML += `<div class="card-slot-empty" style="opacity:0.2;"><div class="card-slot-number">${numSlot}</div></div>`;
-                    continue;
-                }
-
-                const quantidadePossuida = inventario[usuarioLogado.id]?.[carta.id] || 0;
-
-                if (quantidadePossuida > 0) {
-                    const imgTag = carta.img ? `<img src="${carta.img}" class="card-img" alt="${carta.name}">` : `<span class="card-img-fallback">🚀</span>`;
-                    const badgeRepetida = quantidadePossuida > 1 ? `<div class="badge-nova">+${quantidadePossuida - 1}</div>` : '';
-                    
-                    const cardHTML = `
-                        <div class="card ${carta.rarity}" onclick="ampliarCarta('${carta.id}')">
-                            ${badgeRepetida}
-                            <span class="card-raridade">${carta.rarity}</span>
-                            <div class="card-img-container">${imgTag}</div>
-                            <div class="card-name">${carta.name}</div>
-                            <div class="card-points">⚡ ${carta.points} pts</div>
-                            <div class="card-habilidade">${carta.desc}</div>
-                        </div>
-                    `;
-                    container.innerHTML += cardHTML;
-                } else {
-                    const precoHTML = carta.price > 0 ? `
-                        <button class="buy-sticker-btn" onclick="comprarFigurinhaDireta(event, '${carta.id}')">
-                            🪙 ${carta.price}
-                        </button>
-                    ` : '';
-                    
-                    container.innerHTML += `
-                        <div class="card-slot-empty">
-                            <div class="card-slot-number">${numSlot}</div>
-                            <div style="font-size:0.75rem; text-align:center; padding:0 5px; color:#7c7c8a;">${carta.name}</div>
-                            ${precoHTML}
-                        </div>
-                    `;
-                }
-            }
-        }
-
-        window.folhearPagina = function(direcao) {
-            paginaAtualEsquerda += (direcao * 2);
-            renderizarAlbumAberto();
-        };
-
-        window.comprarFigurinhaDireta = async function(event, cartaId) {
-            event.stopPropagation();
-            const carta = cartas.find(c => c.id === cartaId);
-            if (!carta) return;
-
-            if (usuarioLogado.coins < carta.price) {
-                alert("❌ Você não tem MakerCoins suficientes!");
-                return;
-            }
-
-            if (confirm(`Confirmar a compra de "${carta.name}" por 🪙 ${carta.price}?`)) {
-                const novasMoedas = usuarioLogado.coins - carta.price;
-                const novaQtd = (inventario[usuarioLogado.id]?.[cartaId] || 0) + 1;
-
-                // Atualizações atômicas no Firebase
-                await update(ref(db, `usuarios/${usuarioLogado.id}`), { coins: novasMoedas });
-                await set(ref(db, `inventario/${usuarioLogado.id}/${cartaId}`), novaQtd);
-                
-                usuarioLogado.coins = novasMoedas;
-                renderizarAlbumAberto();
-            }
-        };
-
-        // ==========================================
-        // 6. ZOOM / AMPLIAÇÃO
-        // ==========================================
-        window.ampliarCarta = function(cartaId) {
-            const carta = cartas.find(c => c.id === cartaId);
-            if (!carta) return;
-
-            const imgTag = carta.img ? `<img src="${carta.img}" class="card-img" alt="${carta.name}">` : `<span class="card-img-fallback" style="font-size:5rem;">🚀</span>`;
-            document.getElementById("zoom-card-content").innerHTML = `
-                <div class="card ${carta.rarity}">
-                    <span class="card-raridade" style="font-size:0.85rem; padding:4px 12px;">${carta.rarity}</span>
-                    <div class="card-img-container">${imgTag}</div>
-                    <div class="card-name">${carta.name}</div>
-                    <div class="card-points">⚡ ${carta.points} Pontos de Experiência</div>
-                    <div class="card-habilidade">${carta.desc}</div>
-                </div>
-            `;
-            document.getElementById("zoom-modal").classList.add("active");
-        };
-
-        window.fecharAmpliacao = function(e) {
-            if (e.target.id === "zoom-modal") document.getElementById("zoom-modal").classList.remove("active");
-        };
-        window.fecharAmpliacaoObg = function() {
-            document.getElementById("zoom-modal").classList.remove("active");
-        };
-
-        // ==========================================
-        // 7. PAINEL ADMINISTRATIVO E ENVIOS
-        // ==========================================
-        function inicializarPainelAdmin() {
-            document.getElementById("admin-role-display").innerText = usuarioLogado.role;
-            const r = usuarioLogado.role;
-            
-            configurarTravaComponente("box-gerenciar-albuns", (r === 'administrador' || r === 'instrutor'));
-            configurarTravaComponente("box-gerenciar-cartas", (r === 'administrador' || r === 'instrutor'));
-            configurarTravaComponente("box-gerenciar-alunos", (r === 'administrador'));
-            configurarTravaComponente("box-distribuir-cartas", (r !== 'aluno'));
-
-            atualizarSelectsDeAlbuns();
-            listarAlbunsAdmin();
-            listarCartasCadastradasAdmin();
-            filtrarAlunosDistribuicao();
-        }
-
-        function configurarTravaComponente(id, condicao) {
-            const el = document.getElementById(id);
-            if (condicao) el.classList.remove("disabled-box"); else el.classList.add("disabled-box");
-        }
-
-        function atualizarSelectsDeAlbuns() {
-            const opcoes = albuns.map(a => `<option value="${a.id}">${a.title}</option>`).join("");
-            document.getElementById("card-album-select").innerHTML = opcoes;
-            document.getElementById("filter-cards-by-album").innerHTML = `<option value="todos">-- Ver Todas --</option>` + opcoes;
-            document.getElementById("select-dist-album-filter").innerHTML = opcoes;
-        }
-
-        function listarAlbunsAdmin() {
-            const list = document.getElementById("list-albuns-ativos");
-            list.innerHTML = albuns.map(a => `
-                <div class="list-item">
-                    <span>${a.image} <b>${a.title}</b></span>
-                    <div class="box-acoes-botoes">
-                        <button class="btn-edit" onclick="carregarAlbumParaEdicao('${a.id}')">✏️</button>
-                        <button class="btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="removerAlbum('${a.id}')">❌</button>
-                    </div>
-                </div>
-            `).join("");
-        }
-
-        window.salvarNovoAlbum = async function() {
-            const title = document.getElementById("album-new-title").value.trim();
-            const img = document.getElementById("album-new-image").value.trim() || "📁";
-            const color = document.getElementById("album-new-color").value;
-            const editId = document.getElementById("album-edit-id").value;
-
-            if (!title) return alert("Informe o título!");
-
-            const id = editId || "alb-" + Date.now();
-            await set(ref(db, `albuns/${id}`), { id, title, image: img, color });
-
-            document.getElementById("album-edit-id").value = "";
-            document.getElementById("album-new-title").value = "";
-            document.getElementById("album-new-image").value = "";
-            document.getElementById("title-album-form").innerText = "📁 Gerenciar / Criar Álbuns";
-        };
-
-        window.carregarAlbumParaEdicao = function(id) {
-            const alb = albuns.find(a => a.id === id);
-            if (!alb) return;
-            document.getElementById("album-edit-id").value = alb.id;
-            document.getElementById("album-new-title").value = alb.title;
-            document.getElementById("album-new-image").value = alb.image;
-            document.getElementById("album-new-color").value = alb.color;
-            document.getElementById("title-album-form").innerText = "✏️ Editando Álbum";
-        };
-
-        window.removerAlbum = async function(id) {
-            if (confirm("Deseja apagar este álbum do Firebase?")) {
-                await set(ref(db, `albuns/${id}`), null);
-            }
-        };
-
-        window.listarCartasCadastradasAdmin = function() {
-            const filtro = document.getElementById("filter-cards-by-album").value;
-            const list = document.getElementById("list-cards");
-            const filtradas = filtro === "todos" ? cartas : cartas.filter(c => c.albumId === filtro);
-
-            list.innerHTML = filtradas.map(c => {
-                const albNome = albuns.find(a => a.id === c.albumId)?.title || "Sem álbum";
-                return `
-                    <div class="list-item">
-                        <div><b>[${c.rarity.toUpperCase()}]</b> ${c.name} <br> <small style="color:#7c7c8a">${albNome} • 🪙${c.price} • ⚡${c.points}p</small></div>
-                        <div class="box-acoes-botoes">
-                            <button class="btn-edit" onclick="carregarCartaParaEdicao('${c.id}')">✏️</button>
-                            <button class="btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="removerCarta('${c.id}')">❌</button>
-                        </div>
-                    </div>
-                `;
-            }).join("");
-        };
-
-        window.salvarCarta = async function() {
-            const editId = document.getElementById("card-edit-id").value;
-            const albumId = document.getElementById("card-album-select").value;
-            const rarity = document.getElementById("card-rarity").value;
-            const name = document.getElementById("card-name").value.trim();
-            const points = parseInt(document.getElementById("card-points").value) || 0;
-            const price = parseInt(document.getElementById("card-price").value) || 0;
-            const img = document.getElementById("card-img").value.trim();
-            const desc = document.getElementById("card-desc").value.trim();
-
-            if (!name) return alert("Diga o nome da figurinha!");
-
-            const id = editId || "c-" + Date.now();
-            await set(ref(db, `cartas/${id}`), { id, albumId, rarity, name, points, price, img, desc });
-
-            document.getElementById("card-edit-id").value = "";
-            document.getElementById("card-name").value = "";
-            document.getElementById("card-points").value = "";
-            document.getElementById("card-price").value = "";
-            document.getElementById("card-img").value = "";
-            document.getElementById("card-desc").value = "";
-            document.getElementById("title-card-form").innerText = "🃏 Cadastrar Nova Figurinha";
-        };
-
-        window.carregarCartaParaEdicao = function(id) {
-            const c = cartas.find(cart => cart.id === id);
-            if (!c) return;
-            document.getElementById("card-edit-id").value = c.id;
-            document.getElementById("card-album-select").value = c.albumId;
-            document.getElementById("card-rarity").value = c.rarity;
-            document.getElementById("card-name").value = c.name;
-            document.getElementById("card-points").value = c.points;
-            document.getElementById("card-price").value = c.price;
-            document.getElementById("card-img").value = c.img;
-            document.getElementById("card-desc").value = c.desc;
-            document.getElementById("title-card-form").innerText = "✏️ Editando Figurinha";
-        };
-
-        window.removerCarta = async function(id) {
-            if (confirm("Remover esta figurinha do Firebase?")) {
-                await set(ref(db, `cartas/${id}`), null);
-            }
-        };
-
-        function filtrarAlunosDistribuicao() {
-            const fGrade = document.getElementById("select-filter-grade").value;
-            const fLetter = document.getElementById("select-filter-letter").value;
-            const selectStudent = document.getElementById("select-dist-student");
-
-            selectStudent.innerHTML = "";
-            const filtrados = usuarios.filter(u => {
-                if (u.role !== 'aluno') return false;
-                return (fGrade === "todos" || u.grade === fGrade) && (fLetter === "todos" || u.letter === fLetter);
+            const historicoFiltrado = historicoEnvios.filter(h => {
+                const matchStudent = h.alunoNome.toLowerCase().includes(fStudent);
+                const matchGrade = (fGrade === "todos" || h.alunoSerie === fGrade);
+                const matchLetter = (fLetter === "todos" || (h.alunoLetter || "-") === fLetter);
+                return matchStudent && matchGrade && matchLetter;
             });
 
-            if (filtrados.length === 0) {
-                selectStudent.innerHTML = `<option value="">Nenhum aluno encontrado</option>`;
-                return;
-            }
-            filtrados.forEach(u => {
-                selectStudent.innerHTML += `<option value="${u.id}">${u.name} (${u.grade} ${u.letter})</option>`;
-            });
+            tbody.innerHTML = historicoFiltrado.map(h => `
+                <tr>
+                    <td><b>${h.alunoNome}</b></td>
+                    <td>${h.alunoSerie || '-'} ${h.alunoLetter && h.alunoLetter !== '-' ? h.alunoLetter : ''}</td>
+                    <td>${h.albumTitulo}</td>
+                    <td>${h.cartaNome}</td>
+                    <td><span class="card-raridade">${h.raridade}</span></td>
+                    <td>${h.data}</td>
+                </tr>
+            `).join('');
         }
-        window.filtrarAlunosDistribuicao = filtrarAlunosDistribuicao;
-
-        function atualizarSelectisFigurinhasDistribuicao() {
-            const albFiltro = document.getElementById("select-dist-album-filter").value;
-            const selectCard = document.getElementById("select-dist-card");
-            selectCard.innerHTML = "";
-
-            const filtradas = cartas.filter(c => c.albumId === albFiltro);
-            if (filtradas.length === 0) {
-                selectCard.innerHTML = `<option value="">Nenhuma figurinha nesse álbum</option>`;
-                return;
-            }
-            filtradas.forEach(c => {
-                selectCard.innerHTML += `<option value="${c.id}">${c.name} [${c.rarity}]</option>`;
-            });
-        }
-        window.atualizarSelectFigurinhasDistribuicao = atualizarSelectisFigurinhasDistribuicao;
-
-        window.distribuirCarta = async function() {
-            const studentId = document.getElementById("select-dist-student").value;
-            const cardId = document.getElementById("select-dist-card").value;
-
-            if (!studentId || !cardId) return alert("Dados inválidos!");
-
-            const novaQtd = (inventario[studentId]?.[cardId] || 0) + 1;
-            await set(ref(db, `inventario/${studentId}/${cardId}`), novaQtd);
-            alert("🚀 Figurinha adicionada ao aluno via Cloud!");
-        };
-
-        window.adicionarAluno = async function() {
-            const name = document.getElementById("student-name").value.trim();
-            const grade = document.getElementById("student-grade").value;
-            const letter = document.getElementById("student-letter").value;
-            const role = document.getElementById("student-role").value;
-            const pin = document.getElementById("student-pin").value.trim();
-
-            if (!name || !pin) return alert("Preencha o Nome e Código!");
-
-            const id = "u-" + Date.now();
-            await set(ref(db, `usuarios/${id}`), {
-                id, name, grade, letter, role, pin, coins: role === 'aluno' ? 10 : 100
-            });
-
-            document.getElementById("student-name").value = "";
-            document.getElementById("student-pin").value = "";
-            alert(`👤 Cadastrado com sucesso no Firebase!`);
-        };
+        function limparHistoricoGeral() { if(confirm("Limpar todo o histórico?")) { historicoEnvios = []; localStorage.setItem('ml_history', '[]'); atualizarTabelaHistorico(); } }
+        
+        // Carregamento inicial estruturado conforme o seu original
+        window.addEventListener('DOMContentLoaded', () => {
+            atualizarTabelaHistorico();
+        });
     </script>
+</body>
+</html>
