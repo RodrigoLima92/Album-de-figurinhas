@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maker Labs São Roque - Sistema de Gestão</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
@@ -145,14 +149,30 @@
 
         .card.comum::after { display: none; content: none; }
         .card.comum { border-color: #55555e; animation: none !important; box-shadow: 0 6px 12px var(--card-shadow) !important; }
-        .card.rara::after { background: linear-gradient(to right, rgba(0,180,216,0) 0%, rgba(0,180,216,0.25) 50%, rgba(0,180,216,0) 100%); animation-duration: 7s; }
+
+        .card.rara::after {
+            background: linear-gradient(to right, rgba(0,180,216,0) 0%, rgba(0,180,216,0.25) 50%, rgba(0,180,216,0) 100%);
+            animation-duration: 7s;
+        }
         .card.rara { border-color: #00b4d8; }
-        .card.epica::after { background: linear-gradient(to right, rgba(157,78,221,0) 0%, rgba(216,180,254,0.35) 50%, rgba(157,78,221,0) 100%); animation-duration: 5.5s; }
+
+        .card.epica::after {
+            background: linear-gradient(to right, rgba(157,78,221,0) 0%, rgba(216,180,254,0.35) 50%, rgba(157,78,221,0) 100%);
+            animation-duration: 5.5s;
+        }
         .card.epica { border-color: #9d4edd; }
-        .card.lendaria::after { background: linear-gradient(to right, rgba(255,183,3,0) 0%, rgba(255,255,255,0.4) 40%, rgba(255,183,3,0.4) 60%, rgba(255,183,3,0) 100%); animation-duration: 4.5s; }
+
+        .card.lendaria::after {
+            background: linear-gradient(to right, rgba(255,183,3,0) 0%, rgba(255,255,255,0.4) 40%, rgba(255,183,3,0.4) 60%, rgba(255,183,3,0) 100%);
+            animation-duration: 4.5s;
+        }
         .card.lendaria { border-color: #ffb703; }
 
-        @keyframes passing-shine { 0% { left: -70%; } 15% { left: 120%; } 100% { left: 120%; } }
+        @keyframes passing-shine {
+            0% { left: -70%; }
+            15% { left: 120%; }
+            100% { left: 120%; }
+        }
 
         .zoom-container .card.rara { animation: glow-rara 4s infinite alternate ease-in-out; }
         .zoom-container .card.epica { animation: glow-epica 3.5s infinite alternate ease-in-out; }
@@ -162,10 +182,19 @@
         @keyframes glow-epica { 0% { box-shadow: 0 0 8px rgba(157, 78, 221, 0.5); } 100% { box-shadow: 0 0 26px rgba(157, 78, 221, 0.9); } }
         @keyframes glow-lendaria { 0% { box-shadow: 0 0 12px rgba(255, 183, 3, 0.6); border-color: #ffb703; } 100% { box-shadow: 0 0 38px rgba(255, 183, 3, 1), 0 0 10px rgba(255,255,255,0.2) inset; border-color: #fff; } }
 
-        .badge-nova { position: absolute; top: 8px; right: 8px; background: #e63946; color: #fff; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 8px; box-shadow: 0 0 10px rgba(230,57,70,0.8); z-index: 80; text-transform: uppercase; animation: pulse-badge 1.2s infinite alternate; pointer-events: none; }
-        @keyframes pulse-badge { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 14px rgba(230,57,70,1); } }
+        .badge-nova {
+            position: absolute; top: 8px; right: 8px; background: #e63946; color: #fff;
+            font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 8px;
+            box-shadow: 0 0 10px rgba(230,57,70,0.8); z-index: 80; text-transform: uppercase;
+            animation: pulse-badge 1.2s infinite alternate; pointer-events: none;
+        }
 
-        .card-slot-empty { background: rgba(31, 31, 35, 0.4); border-radius: 14px; height: 100%; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(255,255,255,0.1); color: rgba(255,255,255,0.15); position: relative; font-weight: bold; width: 100%; max-height: 235px; margin: 0 auto; }
+        .card-slot-empty { 
+            background: rgba(31, 31, 35, 0.4); border-radius: 14px; height: 100%; min-height: 220px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            border: 2px dashed rgba(255,255,255,0.1); color: rgba(255,255,255,0.15); position: relative; 
+            font-weight: bold; width: 100%; max-height: 235px; margin: 0 auto;
+        }
         .card-slot-empty::before { content: "?"; font-size: 2.5rem; color: rgba(255,255,255,0.08); margin-bottom: 5px; }
         .card-slot-number { position: absolute; top: 12px; left: 12px; background: var(--bg-body); color: var(--text-color); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid var(--border-color); opacity: 0.5; }
 
@@ -264,337 +293,4 @@
             </div>
             <div class="nav-buttons">
                 <button class="btn-secondary" id="btn-shelf-back-admin" style="display:none; background:#0077b6" onclick="mudarTela('screen-admin')">Voltar ao Painel</button>
-                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
-            </div>
-        </header>
-        <div class="bookcase-container">
-            <h2 style="margin-bottom: 20px; color:#ffb703; text-transform: uppercase; font-size: 1.2rem;">📖 Escolha um Álbum para Folhear:</h2>
-            <div class="shelf" id="shelf-books-grid"></div>
-        </div>
-    </div>
-
-    <div id="screen-album" class="screen">
-        <header>
-            <div>
-                <h1 id="active-album-title">Nome do Álbum</h1>
-                <p>Usuário: <span id="user-display" style="color: #ffb703; font-weight: bold;"></span> <span id="album-coins-wrapper"></span></p>
-            </div>
-            <div class="nav-buttons">
-                <button style="background: #2a9d8f;" onclick="mudarTela('screen-bookcase')">📁 Voltar para a Estante</button>
-                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
-            </div>
-        </header>
-        <div class="album-stats">
-            <div class="stats-row">
-                <span class="stats-text" id="album-progress-text">Figurinhas: 0 / 0</span>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="album-progress-bar"></div>
-                </div>
-                <span class="stats-text" id="album-percentage-text" style="color:#2a9d8f;">0%</span>
-            </div>
-        </div>
-        <div class="book-container">
-            <div class="book-wrapper">
-                <div class="book-page left-page">
-                    <div class="page-grid" id="page-left-grid"></div>
-                    <div class="page-num" id="page-left-num">Pág. 1</div>
-                </div>
-                <div class="book-page right-page">
-                    <div class="page-grid" id="page-right-grid"></div>
-                    <div class="page-num" id="page-right-num">Pág. 2</div>
-                </div>
-            </div>
-        </div>
-        <div class="book-controls">
-            <button id="btn-book-prev" onclick="folhearPagina(-1)">⬅️ Página Anterior</button>
-            <button id="btn-book-next" onclick="folhearPagina(1)">Próxima Página ➡️</button>
-        </div>
-    </div>
-
-    <div id="screen-admin" class="screen">
-        <header>
-            <div>
-                <h1>Painel Maker Labs</h1>
-                <p>Nível de Acesso atual: <span id="admin-role-display" style="color:#ffb703; font-weight:bold; text-transform:uppercase;"></span></p>
-            </div>
-            <div class="nav-buttons">
-                <button style="background:#0077b6" onclick="verEstanteComoAdmin()">Visualizar Estante de Álbuns</button>
-                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
-            </div>
-        </header>
-
-        <div class="admin-layout-container">
-            <div class="admin-grid">
-                
-                <div class="admin-box" id="box-gerenciar-albuns">
-                    <h2 id="title-album-form">📁 Gerenciar / Criar Álbuns</h2>
-                    <input type="hidden" id="album-edit-id" value="">
-                    <input type="text" id="album-new-title" placeholder="Nome do Álbum (Ex: Anual 2026)">
-                    
-                    <label>Desenho / Ilustração da Capa (Link URL ou Emoji):</label>
-                    <input type="text" id="album-new-image" placeholder="Ex: https://link-da-imagem.png ou 🤖">
-
-                    <label>Cor da Capa do Livro:</label>
-                    <input type="color" id="album-new-color" value="#8b0000" style="height: 40px; padding: 2px; cursor: pointer;">
-                    
-                    <div id="wrapper-album-buttons" style="margin-bottom: 20px;">
-                        <button onclick="salvarNovoAlbum()">Criar Álbum</button>
-                    </div>
-                    
-                    <h2 style="font-size:1rem; color:#a8a8b3;">Álbuns Ativos</h2>
-                    <div class="manage-list" id="list-albuns-ativos"></div>
-                </div>
-
-                <div class="admin-box" id="box-gerenciar-cartas">
-                    <h2 id="title-card-form">🃏 Cadastrar Nova Figurinha</h2>
-                    <input type="hidden" id="card-edit-id" value="">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div>
-                            <label>Vincular ao Álbum:</label>
-                            <select id="card-album-select"></select>
-                        </div>
-                        <div>
-                            <label>Raridade:</label>
-                            <select id="card-rarity">
-                                <option value="comum">Comum (Cinza)</option>
-                                <option value="rara">Rara (Azul)</option>
-                                <option value="epica">Épica (Roxa)</option>
-                                <option value="lendaria">Lendária (Dourada)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
-                        <input type="text" id="card-name" placeholder="Nome da Figurinha">
-                        <input type="number" id="card-points" placeholder="Pontos">
-                        <input type="number" id="card-price" placeholder="Preço 🪙" min="0">
-                    </div>
-                    <input type="text" id="card-img" placeholder="Link/URL da Imagem">
-                    <textarea id="card-desc" rows="2" placeholder="Descrição da Figurinha" style="resize: none;"></textarea>
-                    <div id="wrapper-card-buttons" style="margin-bottom: 20px;">
-                        <button onclick="salvarCarta()">Adicionar Figurinha</button>
-                    </div>
-                    
-                    <h2 style="font-size:1rem; color:#a8a8b3; margin-bottom:5px;">Figurinhas Cadastradas</h2>
-                    <label>🔍 Filtrar Lista por Álbum:</label>
-                    <select id="filter-cards-by-album" onchange="listarCartasCadastradasAdmin()" style="border-color: var(--accent-color); padding: 6px; font-size:0.85rem; height:34px;"></select>
-                    <div class="manage-list" id="list-cards" style="margin-top: 5px;"></div>
-                </div>
-
-                <div class="admin-box" id="box-distribuir-cartas">
-                    <h2>🚀 Distribuir Figurinhas Manualmente</h2>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div>
-                            <label>Série:</label>
-                            <select id="select-filter-grade" onchange="filtrarAlunosDistribuicao()">
-                                <option value="todos">-- Todas --</option>
-                                <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
-                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Sala:</label>
-                            <select id="select-filter-letter" onchange="filtrarAlunosDistribuicao()">
-                                <option value="todos">-- Todas --</option>
-                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
-                            </select>
-                        </div>
-                    </div>
-                    <label style="margin-top:10px;">Escolha o Aluno:</label>
-                    <select id="select-dist-student" style="margin-bottom: 20px; border-color: var(--accent-color);"></select>
-                    <label>Filtrar por Álbum:</label>
-                    <select id="select-dist-album-filter" onchange="atualizarSelectFigurinhasDistribuicao()"></select>
-                    <label>Escolha a Figurinha:</label>
-                    <select id="select-dist-card" style="margin-bottom: 20px;"></select>
-                    <button style="background: #2a9d8f; padding: 14px;" onclick="distribuirCarta()">Colar Figurinha no Álbum</button>
-                </div>
-
-                <div class="admin-box" id="box-gerenciar-alunos">
-                    <h2 id="title-user-form">👥 Gerenciador de Usuários (Cadastro Geral)</h2>
-                    <input type="hidden" id="student-edit-id" value="">
-                    <input type="text" id="student-name" placeholder="Nome Completo">
-                    
-                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
-                        <div>
-                            <label>Série Escolar:</label>
-                            <select id="student-grade">
-                                <option value="-">-- Staff --</option>
-                                <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
-                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Sala:</label>
-                            <select id="student-letter">
-                                <option value="-">-</option>
-                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Cargo:</label>
-                            <select id="student-role">
-                                <option value="aluno" selected>Aluno</option>
-                                <option value="auxiliar">Auxiliar</option>
-                                <option value="instrutor">Instrutor</option>
-                                <option value="administrador">Admin</option>
-                            </select>
-                        </div>
-                    </div>
-                    <input type="text" id="student-pin" placeholder="Código / Senha de Acesso" style="margin-top:12px;">
-                    <div id="wrapper-user-buttons" style="margin-bottom: 25px;">
-                        <button id="btn-user-submit" onclick="adicionarAluno()">Cadastrar Integrante</button>
-                    </div>
-                    
-                    <h2 style="font-size:1rem; color:#a8a8b3;">Todos os Integrantes Cadastrados</h2>
-                    <div class="manage-list" id="list-all-users" style="max-height: 180px;"></div>
-                </div>
-
-                <div class="admin-box" id="box-carteira-moedas">
-                    <h2>🪙 Carteira de Alunos (Gestão de Saldo)</h2>
-                    <div class="filter-group-inline">
-                        <div class="filter-field" style="flex: 1.5;">
-                            <input type="text" id="filter-user-name" placeholder="🔍 Buscar aluno..." onkeyup="atualizarListasAdmin()">
-                        </div>
-                        <div class="filter-field">
-                            <select id="filter-user-grade" onchange="atualizarListasAdmin()">
-                                <option value="todos">Série (Todas)</option>
-                                <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
-                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
-                            </select>
-                        </div>
-                        <div class="filter-field">
-                            <select id="filter-user-letter" onchange="atualizarListasAdmin()">
-                                <option value="todos">Sala (Todas)</option>
-                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="manage-list" id="list-only-students-wallets" style="max-height: 290px; flex-grow: 1;"></div>
-                </div>
-
-            </div>
-
-            <div class="admin-box" id="box-historico">
-                <h2>📅 Histórico Geral de Entregas / Compras</h2>
-                <div class="filter-group-inline">
-                    <div class="filter-field" style="flex: 1.5;">
-                        <input type="text" id="filter-history-student" placeholder="🔍 Filtrar por Aluno..." onkeyup="atualizarTabelaHistorico()">
-                    </div>
-                    <div class="filter-field">
-                        <select id="filter-history-grade" onchange="atualizarTabelaHistorico()">
-                            <option value="todos">-- Todas as Séries --</option>
-                            <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                            <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
-                            <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
-                        </select>
-                    </div>
-                    <div class="filter-field">
-                        <select id="filter-history-letter" onchange="atualizarTabelaHistorico()">
-                            <option value="todos">-- Todas as Salas --</option>
-                            <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
-                        </select>
-                    </div>
-                    <button class="btn-danger" style="width: auto; padding: 8px 14px; height: 36px; font-size:0.85rem;" onclick="limparHistoricoGeral()">Limpar Logs 🗑️</button>
-                </div>
-                
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome Aluno</th>
-                                <th>Série / Sala</th>
-                                <th>Álbum Referente</th>
-                                <th>Figurinha Coletada</th>
-                                <th>Raridade</th>
-                                <th>Data / Horário</th>
-                            </tr>
-                        </thead>
-                        <tbody id="history-table-body"></tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2026 Maker Labs São Roque - Sistema de Gestão Interna de Álbuns. Todos os direitos reservados.
-    </footer>
-
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "firebase/app";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBzlVayf42IU6IExTLiZosRB0O1OHQ4wik",
-            authDomain: "album-27bb2.firebaseapp.com",
-            projectId: "album-27bb2",
-            storageBucket: "album-27bb2.firebasestorage.app",
-            messagingSenderId: "380185061798",
-            appId: "1:380185061798:web:a41721fc9cda26b3f18767"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        
-        // Expor a instância globalmente caso precise em outros escopos do script clássico
-        window.firebaseApp = app;
-    </script>
-
-    <script>
-        // Mantendo as lógicas originais do arquivo index.html fornecido
-        let usuarioLogado = null;
-        let albumAtivoId = null;
-        let paginaAtual = 1;
-
-        let baseAlunos = JSON.parse(localStorage.getItem('ml_students')) || [];
-        let baseAlbuns = JSON.parse(localStorage.getItem('ml_albums')) || [];
-        let baseCartas = JSON.parse(localStorage.getItem('ml_cards')) || [];
-        let historicoEnvios = JSON.parse(localStorage.getItem('ml_history')) || [];
-
-        function mudarTela(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(screenId);
-            if(target) target.classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        // As funções de visualização, tabela e tratamento de histórico continuam anexadas aos escopos globais
-        function atualizarTabelaHistorico() {
-            const tbody = document.getElementById('history-table-body'); if(!tbody) return;
-            const fStudent = document.getElementById('filter-history-student').value.toLowerCase();
-            const fGrade = document.getElementById('filter-history-grade').value;
-            const fLetter = document.getElementById('filter-history-letter').value;
-
-            const historicoFiltrado = historicoEnvios.filter(h => {
-                const matchStudent = h.alunoNome.toLowerCase().includes(fStudent);
-                const matchGrade = (fGrade === "todos" || h.alunoSerie === fGrade);
-                const matchLetter = (fLetter === "todos" || (h.alunoLetter || "-") === fLetter);
-                return matchStudent && matchGrade && matchLetter;
-            });
-
-            tbody.innerHTML = historicoFiltrado.map(h => `
-                <tr>
-                    <td><b>${h.alunoNome}</b></td>
-                    <td>${h.alunoSerie || '-'} ${h.alunoLetter && h.alunoLetter !== '-' ? h.alunoLetter : ''}</td>
-                    <td>${h.albumTitulo}</td>
-                    <td>${h.cartaNome}</td>
-                    <td><span class="card-raridade">${h.raridade}</span></td>
-                    <td>${h.data}</td>
-                </tr>
-            `).join('');
-        }
-        function limparHistoricoGeral() { if(confirm("Limpar todo o histórico?")) { historicoEnvios = []; localStorage.setItem('ml_history', '[]'); atualizarTabelaHistorico(); } }
-        
-        // Carregamento inicial estruturado conforme o seu original
-        window.addEventListener('DOMContentLoaded', () => {
-            atualizarTabelaHistorico();
-        });
-    </script>
-</body>
-</html>
+                <button class="btn-secondary"
