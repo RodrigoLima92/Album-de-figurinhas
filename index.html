@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maker Labs São Roque - Sistema de Gestão</title>
+    <title>Maker Labs São Roque - Sistema e Lojinha</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
@@ -31,12 +31,14 @@
         header { 
             display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto 30px auto; padding: 20px 25px; 
             background-image: linear-gradient(135deg, #00b4d8, #0077b6); background-size: cover; background-position: center;
-            border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color);
+            border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); flex-wrap: wrap; gap: 15px;
         }
         header h1 { font-size: 1.6rem; text-transform: uppercase; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); }
-        header p { color: #ffffff; font-size: 0.95rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); background: rgba(0,0,0,0.25); padding: 6px 12px; border-radius: 8px; display: inline-block; }
+        header p { color: #ffffff; font-size: 0.95rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); background: rgba(0,0,0,0.25); padding: 6px 12px; border-radius: 8px; display: inline-block; margin-top: 5px; }
 
-        .coin-display { background: #ffb703; color: #121214; font-weight: bold; padding: 6px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(255,183,3,0.3); font-size: 0.95rem; text-shadow: none; margin-left: 8px; }
+        .coin-display { font-weight: bold; padding: 6px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; font-size: 0.95rem; margin-left: 8px; }
+        .coin-normal { background: #ffb703; color: #121214; box-shadow: 0 4px 10px rgba(255,183,3,0.3); }
+        .coin-exclusive { background: linear-gradient(135deg, #7209b7, #b5179e); color: #fff; box-shadow: 0 4px 10px rgba(181,23,158,0.4); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
 
         footer {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; padding: 0 25px;
@@ -66,6 +68,8 @@
         .btn-secondary:hover { background: #323238; }
         .btn-edit { background: linear-gradient(135deg, #f4a261, #e76f51); padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; width: auto; color: #fff; }
         .btn-coin { background: linear-gradient(135deg, #ffb703, #fb8500); color: #121214; }
+        .btn-diamond { background: linear-gradient(135deg, #b5179e, #7209b7); color: #fff; }
+        .btn-store { background: linear-gradient(135deg, #f72585, #b5179e); color: white; }
 
         .filter-group-inline { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; background: #141416; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); align-items: center; }
         .filter-field { flex: 1; min-width: 120px; }
@@ -73,25 +77,67 @@
 
         /* --- ESTANTE DE LIVROS --- */
         .bookcase-container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .shelf {
-            background: linear-gradient(transparent 90%, #5c3d2e 90%, #3d251a 100%);
-            padding: 30px 20px 25px 20px; margin-bottom: 50px;
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px;
-            border-bottom: 12px solid #2b1810;
-        }
+        .shelf { background: linear-gradient(transparent 90%, #5c3d2e 90%, #3d251a 100%); padding: 30px 20px 25px 20px; margin-bottom: 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; border-bottom: 12px solid #2b1810; }
         
-        .book-cover-item {
-            width: 170px; height: 240px; border-radius: 4px 12px 12px 4px; padding: 15px;
-            display: flex; flex-direction: column; justify-content: space-between; align-items: center; cursor: pointer; position: relative;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset 8px 0 8px rgba(0,0,0,0.3); border-left: 6px solid rgba(0,0,0,0.4);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); justify-self: center; text-align: center;
-        }
+        .book-cover-item { width: 170px; height: 240px; border-radius: 4px 12px 12px 4px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; cursor: pointer; position: relative; box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset 8px 0 8px rgba(0,0,0,0.3); border-left: 6px solid rgba(0,0,0,0.4); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); justify-self: center; text-align: center; }
         .book-cover-item:hover { transform: translateY(-15px) scale(1.05); box-shadow: 10px 15px 25px rgba(0,0,0,0.7); }
         .book-cover-title { font-size: 1rem; font-weight: bold; color: #fff; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); text-transform: uppercase; line-height: 1.2; width: 100%; word-wrap: break-word; }
         .book-cover-badge { background: rgba(0,0,0,0.6); color: #ffb703; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; text-align: center; width: 100%; }
-        
         .book-cover-thumb { width: 100%; height: 90px; margin: 10px 0; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 6px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); }
         .book-cover-img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- CARDS / FIGURINHAS --- */
+        .card { background: var(--bg-box); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; border: 4px solid var(--border-color); box-shadow: 0 6px 12px var(--card-shadow); transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s; position: relative; cursor: pointer; overflow: hidden; width: 100%; height: 100%; max-height: 235px; margin: 0 auto; }
+        .card:hover { transform: scale(1.03); z-index: 60; }
+        .card::after { content: ''; position: absolute; top: -50%; left: -60%; width: 30%; height: 200%; transform: rotate(25deg); transition: none; pointer-events: none; animation: passing-shine 8s infinite ease-in-out; }
+
+        .card.comum::after { display: none; content: none; }
+        .card.comum { border-color: #55555e; animation: none !important; box-shadow: 0 6px 12px var(--card-shadow) !important; }
+        .card.rara::after { background: linear-gradient(to right, rgba(0,180,216,0) 0%, rgba(0,180,216,0.25) 50%, rgba(0,180,216,0) 100%); animation-duration: 7s; }
+        .card.rara { border-color: #00b4d8; }
+        .card.epica::after { background: linear-gradient(to right, rgba(157,78,221,0) 0%, rgba(216,180,254,0.35) 50%, rgba(157,78,221,0) 100%); animation-duration: 5.5s; }
+        .card.epica { border-color: #9d4edd; }
+        .card.lendaria::after { background: linear-gradient(to right, rgba(255,183,3,0) 0%, rgba(255,255,255,0.4) 40%, rgba(255,183,3,0.4) 60%, rgba(255,183,3,0) 100%); animation-duration: 4.5s; }
+        .card.lendaria { border-color: #ffb703; }
+        /* Nova Raridade Exclusiva */
+        .card.exclusiva::after { background: linear-gradient(to right, rgba(247,37,133,0) 0%, rgba(247,37,133,0.5) 50%, rgba(247,37,133,0) 100%); animation-duration: 3s; }
+        .card.exclusiva { border-color: #f72585; box-shadow: 0 0 10px rgba(247,37,133,0.4); }
+
+        @keyframes passing-shine { 0% { left: -70%; } 15% { left: 120%; } 100% { left: 120%; } }
+
+        .zoom-container .card.rara { animation: glow-rara 4s infinite alternate ease-in-out; }
+        .zoom-container .card.epica { animation: glow-epica 3.5s infinite alternate ease-in-out; }
+        .zoom-container .card.lendaria { animation: glow-lendaria 3s infinite alternate ease-in-out; }
+        .zoom-container .card.exclusiva { animation: glow-exclusiva 2s infinite alternate ease-in-out; }
+
+        @keyframes glow-rara { 0% { box-shadow: 0 0 6px rgba(0, 180, 216, 0.4); } 100% { box-shadow: 0 0 18px rgba(0, 180, 216, 0.8); } }
+        @keyframes glow-epica { 0% { box-shadow: 0 0 8px rgba(157, 78, 221, 0.5); } 100% { box-shadow: 0 0 26px rgba(157, 78, 221, 0.9); } }
+        @keyframes glow-lendaria { 0% { box-shadow: 0 0 12px rgba(255, 183, 3, 0.6); border-color: #ffb703; } 100% { box-shadow: 0 0 38px rgba(255, 183, 3, 1), 0 0 10px rgba(255,255,255,0.2) inset; border-color: #fff; } }
+        @keyframes glow-exclusiva { 0% { box-shadow: 0 0 15px rgba(247, 37, 133, 0.6); border-color: #f72585; } 100% { box-shadow: 0 0 45px rgba(247, 37, 133, 1), 0 0 15px rgba(255,255,255,0.4) inset; border-color: #fff; } }
+
+        .badge-nova { position: absolute; top: 8px; right: 8px; background: #e63946; color: #fff; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 8px; box-shadow: 0 0 10px rgba(230,57,70,0.8); z-index: 80; text-transform: uppercase; animation: pulse-badge 1.2s infinite alternate; pointer-events: none; }
+        @keyframes pulse-badge { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 14px rgba(230,57,70,1); } }
+
+        .card-slot-empty { background: rgba(31, 31, 35, 0.4); border-radius: 14px; height: 100%; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(255,255,255,0.1); color: rgba(255,255,255,0.15); position: relative; font-weight: bold; width: 100%; max-height: 235px; margin: 0 auto; }
+        .card-slot-number { position: absolute; top: 12px; left: 12px; background: var(--bg-body); color: var(--text-color); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid var(--border-color); opacity: 0.5; }
+
+        .buy-sticker-btn { margin-top: 10px; background: #ffb703; color: #121214; font-size: 0.75rem; font-weight: bold; border: none; padding: 4px 10px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: transform 0.2s; z-index: 70; justify-content: center; width: auto; }
+        .buy-sticker-btn:hover { transform: scale(1.08); background: #fff; }
+        
+        .card-raridade { font-size: 0.65rem; text-transform: uppercase; font-weight: bold; padding: 2px 8px; border-radius: 20px; margin-bottom: 4px; background: var(--bg-body); }
+        .comum .card-raridade { color: #b0b0b8; }
+        .rara .card-raridade { color: #00b4d8; }
+        .epica .card-raridade { color: #9d4edd; }
+        .lendaria .card-raridade { color: #ffb703; }
+        .exclusiva .card-raridade { color: #f72585; text-shadow: 0 0 5px rgba(247,37,133,0.5); }
+        
+        .card-img-container { width: 100%; height: 80px; background-color: var(--bg-body); border-radius: 8px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; }
+        .card-img-fallback { font-size: 2rem; }
+
+        .card-name { font-size: 0.85rem; font-weight: bold; color: #ffffff; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+        .card-points { font-size: 0.7rem; color: var(--accent-color); font-weight: bold; margin-bottom: 4px; background: var(--bg-body); padding: 1px 8px; border-radius: 20px; }
+        .card-habilidade { font-size: 0.7rem; color: #a8a8b3; background: var(--bg-body); padding: 4px; border-radius: 6px; width: 100%; flex-grow: 1; line-height: 1.2; display: flex; align-items: center; justify-content: center; }
 
         /* --- DESIGN DO LIVRO ABERTO --- */
         .album-stats { background: var(--bg-box); padding: 15px 25px; border-radius: 15px; margin-bottom: 25px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; max-width: 1050px; margin: 0 auto 25px auto; }
@@ -111,87 +157,28 @@
         .left-page .page-num { left: 20px; }
         .right-page .page-num { right: 20px; }
         
-        .page-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            grid-template-rows: repeat(2, 1fr);
-            gap: 20px; 
-            width: 100%;
-            height: 100%;
-            max-width: 440px;
-            margin: 0 auto;
-            align-items: center;
-            justify-content: center;
-        }
-        
+        .page-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 20px; width: 100%; height: 100%; max-width: 440px; margin: 0 auto; align-items: center; justify-content: center; }
         .book-controls { display: flex; justify-content: space-between; max-width: 1050px; margin: 0 auto; gap: 20px; }
         .book-controls button { width: auto; flex: 1; padding: 15px; }
 
-        /* --- CARDS / FIGURINHAS --- */
-        .card { 
-            background: var(--bg-box); border-radius: 14px; padding: 10px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-            text-align: center; border: 4px solid var(--border-color); box-shadow: 0 6px 12px var(--card-shadow); 
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s; position: relative; cursor: pointer; overflow: hidden;
-            width: 100%; height: 100%; max-height: 235px; margin: 0 auto;
-        }
-        .card:hover { transform: scale(1.03); z-index: 60; }
-
-        .card::after {
-            content: ''; position: absolute; top: -50%; left: -60%; width: 30%; height: 200%;
-            transform: rotate(25deg); transition: none; pointer-events: none;
-            animation: passing-shine 8s infinite ease-in-out;
-        }
-
-        .card.comum::after { display: none; content: none; }
-        .card.comum { border-color: #55555e; animation: none !important; box-shadow: 0 6px 12px var(--card-shadow) !important; }
-        .card.rara::after { background: linear-gradient(to right, rgba(0,180,216,0) 0%, rgba(0,180,216,0.25) 50%, rgba(0,180,216,0) 100%); animation-duration: 7s; }
-        .card.rara { border-color: #00b4d8; }
-        .card.epica::after { background: linear-gradient(to right, rgba(157,78,221,0) 0%, rgba(216,180,254,0.35) 50%, rgba(157,78,221,0) 100%); animation-duration: 5.5s; }
-        .card.epica { border-color: #9d4edd; }
-        .card.lendaria::after { background: linear-gradient(to right, rgba(255,183,3,0) 0%, rgba(255,255,255,0.4) 40%, rgba(255,183,3,0.4) 60%, rgba(255,183,3,0) 100%); animation-duration: 4.5s; }
-        .card.lendaria { border-color: #ffb703; }
-
-        @keyframes passing-shine { 0% { left: -70%; } 15% { left: 120%; } 100% { left: 120%; } }
-
-        .zoom-container .card.rara { animation: glow-rara 4s infinite alternate ease-in-out; }
-        .zoom-container .card.epica { animation: glow-epica 3.5s infinite alternate ease-in-out; }
-        .zoom-container .card.lendaria { animation: glow-lendaria 3s infinite alternate ease-in-out; }
-
-        @keyframes glow-rara { 0% { box-shadow: 0 0 6px rgba(0, 180, 216, 0.4); } 100% { box-shadow: 0 0 18px rgba(0, 180, 216, 0.8); } }
-        @keyframes glow-epica { 0% { box-shadow: 0 0 8px rgba(157, 78, 221, 0.5); } 100% { box-shadow: 0 0 26px rgba(157, 78, 221, 0.9); } }
-        @keyframes glow-lendaria { 0% { box-shadow: 0 0 12px rgba(255, 183, 3, 0.6); border-color: #ffb703; } 100% { box-shadow: 0 0 38px rgba(255, 183, 3, 1), 0 0 10px rgba(255,255,255,0.2) inset; border-color: #fff; } }
-
-        .badge-nova { position: absolute; top: 8px; right: 8px; background: #e63946; color: #fff; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 8px; box-shadow: 0 0 10px rgba(230,57,70,0.8); z-index: 80; text-transform: uppercase; animation: pulse-badge 1.2s infinite alternate; pointer-events: none; }
-        @keyframes pulse-badge { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 14px rgba(230,57,70,1); } }
-
-        .card-slot-empty { background: rgba(31, 31, 35, 0.4); border-radius: 14px; height: 100%; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(255,255,255,0.1); color: rgba(255,255,255,0.15); position: relative; font-weight: bold; width: 100%; max-height: 235px; margin: 0 auto; }
-        .card-slot-empty::before { content: "?"; font-size: 2.5rem; color: rgba(255,255,255,0.08); margin-bottom: 5px; }
-        .card-slot-number { position: absolute; top: 12px; left: 12px; background: var(--bg-body); color: var(--text-color); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid var(--border-color); opacity: 0.5; }
-
-        .buy-sticker-btn { margin-top: 10px; background: #ffb703; color: #121214; font-size: 0.75rem; font-weight: bold; border: none; padding: 4px 10px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: transform 0.2s; z-index: 70; }
-        .buy-sticker-btn:hover { transform: scale(1.08); background: #fff; }
+        /* --- LOJINHA --- */
+        .store-container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .store-section { background: rgba(30, 30, 34, 0.6); border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .store-section h2 { color: #f72585; margin-bottom: 20px; border-bottom: 2px solid #3c3c42; padding-bottom: 10px; font-size: 1.4rem; text-transform: uppercase; }
+        .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
         
-        .card-raridade { font-size: 0.65rem; text-transform: uppercase; font-weight: bold; padding: 2px 8px; border-radius: 20px; margin-bottom: 4px; background: var(--bg-body); }
-        .comum .card-raridade { color: #b0b0b8; }
-        .rara .card-raridade { color: #00b4d8; }
-        .epica .card-raridade { color: #9d4edd; }
-        .lendaria .card-raridade { color: #ffb703; }
-        
-        .card-img-container { width: 100%; height: 80px; background-color: var(--bg-body); border-radius: 8px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .card-img { width: 100%; height: 100%; object-fit: cover; }
-        .card-img-fallback { font-size: 2rem; }
-
-        .card-name { font-size: 0.85rem; font-weight: bold; color: #ffffff; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
-        .card-points { font-size: 0.7rem; color: var(--accent-color); font-weight: bold; margin-bottom: 4px; background: var(--bg-body); padding: 1px 8px; border-radius: 20px; }
-        .card-habilidade { font-size: 0.7rem; color: #a8a8b3; background: var(--bg-body); padding: 4px; border-radius: 6px; width: 100%; flex-grow: 1; line-height: 1.2; display: flex; align-items: center; justify-content: center; }
+        .store-item-box { background: var(--bg-box); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; align-items: center; text-align: center; border: 2px solid var(--border-color); box-shadow: 0 4px 10px var(--card-shadow); transition: transform 0.2s; position: relative; }
+        .store-item-box:hover { transform: translateY(-5px); border-color: #b5179e; }
+        .store-item-icon { font-size: 3.5rem; margin-bottom: 10px; background: var(--bg-body); width: 100%; border-radius: 8px; padding: 10px 0; }
+        .store-item-img { width: 100%; height: 90px; object-fit: contain; background: var(--bg-body); border-radius: 8px; margin-bottom: 10px; }
+        .store-item-name { font-weight: bold; color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
+        .store-item-desc { font-size: 0.8rem; color: #a8a8b3; margin-bottom: 15px; flex-grow: 1; }
 
         /* --- ZOOM MODALS --- */
         .zoom-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .zoom-overlay.active { opacity: 1; pointer-events: auto; }
         .zoom-container { width: 90%; max-width: 380px; position: relative; transform: scale(0.7); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .zoom-overlay.active .zoom-container { transform: scale(1); }
-        
         .zoom-container .card { width: 100%; max-height: none; height: auto; padding: 25px; border-width: 8px; cursor: default; transform: none !important; }
         .zoom-container .card-img-container { height: 200px; }
         .zoom-container .card-name { font-size: 1.4rem; white-space: normal; margin: 10px 0; }
@@ -202,7 +189,6 @@
         /* --- PAINEL ADMIN --- */
         .admin-layout-container { max-width: 1300px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(48%, 1fr)); gap: 24px; }
-        
         .admin-box { background: var(--bg-box); padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .admin-box h2 { margin-bottom: 16px; color: #ffb703; font-size: 1.15rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
         .admin-box.disabled-box { opacity: 0.25; pointer-events: none; position: relative; filter: grayscale(100%); }
@@ -212,7 +198,6 @@
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #222226; font-size: 0.9rem; gap: 12px; }
         .list-item:last-child { border-bottom: none; }
         .list-item button { width: auto; padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; }
-        
         .box-acoes-botoes { display: flex; gap: 6px; align-items: center; }
 
         .table-wrapper { max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; background: #141416; }
@@ -220,7 +205,7 @@
         th, td { padding: 12px 16px; border-bottom: 1px solid #222226; }
         th { background: #1a1a1e; color: var(--accent-color); font-weight: 600; position: sticky; top: 0; z-index: 20; border-bottom: 2px solid var(--border-color); }
 
-        .nav-buttons { display: flex; gap: 10px; }
+        .nav-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
         .nav-buttons button { width: auto; padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; }
     </style>
 </head>
@@ -262,11 +247,14 @@
         <header>
             <div>
                 <h1>Estante de Álbuns Maker</h1>
-                <p>Usuário: <span id="shelf-user-display" style="color: #ffb703; font-weight: bold;"></span> <span id="shelf-coins-wrapper"></span></p>
+                <p>Usuário: <span id="shelf-user-display" style="color: #ffb703; font-weight: bold;"></span> 
+                    <span id="shelf-coins-wrapper"></span>
+                </p>
             </div>
             <div class="nav-buttons">
+                <button class="btn-store" onclick="mudarTela('screen-store')">Lojinha 🛒</button>
                 <button class="btn-secondary" id="btn-shelf-back-admin" style="display:none; background:#0077b6" onclick="mudarTela('screen-admin')">Voltar ao Painel</button>
-                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
             </div>
         </header>
         <div class="bookcase-container">
@@ -280,11 +268,14 @@
         <header>
             <div>
                 <h1 id="active-album-title">Nome do Álbum</h1>
-                <p>Usuário: <span id="user-display" style="color: #ffb703; font-weight: bold;"></span> <span id="album-coins-wrapper"></span></p>
+                <p>Usuário: <span id="user-display" style="color: #ffb703; font-weight: bold;"></span> 
+                   <span id="album-coins-wrapper"></span>
+                </p>
             </div>
             <div class="nav-buttons">
+                <button class="btn-store" onclick="mudarTela('screen-store')">Lojinha 🛒</button>
                 <button style="background: #2a9d8f;" onclick="mudarTela('screen-bookcase')">📁 Voltar para a Estante</button>
-                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
             </div>
         </header>
         <div class="album-stats">
@@ -314,20 +305,69 @@
         </div>
     </div>
 
+    <!-- TELA DA LOJINHA MAKER -->
+    <div id="screen-store" class="screen">
+        <header>
+            <div>
+                <h1 style="color: #f72585; text-shadow: 0 0 10px rgba(247,37,133,0.5);">Lojinha Maker 🛒</h1>
+                <p>Compre Itens e Figurinhas Especiais!</p>
+                <div id="store-coins-wrapper" style="margin-top: 10px;"></div>
+            </div>
+            <div class="nav-buttons">
+                <button style="background: #2a9d8f;" onclick="mudarTela('screen-bookcase')">📁 Voltar para a Estante</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
+            </div>
+        </header>
+        
+        <div class="store-container">
+            <!-- Figurinhas Exclusivas -->
+            <div class="store-section">
+                <h2>💎 Figurinhas Exclusivas (Álbuns)</h2>
+                <p style="color:#a8a8b3; margin-bottom: 20px; font-size:0.9rem;">Estas figurinhas são vendidas separadamente e possuem efeitos e pontuações especiais.</p>
+                <div class="store-grid" id="store-cards-grid">
+                    <!-- Cards exclusivos injetados aqui -->
+                </div>
+            </div>
+
+            <!-- Itens e Experiências Extras -->
+            <div class="store-section">
+                <h2 style="color: #00b4d8;">🚀 Experiências & Itens Extras</h2>
+                <p style="color:#a8a8b3; margin-bottom: 20px; font-size:0.9rem;">Troque suas moedas por tempo de uso de equipamentos ou prêmios físicos.</p>
+                <div class="store-grid" id="store-items-grid">
+                    <!-- Itens genéricos da loja injetados aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- TELA ADMINISTRATIVA GERAL -->
     <div id="screen-admin" class="screen">
         <header>
             <div>
                 <h1>Painel Maker Labs</h1>
-                <p>Nível de Acesso atual: <span id="admin-role-display" style="color:#ffb703; font-weight:bold; text-transform:uppercase;"></span></p>
+                <p>Nível de Acesso: <span id="admin-role-display" style="color:#ffb703; font-weight:bold; text-transform:uppercase;"></span></p>
             </div>
             <div class="nav-buttons">
-                <button style="background:#0077b6" onclick="verEstanteComoAdmin()">Visualizar Estante de Álbuns</button>
-                <button class="btn-secondary" onclick="fazerLogout()">Sair do Sistema 🚪</button>
+                <button class="btn-store" onclick="mudarTela('screen-store')">Ver Lojinha 🛒</button>
+                <button style="background:#0077b6" onclick="verEstanteComoAdmin()">Ver Estante de Álbuns</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
             </div>
         </header>
 
         <div class="admin-layout-container">
+            
+            <!-- CAIXA RÁPIDA: ALTERAR MINHA SENHA -->
+            <div class="admin-box" style="padding: 15px 24px; flex-direction: row; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2 style="margin-bottom: 5px; color:#fff; border:none; font-size:1rem;">🔑 Alterar Minha Senha de Acesso (Admin)</h2>
+                    <p style="font-size: 0.8rem; color: #a8a8b3;">Atualize sua senha rapidamente para manter o painel seguro.</p>
+                </div>
+                <div style="display: flex; gap: 10px; width: 40%;">
+                    <input type="text" id="admin-fast-pin" placeholder="Digite a nova senha..." style="margin:0;">
+                    <button onclick="alterarMinhaSenhaAdmin()" style="width: auto; padding: 0 20px;">Atualizar</button>
+                </div>
+            </div>
+
             <div class="admin-grid">
                 
                 <!-- BLOCO 1: GERENCIAR ÁLBUM -->
@@ -366,6 +406,7 @@
                                 <option value="rara">Rara (Azul)</option>
                                 <option value="epica">Épica (Roxa)</option>
                                 <option value="lendaria">Lendária (Dourada)</option>
+                                <option value="exclusiva" style="color:#f72585; font-weight:bold;">Exclusiva (Lojinha)</option>
                             </select>
                         </div>
                     </div>
@@ -386,7 +427,7 @@
                     <div class="manage-list" id="list-cards" style="margin-top: 5px;"></div>
                 </div>
 
-                <!-- BLOCO 3: DISTRIBUIR FIGURINHAS -->
+                <!-- BLOCO 3: DISTRIBUIR FIGURINHAS MANUALMENTE -->
                 <div class="admin-box" id="box-distribuir-cartas">
                     <h2>🚀 Distribuir Figurinhas Manualmente</h2>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -416,9 +457,36 @@
                     <button style="background: #2a9d8f; padding: 14px;" onclick="distribuirCarta()">Colar Figurinha no Álbum</button>
                 </div>
 
+                <!-- BLOCO 4: ITENS DA LOJINHA -->
+                <div class="admin-box" id="box-gerenciar-lojinha">
+                    <h2 id="title-store-form" style="color:#f72585;">🛍️ Gerenciar Itens da Lojinha</h2>
+                    <input type="hidden" id="store-edit-id" value="">
+                    
+                    <input type="text" id="store-name" placeholder="Nome do Item (Ex: Piloto de Drone 10min)">
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label>Preço Sugerido (🪙):</label>
+                            <input type="number" id="store-price" placeholder="Ex: 150">
+                        </div>
+                        <div>
+                            <label>Ícone ou URL de Imagem:</label>
+                            <input type="text" id="store-img" placeholder="Ex: 🚁 ou link">
+                        </div>
+                    </div>
+                    <textarea id="store-desc" rows="2" placeholder="Descrição do que o item faz..." style="resize: none;"></textarea>
+                    
+                    <div id="wrapper-store-buttons" style="margin-bottom: 20px;">
+                        <button class="btn-store" onclick="salvarItemLoja()">Cadastrar Item na Loja</button>
+                    </div>
+
+                    <h2 style="font-size:1rem; color:#a8a8b3;">Itens Cadastrados</h2>
+                    <div class="manage-list" id="list-store-items"></div>
+                </div>
+
                 <!-- SEÇÃO INTEGRANTES -->
                 <div class="admin-box" id="box-gerenciar-alunos">
-                    <h2 id="title-user-form">👥 Gerenciador de Usuários (Cadastro Geral)</h2>
+                    <h2 id="title-user-form">👥 Gerenciador de Usuários</h2>
                     <input type="hidden" id="student-edit-id" value="">
                     <input type="text" id="student-name" placeholder="Nome Completo">
                     
@@ -461,7 +529,7 @@
 
                 <!-- SALDO MOEDAS -->
                 <div class="admin-box" id="box-carteira-moedas">
-                    <h2>🪙 Carteira de Alunos (Gestão de Saldo)</h2>
+                    <h2>🪙 Carteira de Alunos (Saldos)</h2>
                     <div class="filter-group-inline">
                         <div class="filter-field" style="flex: 1.5;">
                             <input type="text" id="filter-user-name" placeholder="🔍 Buscar aluno..." onkeyup="atualizarListasAdmin()">
@@ -482,7 +550,7 @@
                         </div>
                     </div>
 
-                    <div class="manage-list" id="list-only-students-wallets" style="max-height: 290px; flex-grow: 1;"></div>
+                    <div class="manage-list" id="list-only-students-wallets" style="max-height: 380px; flex-grow: 1;"></div>
                 </div>
 
             </div>
@@ -516,9 +584,9 @@
                             <tr>
                                 <th>Aluno</th>
                                 <th>Série / Sala</th>
-                                <th>Álbum Referente</th>
-                                <th>Figurinha Coletada</th>
-                                <th>Raridade</th>
+                                <th>Ref. / Álbum</th>
+                                <th>Item / Carta</th>
+                                <th>Raridade/Tipo</th>
                                 <th>Método / Registro</th>
                             </tr>
                         </thead>
@@ -534,7 +602,6 @@
         <span>© 2026 Maker Labs - Unidade São Roque</span>
     </footer>
 
-    <!-- Firebase SDK Modular do CDN -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -554,28 +621,32 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-        // ID dinâmico do app - Regra estrita de segurança do Canvas (evita os permission-denied)
+        // ID dinâmico do app - Regra estrita de segurança do Canvas
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'album-27bb2';
 
-        // Dados padrão caso o banco esteja limpo
+        // Sementes Base
         const albunsIniciais = [
             { id: "alb_anual", titulo: "Álbum Anual 2026", cor: "#1a4314", imagem: "🤖" },
             { id: "alb_robotica", titulo: "Oficina de Robótica", cor: "#005f73", imagem: "⚙️" }
         ];
         const cartasIniciais = [
             { id: "c1", albumId: "alb_anual", nome: "Cérebro Eletrônico", raridade: "lendaria", pontos: 10, preço: 50, habilidade: "Duplica energia.", imagem: "" },
-            { id: "c2", albumId: "alb_anual", nome: "Placa Arduino Uno", raridade: "epica", pontos: 8, preço: 30, habilidade: "Energia estável.", imagem: "" },
-            { id: "c3", albumId: "alb_anual", nome: "Resistor Comum", raridade: "comum", pontos: 2, preço: 5, habilidade: "Proteção básica.", imagem: "" }
+            { id: "c2", albumId: "alb_anual", nome: "Cartão Dourado Maker", raridade: "exclusiva", pontos: 50, preço: 200, habilidade: "Passe Livre Vip", imagem: "🎫" },
+            { id: "c3", albumId: "alb_anual", nome: "Placa Arduino Uno", raridade: "epica", pontos: 8, preço: 30, habilidade: "Energia estável.", imagem: "" }
         ];
         const alunosIniciais = [
-            { id: "admin_1", nome: "Admin", grade: "-", letter: "-", role: "administrador", pin: "1234", moedas: 0 },
-            { id: "1", nome: "Lucas Lima", grade: "6º Ano", letter: "A", role: "aluno", pin: "123", moedas: 100 },
-            { id: "2", nome: "Prof. Roberto", grade: "-", letter: "-", role: "instrutor", pin: "456", moedas: 0 }
+            { id: "admin_1", nome: "Admin", grade: "-", letter: "-", role: "administrador", pin: "1234", moedas: 0, moedasExclusivas: 0 },
+            { id: "1", nome: "Lucas Lima", grade: "6º Ano", letter: "A", role: "aluno", pin: "123", moedas: 100, moedasExclusivas: 5 }
+        ];
+        const lojaIniciais = [
+            { id: "lj_1", nome: "Piloto de Drone (10min)", preco: 150, imagem: "🚁", desc: "Ganhe 10 minutos de pilotagem com o drone principal." },
+            { id: "lj_2", nome: "Sessão Óculos 3D/VR", preco: 80, imagem: "🥽", desc: "Explore mundos virtuais por 15 minutos." }
         ];
 
         let bancoAlbuns = [];
         let bancoDeCartas = [];
         let bancoDeAlunos = [];
+        let bancoLoja = [];
         let historicoEnvios = [];
         let figurinhasVistas = {};
         
@@ -587,11 +658,11 @@
         const FIGURINHAS_POR_PAGINA = 4;
         let currentUserId = "";
 
-        // Atalhos de Coleções OBRIGATÓRIOS (Regra 1: Strict Paths do Canvas)
+        // Atalhos de Coleções (Strict Paths)
         const getPublicCollection = (colName) => collection(db, 'artifacts', appId, 'public', 'data', colName);
         const getPrivateCollection = (uid, colName) => collection(db, 'artifacts', appId, 'users', uid, colName);
 
-        // Autenticação inicial (Regra 3: Autenticar e aguardar antes de usar o Firestore)
+        // Autenticação inicial
         async function inicializarAutenticacao() {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -600,7 +671,7 @@
                     await signInAnonymously(auth);
                 }
             } catch (err) {
-                console.error("Erro na autenticação de inicialização:", err);
+                console.error("Erro na autenticação:", err);
             }
         }
 
@@ -610,70 +681,67 @@
             currentUserId = uid;
 
             onSnapshot(getPublicCollection('albuns'), (snap) => {
-                let list = [];
-                snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
-                if (list.length === 0) popularSementesAlbuns();
-                else { bancoAlbuns = list; renderizarEstanteDeLivros(); atualizarListasAdmin(); }
-            }, (err) => console.error("Erro (Álbuns):", err));
+                let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+                if (list.length === 0) popularSementesAlbuns(); else { bancoAlbuns = list; renderizarEstanteDeLivros(); atualizarListasAdmin(); }
+            }, (err) => console.error(err));
 
             onSnapshot(getPublicCollection('cartas'), (snap) => {
-                let list = [];
-                snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
-                if (list.length === 0) popularSementesCartas();
-                else { bancoDeCartas = list; if (idAlbumAtivoAtualmente) renderizarLivroAberto(); atualizarListasAdmin(); }
-            }, (err) => console.error("Erro (Cartas):", err));
+                let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+                if (list.length === 0) popularSementesCartas(); else { bancoDeCartas = list; if (idAlbumAtivoAtualmente) renderizarLivroAberto(); atualizarListasAdmin(); renderizarLojinha(); }
+            }, (err) => console.error(err));
 
             onSnapshot(getPublicCollection('alunos'), (snap) => {
-                let list = [];
-                snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
-                if (list.length === 0) popularSementesAlunos();
-                else { bancoDeAlunos = list; atualizarIndicadoresMoeda(); atualizarListasAdmin(); }
-            }, (err) => console.error("Erro (Alunos):", err));
+                let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+                if (list.length === 0) popularSementesAlunos(); else { bancoDeAlunos = list; atualizarIndicadoresMoeda(); atualizarListasAdmin(); }
+            }, (err) => console.error(err));
+
+            onSnapshot(getPublicCollection('lojinha_itens'), (snap) => {
+                let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+                if (list.length === 0) popularSementesLoja(); else { bancoLoja = list; atualizarListasAdmin(); renderizarLojinha(); }
+            }, (err) => console.error(err));
 
             onSnapshot(getPublicCollection('historico'), (snap) => {
-                let list = [];
-                snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
-                list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-                historicoEnvios = list;
+                let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+                list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); historicoEnvios = list;
                 if (idAlbumAtivoAtualmente) renderizarLivroAberto();
-                atualizarListasAdmin(); atualizarTabelaHistorico(); renderizarEstanteDeLivros();
-            }, (err) => console.error("Erro (Historico):", err));
+                atualizarListasAdmin(); atualizarTabelaHistorico(); renderizarEstanteDeLivros(); renderizarLojinha();
+            }, (err) => console.error(err));
 
             onSnapshot(getPrivateCollection(uid, 'seen_stickers'), (snap) => {
-                figurinhasVistas = {};
-                snap.forEach(docSnap => { figurinhasVistas[docSnap.id] = docSnap.data().vista || false; });
+                figurinhasVistas = {}; snap.forEach(docSnap => { figurinhasVistas[docSnap.id] = docSnap.data().vista || false; });
                 if (idAlbumAtivoAtualmente) renderizarLivroAberto();
-            }, (err) => console.error("Erro (Figurinhas Vistas):", err));
+            }, (err) => console.error(err));
         }
 
-        async function popularSementesAlbuns() {
-            for (const item of albunsIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', item.id), item);
-        }
-        async function popularSementesCartas() {
-            for (const item of cartasIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', item.id), item);
-        }
-        async function popularSementesAlunos() {
-            for (const item of alunosIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', item.id), item);
-        }
+        async function popularSementesAlbuns() { for (const item of albunsIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', item.id), item); }
+        async function popularSementesCartas() { for (const item of cartasIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', item.id), item); }
+        async function popularSementesAlunos() { for (const item of alunosIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', item.id), item); }
+        async function popularSementesLoja() { for (const item of lojaIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', item.id), item); }
 
         window.addEventListener('load', () => inicializarAutenticacao());
 
-        onAuthStateChanged(auth, (user) => {
-            if (user && !currentUserId) iniciarListeners(user.uid);
-        });
+        onAuthStateChanged(auth, (user) => { if (user && !currentUserId) iniciarListeners(user.uid); });
 
         /* --- MÉTODOS DE TELA E INTERAÇÃO --- */
         function mudarTela(idTela) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(idTela).classList.add('active');
+            if (idTela === 'screen-store') renderizarLojinha();
         }
 
         function atualizarIndicadoresMoeda() {
             const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno");
-            const saldo = alunoObj ? (alunoObj.moedas || 0) : 0;
-            const tagMoeda = modoAdminVisualizacao ? '' : `<span class="coin-display">🪙 ${saldo} Moedas</span>`;
-            document.getElementById('shelf-coins-wrapper').innerHTML = tagMoeda;
-            document.getElementById('album-coins-wrapper').innerHTML = tagMoeda;
+            const saldoN = alunoObj ? (alunoObj.moedas || 0) : 0;
+            const saldoE = alunoObj ? (alunoObj.moedasExclusivas || 0) : 0;
+            
+            const tags = modoAdminVisualizacao ? '' : `
+                <span class="coin-display coin-normal">🪙 ${saldoN}</span>
+                <span class="coin-display coin-exclusive">💎 ${saldoE}</span>
+            `;
+            
+            if(document.getElementById('shelf-coins-wrapper')) document.getElementById('shelf-coins-wrapper').innerHTML = tags;
+            if(document.getElementById('album-coins-wrapper')) document.getElementById('album-coins-wrapper').innerHTML = tags;
+            if(document.getElementById('store-coins-wrapper')) document.getElementById('store-coins-wrapper').innerHTML = tags;
         }
 
         function fazerLogin() {
@@ -681,10 +749,7 @@
             const pass = document.getElementById('password').value.trim();
             const selectedRole = document.getElementById('login-role').value;
 
-            // Integrado totalmente ao Banco de Dados!
-            const contaValida = bancoDeAlunos.find(a => 
-                a.nome.toLowerCase() === user.toLowerCase() && a.pin === pass && a.role === selectedRole
-            );
+            const contaValida = bancoDeAlunos.find(a => a.nome.toLowerCase() === user.toLowerCase() && a.pin === pass && a.role === selectedRole);
 
             if (contaValida) {
                 usuarioLogado = contaValida.nome; cargoLogado = contaValida.role;
@@ -692,12 +757,8 @@
                     modoAdminVisualizacao = false;
                     document.getElementById('btn-shelf-back-admin').style.display = "none";
                     document.getElementById('shelf-user-display').innerText = `${contaValida.nome} (${contaValida.grade}º ${contaValida.letter})`;
-                    atualizarIndicadoresMoeda(); 
-                    renderizarEstanteDeLivros(); 
-                    mudarTela('screen-bookcase');
-                } else {
-                    carregarModoAdmin();
-                }
+                    atualizarIndicadoresMoeda(); renderizarEstanteDeLivros(); mudarTela('screen-bookcase');
+                } else { carregarModoAdmin(); }
             } else {
                 alert("Dados de acesso incorretos ou cargo inválido! Verifique o nome de usuário e a senha.");
             }
@@ -706,16 +767,14 @@
         function carregarModoAdmin() {
             document.getElementById('admin-role-display').innerText = cargoLogado;
             document.getElementById('btn-shelf-back-admin').style.display = "block";
-            configurarPermissoesVisuais(); 
-            atualizarListasAdmin(); 
-            mudarTela('screen-admin');
+            configurarPermissoesVisuais(); atualizarListasAdmin(); mudarTela('screen-admin');
         }
 
         function configurarPermissoesVisuais() {
-            const caixas = ['box-gerenciar-cartas', 'box-gerenciar-alunos', 'box-distribuir-cartas', 'box-historico', 'box-gerenciar-albuns', 'box-carteira-moedas'];
+            const caixas = ['box-gerenciar-cartas', 'box-gerenciar-alunos', 'box-distribuir-cartas', 'box-historico', 'box-gerenciar-albuns', 'box-carteira-moedas', 'box-gerenciar-lojinha'];
             caixas.forEach(id => document.getElementById(id).classList.remove('disabled-box'));
             if (cargoLogado === "auxiliar") {
-                ['box-gerenciar-alunos', 'box-historico', 'box-gerenciar-albuns'].forEach(id => document.getElementById(id).classList.add('disabled-box'));
+                ['box-gerenciar-alunos', 'box-historico', 'box-gerenciar-albuns', 'box-gerenciar-lojinha'].forEach(id => document.getElementById(id).classList.add('disabled-box'));
             }
         }
 
@@ -723,21 +782,128 @@
             modoAdminVisualizacao = true;
             document.getElementById('shelf-user-display').innerText = `${usuarioLogado} (Modo Gerencial)`;
             document.getElementById('shelf-coins-wrapper').innerHTML = '';
-            renderizarEstanteDeLivros(); 
-            mudarTela('screen-bookcase');
+            renderizarEstanteDeLivros(); mudarTela('screen-bookcase');
         }
 
         function fazerLogout() {
             usuarioLogado = ""; cargoLogado = "";
-            document.getElementById('username').value = ""; 
-            document.getElementById('password').value = "";
+            document.getElementById('username').value = ""; document.getElementById('password').value = "";
             mudarTela('screen-login');
         }
 
+        /* --- STREAMING_CHUNK:Lojinha (Store) Logic... --- */
+        function renderizarLojinha() {
+            const gridCartas = document.getElementById('store-cards-grid');
+            const gridItens = document.getElementById('store-items-grid');
+            if(!gridCartas || !gridItens) return;
+            
+            gridCartas.innerHTML = ''; gridItens.innerHTML = '';
+            
+            // 1. Renderizar Cartas Exclusivas
+            const cartasExclusivas = bancoDeCartas.filter(c => c.raridade === 'exclusiva');
+            const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome.toLowerCase() === usuarioLogado.toLowerCase());
+
+            if(cartasExclusivas.length === 0) gridCartas.innerHTML = '<p style="color:#7c7c8a; font-size:0.9rem;">Nenhuma figurinha exclusiva disponível no momento.</p>';
+            
+            cartasExclusivas.forEach(carta => {
+                const albRef = bancoAlbuns.find(a => a.id === carta.albumId);
+                const nomeAlbum = albRef ? albRef.titulo : "Álbum Desconhecido";
+                const jaPossui = enviosDoAluno.some(e => e.cartaNome === carta.nome);
+                
+                const tagImagem = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${carta.imagem}">` : `<div class="card-img-fallback">💎</div>`;
+                const preco = parseInt(carta.preço) || 0;
+                
+                let btnComprar = jaPossui ? `<button class="buy-sticker-btn" style="background:#4CAF50; color:#fff;" disabled>✅ Já Possui</button>` : `<button class="buy-sticker-btn" onclick="comprarItemDaLojinha('${carta.id}', 'carta')">Comprar por 🪙 ${preco}</button>`;
+                
+                if (modoAdminVisualizacao) btnComprar = `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>`;
+
+                const el = document.createElement('div');
+                el.style.maxWidth = "220px";
+                el.innerHTML = `
+                    <div class="card exclusiva" style="margin-bottom: 10px;">
+                        <span class="card-raridade">EXCLUSIVA</span>
+                        <div class="card-img-container">${tagImagem}</div>
+                        <div class="card-name">${carta.nome}</div>
+                        <div class="card-points">${carta.pontos} Pts</div>
+                        <div class="card-habilidade" style="font-size:0.65rem;">Destino: ${nomeAlbum}</div>
+                    </div>
+                    ${btnComprar}
+                `;
+                gridCartas.appendChild(el);
+            });
+
+            // 2. Renderizar Itens Extras da Loja
+            if(bancoLoja.length === 0) gridItens.innerHTML = '<p style="color:#7c7c8a; font-size:0.9rem;">Nenhum item ou experiência cadastrada.</p>';
+            
+            bancoLoja.forEach(item => {
+                const tagImg = (item.imagem && item.imagem.startsWith("http")) ? `<img class="store-item-img" src="${item.imagem}">` : `<div class="store-item-icon">${item.imagem || '🎁'}</div>`;
+                const preco = parseInt(item.preco) || 0;
+                
+                let btnComprar = modoAdminVisualizacao ? `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>` : `<button class="buy-sticker-btn btn-store" onclick="comprarItemDaLojinha('${item.id}', 'item')">Comprar por 🪙 ${preco}</button>`;
+
+                const el = document.createElement('div');
+                el.className = 'store-item-box';
+                el.innerHTML = `
+                    ${tagImg}
+                    <div class="store-item-name">${item.nome}</div>
+                    <div class="store-item-desc">${item.desc || ''}</div>
+                    ${btnComprar}
+                `;
+                gridItens.appendChild(el);
+            });
+        }
+
+        async function comprarItemDaLojinha(itemId, tipo) {
+            const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno"); 
+            if(!alunoObj) return;
+
+            let objCompra, nomeLog, albumLog, raridadeLog;
+
+            if (tipo === 'carta') {
+                objCompra = bancoDeCartas.find(c => c.id === itemId);
+                if(!objCompra) return;
+                nomeLog = objCompra.nome;
+                albumLog = objCompra.albumId; // Ficará vinculado ao Álbum correto!
+                raridadeLog = objCompra.raridade;
+            } else {
+                objCompra = bancoLoja.find(i => i.id === itemId);
+                if(!objCompra) return;
+                nomeLog = objCompra.nome;
+                albumLog = "Lojinha (Item Físico/Exp)";
+                raridadeLog = "Especial";
+            }
+
+            const preco = parseInt(objCompra.preço || objCompra.preco) || 0; 
+            const saldoAtual = alunoObj.moedas || 0;
+            if(saldoAtual < preco) { alert(`Moedas insuficientes! Requer 🪙 ${preco}.`); return; }
+
+            if(confirm(`Comprar "${nomeLog}" por 🪙 ${preco}?`)) {
+                try {
+                    const alunoRef = doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoObj.id);
+                    await updateDoc(alunoRef, { moedas: saldoAtual - preco });
+
+                    await addDoc(getPublicCollection('historico'), {
+                        alunoNome: alunoObj.nome,
+                        alunoSerie: alunoObj.grade || "-",
+                        alunoLetter: alunoObj.letter || "-",
+                        albumId: albumLog,
+                        albumTitulo: tipo === 'carta' ? "Compra Loja (Exclusiva)" : "Compra de Item (Loja)",
+                        cartaNome: nomeLog,
+                        raridade: raridadeLog,
+                        data: `🛒 Loja`,
+                        timestamp: Date.now()
+                    });
+                    alert("Compra realizada com sucesso!");
+                } catch (err) {
+                    alert("Ocorreu um erro ao processar a compra.");
+                }
+            }
+        }
+
+        /* --- ESTANTE E LIVRO LOGIC --- */
         function renderizarEstanteDeLivros() {
             const grid = document.getElementById('shelf-books-grid'); 
-            if (!grid) return;
-            grid.innerHTML = '';
+            if (!grid) return; grid.innerHTML = '';
             
             bancoAlbuns.forEach(album => {
                 const totalFigurinhasDoAlbum = bancoDeCartas.filter(c => c.albumId === album.id).length;
@@ -746,16 +912,11 @@
 
                 let tagDesenho = `<span style="font-size: 2.5rem;">📘</span>`;
                 if (album.imagem && album.imagem.trim() !== "") {
-                    if (album.imagem.startsWith("http://") || album.imagem.startsWith("https://")) {
-                        tagDesenho = `<img class="book-cover-img" src="${album.imagem}" alt="Capa">`;
-                    } else {
-                        tagDesenho = `<span style="font-size: 2.5rem;">${album.imagem}</span>`;
-                    }
+                    if (album.imagem.startsWith("http")) tagDesenho = `<img class="book-cover-img" src="${album.imagem}" alt="Capa">`;
+                    else tagDesenho = `<span style="font-size: 2.5rem;">${album.imagem}</span>`;
                 }
 
-                const capa = document.createElement('div');
-                capa.className = 'book-cover-item'; 
-                capa.style.backgroundColor = album.cor || '#8b0000';
+                const capa = document.createElement('div'); capa.className = 'book-cover-item'; capa.style.backgroundColor = album.cor || '#8b0000';
                 capa.onclick = () => abrirAlbumEspecifico(album.id);
                 capa.innerHTML = `
                     <div class="book-cover-title">${album.titulo}</div>
@@ -772,16 +933,12 @@
             document.getElementById('active-album-title').innerText = albumObj ? albumObj.titulo : "Álbum Ativo";
             document.getElementById('user-display').innerText = usuarioLogado;
             if(!modoAdminVisualizacao) atualizarIndicadoresMoeda();
-            paginaAtualLivro = 1; 
-            renderizarLivroAberto(); 
-            mudarTela('screen-album');
+            paginaAtualLivro = 1; renderizarLivroAberto(); mudarTela('screen-album');
         }
 
         function renderizarLivroAberto() {
-            const leftGrid = document.getElementById('page-left-grid');
-            const rightGrid = document.getElementById('page-right-grid');
-            if(!leftGrid || !rightGrid) return;
-            leftGrid.innerHTML = ''; rightGrid.innerHTML = '';
+            const leftGrid = document.getElementById('page-left-grid'); const rightGrid = document.getElementById('page-right-grid');
+            if(!leftGrid || !rightGrid) return; leftGrid.innerHTML = ''; rightGrid.innerHTML = '';
 
             const cartasFiltradasDesteAlbum = bancoDeCartas.filter(c => c.albumId === idAlbumAtivoAtualmente);
             const totalCartas = cartasFiltradasDesteAlbum.length;
@@ -799,28 +956,16 @@
             document.getElementById('page-left-num').innerText = `Pág. ${paginaAtualLivro * 2 - 1}`;
             document.getElementById('page-right-num').innerText = `Pág. ${paginaAtualLivro * 2}`;
 
-            for (let i = 0; i < 4; i++) {
-                const itemIndex = baseIndex + i;
-                renderizarSlotFigurinha(cartasFiltradasDesteAlbum[itemIndex], itemIndex + 1, leftGrid, enviosDoAluno);
-            }
-            for (let i = 4; i < 8; i++) {
-                const itemIndex = baseIndex + i;
-                renderizarSlotFigurinha(cartasFiltradasDesteAlbum[itemIndex], itemIndex + 1, rightGrid, enviosDoAluno);
-            }
+            for (let i = 0; i < 4; i++) renderizarSlotFigurinha(cartasFiltradasDesteAlbum[baseIndex + i], baseIndex + i + 1, leftGrid, enviosDoAluno);
+            for (let i = 4; i < 8; i++) renderizarSlotFigurinha(cartasFiltradasDesteAlbum[baseIndex + i], baseIndex + i + 1, rightGrid, enviosDoAluno);
 
             document.getElementById('btn-book-prev').disabled = paginaAtualLivro === 1;
             document.getElementById('btn-book-next').disabled = (baseIndex + totalFigurinhasPorAbertura) >= totalCartas;
         }
 
         function renderizarSlotFigurinha(carta, numeroPosicao, containerAlvo, enviosDoAluno) {
-            const wrapperSlot = document.createElement('div'); 
-            wrapperSlot.style.width = "100%"; 
-            wrapperSlot.style.height = "100%";
-            
-            if (!carta) {
-                wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span></div>`;
-                containerAlvo.appendChild(wrapperSlot); return;
-            }
+            const wrapperSlot = document.createElement('div'); wrapperSlot.style.width = "100%"; wrapperSlot.style.height = "100%";
+            if (!carta) { wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span></div>`; containerAlvo.appendChild(wrapperSlot); return; }
             
             const jaPossui = enviosDoAluno.some(e => e.cartaNome === carta.nome) || modoAdminVisualizacao;
             if (jaPossui) {
@@ -828,70 +973,36 @@
                 const tagNova = ehNova ? `<div class="badge-nova">NOVA!</div>` : '';
                 const tagImagem = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${carta.imagem}">` : `<div class="card-img-fallback">🛠️</div>`;
 
-                const cardElement = document.createElement('div'); 
-                cardElement.className = `card ${carta.raridade}`;
+                const cardElement = document.createElement('div'); cardElement.className = `card ${carta.raridade}`;
                 cardElement.onclick = () => marcarComoVistaEAmpliar(carta);
-                cardElement.innerHTML = `
-                    ${tagNova} <span class="card-slot-number">${numeroPosicao}</span>
-                    <span class="card-raridade">${carta.raridade}</span>
-                    <div class="card-img-container">${tagImagem}</div>
-                    <div class="card-name">${carta.nome}</div>
-                    <div class="card-points">${carta.pontos} Pts</div>
-                    <div class="card-habilidade">${carta.habilidade || ''}</div>
-                `;
+                cardElement.innerHTML = `${tagNova} <span class="card-slot-number">${numeroPosicao}</span><span class="card-raridade">${carta.raridade}</span><div class="card-img-container">${tagImagem}</div><div class="card-name">${carta.nome}</div><div class="card-points">${carta.pontos} Pts</div><div class="card-habilidade">${carta.habilidade || ''}</div>`;
                 wrapperSlot.appendChild(cardElement);
             } else {
-                let botaoCompraHtml = ""; 
-                const preco = parseInt(carta.preço) || 0;
-                if(preco > 0 && !modoAdminVisualizacao) {
-                    botaoCompraHtml = `<button class="buy-sticker-btn" onclick="comprarFigurinhaDireta('${carta.id}')">🪙: ${preco}</button>`;
+                let txtDica = "Vá na Lojinha! 🛒";
+                let botaoCompraHtml = "";
+                
+                if (carta.raridade !== 'exclusiva') {
+                    txtDica = carta.nome.substring(0, 12) + "...";
+                    const preco = parseInt(carta.preço) || 0;
+                    if(preco > 0 && !modoAdminVisualizacao) botaoCompraHtml = `<button class="buy-sticker-btn" onclick="comprarFigurinhaAlbumDireto('${carta.id}')">🪙: ${preco}</button>`;
                 }
-                wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span><div style="font-size:0.7rem; color:#626268; margin-top:20px; text-align:center;">${carta.nome.substring(0, 12)}...</div>${botaoCompraHtml}</div>`;
+
+                wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span><div style="font-size:0.7rem; color:#626268; margin-top:20px; text-align:center; font-weight:bold;">${txtDica}</div>${botaoCompraHtml}</div>`;
             }
             containerAlvo.appendChild(wrapperSlot);
         }
 
         async function marcarComoVistaEAmpliar(carta) {
             if (!modoAdminVisualizacao && !figurinhasVistas[carta.id]) {
-                try {
-                    await setDoc(doc(db, 'artifacts', appId, 'users', currentUserId, 'seen_stickers', carta.id), { vista: true });
-                } catch (err) {
-                    console.error("Erro ao marcar como vista:", err);
-                }
+                try { await setDoc(doc(db, 'artifacts', appId, 'users', currentUserId, 'seen_stickers', carta.id), { vista: true }); } 
+                catch (err) { console.error(err); }
             }
             ampliarCard(carta);
         }
 
-        async function comprarFigurinhaDireta(cartaId) {
-            const cartaObj = bancoDeCartas.find(c => c.id === cartaId); 
-            if(!cartaObj) return;
-            const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno"); 
-            if(!alunoObj) return;
-            
-            const preco = parseInt(cartaObj.preço) || 0; 
-            const saldoAtual = alunoObj.moedas || 0;
-            if(saldoAtual < preco) { alert(`Moedas insuficientes! Requer 🪙 ${preco}.`); return; }
-
-            if(confirm(`Comprar "${cartaObj.nome}" por 🪙 ${preco}?`)) {
-                try {
-                    const alunoRef = doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoObj.id);
-                    await updateDoc(alunoRef, { moedas: saldoAtual - preco });
-
-                    await addDoc(getPublicCollection('historico'), {
-                        alunoNome: alunoObj.nome,
-                        alunoSerie: alunoObj.grade || "-",
-                        alunoLetter: alunoObj.letter || "-",
-                        albumId: cartaObj.albumId,
-                        albumTitulo: "Compra",
-                        cartaNome: cartaObj.nome,
-                        raridade: cartaObj.raridade,
-                        data: `🛒 Compra`,
-                        timestamp: Date.now()
-                    });
-                } catch (err) {
-                    alert("Ocorreu um erro ao processar a compra.");
-                }
-            }
+        async function comprarFigurinhaAlbumDireto(cartaId) {
+            // Reutiliza a função da loja para garantir o mesmo comportamento
+            comprarItemDaLojinha(cartaId, 'carta');
         }
 
         function folhearPagina(direcao) { paginaAtualLivro += direcao; renderizarLivroAberto(); }
@@ -913,7 +1024,23 @@
         function fecharAmpliacao(event) { if (event.target.id === "zoom-modal") document.getElementById('zoom-modal').classList.remove('active'); }
         function fecharAmpliacaoObg() { document.getElementById('zoom-modal').classList.remove('active'); }
 
-        /* --- CONTROLADORES CADASTROS USUÁRIOS NO FIREBASE --- */
+        /* --- STREAMING_CHUNK:Admin Controls and Logic... --- */
+        async function alterarMinhaSenhaAdmin() {
+            const novaSenha = document.getElementById('admin-fast-pin').value.trim();
+            if(!novaSenha) { alert("Digite a nova senha!"); return; }
+            
+            const adminAtual = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === 'administrador');
+            if(adminAtual) {
+                try {
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', adminAtual.id), { pin: novaSenha });
+                    alert("✅ Sua senha de Administrador foi atualizada com sucesso!");
+                    document.getElementById('admin-fast-pin').value = '';
+                } catch (err) { console.error("Erro ao atualizar senha", err); }
+            } else {
+                alert("Erro: Apenas Administradores podem usar este campo.");
+            }
+        }
+
         async function adicionarAluno() {
             if (cargoLogado === "auxiliar") return;
             const nome = document.getElementById('student-name').value.trim();
@@ -921,18 +1048,16 @@
             const letter = document.getElementById('student-letter').value;
             const role = document.getElementById('student-role').value;
             const pin = document.getElementById('student-pin').value.trim();
-            if (!nome || !pin) { alert("Preencha todos os dados!"); return; }
+            if (!nome || !pin) { alert("Preencha todos os dados (incluindo senha)!"); return; }
 
             const novoId = "st_" + Date.now();
             try {
                 await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), {
-                    id: novoId, nome, grade, letter, role, pin, moedas: 0
+                    id: novoId, nome, grade, letter, role, pin, moedas: 0, moedasExclusivas: 0
                 });
-                alert(`✅ Usuário "${nome}" cadastrado com sucesso!`);
+                alert(`✅ Integrante "${nome}" cadastrado com sucesso!`);
                 limparFormularioUsuario();
-            } catch (err) {
-                console.error("Erro ao cadastrar aluno:", err);
-            }
+            } catch (err) { console.error(err); }
         }
 
         function carregarUsuarioParaEdicao(id) {
@@ -943,13 +1068,8 @@
             document.getElementById('student-letter').value = u.letter || "-";
             document.getElementById('student-role').value = u.role;
             document.getElementById('student-pin').value = u.pin;
-            
-            document.getElementById('title-user-form').innerText = "🔄 Modificar Cadastro de Integrante (Incluindo Admin)";
-            
-            document.getElementById('wrapper-user-buttons').innerHTML = `
-                <button onclick="salvarAtualizacaoUsuario()">Salvar Alterações</button>
-                <button class="btn-secondary" style="margin-top:4px;" onclick="limparFormularioUsuario()">Cancelar</button>
-            `;
+            document.getElementById('title-user-form').innerText = "🔄 Modificar Cadastro de Integrante";
+            document.getElementById('wrapper-user-buttons').innerHTML = `<button onclick="salvarAtualizacaoUsuario()">Salvar Alterações</button><button class="btn-secondary" style="margin-top:4px;" onclick="limparFormularioUsuario()">Cancelar</button>`;
         }
 
         async function salvarAtualizacaoUsuario() {
@@ -962,79 +1082,59 @@
                 const role = document.getElementById('student-role').value;
                 const pin = document.getElementById('student-pin').value.trim();
                 const moedas = bancoDeAlunos[index].moedas || 0;
+                const moedasExclusivas = bancoDeAlunos[index].moedasExclusivas || 0;
 
                 try {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id), {
-                        id, nome, grade, letter, role, pin, moedas
-                    });
-                    alert("✅ Cadastro/Senha atualizado com sucesso!");
-                    limparFormularioUsuario();
-                } catch (err) {
-                    console.error("Erro ao atualizar cadastro:", err);
-                }
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id), { id, nome, grade, letter, role, pin, moedas, moedasExclusivas });
+                    alert("✅ Cadastro atualizado com sucesso!"); limparFormularioUsuario();
+                } catch (err) { console.error(err); }
             }
         }
 
         function limparFormularioUsuario() {
             document.getElementById('student-edit-id').value = ""; document.getElementById('student-name').value = "";
             document.getElementById('student-grade').value = "-"; document.getElementById('student-letter').value = "-"; document.getElementById('student-role').value = "aluno";
-            document.getElementById('student-pin').value = ""; document.getElementById('title-user-form').innerText = "👥 Gerenciador de Usuários (Cadastro Geral)";
+            document.getElementById('student-pin').value = ""; document.getElementById('title-user-form').innerText = "👥 Gerenciador de Usuários";
             document.getElementById('wrapper-user-buttons').innerHTML = `<button onclick="adicionarAluno()">Cadastrar Integrante</button>`;
         }
 
         async function deletarAluno(id) {
-            if (cargoLogado === "auxiliar" || !confirm("Remover usuário?")) return;
-            try {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id));
-                alert("Usuário removido do Firebase!");
-            } catch (err) {
-                console.error("Erro ao remover usuário:", err);
-            }
+            if (cargoLogado === "auxiliar" || !confirm("Remover usuário permanentemente?")) return;
+            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id)); } 
+            catch (err) { console.error(err); }
         }
 
-        async function modificarMoedasAluno(alunoId, operacao) {
+        async function modificarMoedasAluno(alunoId, operacao, tipoMoeda = 'normal') {
             const usuario = bancoDeAlunos.find(a => a.id === alunoId); if(!usuario) return;
-            const quantia = parseInt(prompt(`Quantas moedas deseja alterar para ${usuario.nome}?`)) || 0; if(quantia <= 0) return;
-            const saldoAtual = usuario.moedas || 0;
+            const sigla = tipoMoeda === 'normal' ? '🪙' : '💎';
+            const quantia = parseInt(prompt(`Quantas moedas (${sigla}) deseja alterar para ${usuario.nome}?`)) || 0; if(quantia <= 0) return;
             
+            const saldoAtual = tipoMoeda === 'normal' ? (usuario.moedas || 0) : (usuario.moedasExclusivas || 0);
             if(operacao === 'subtrair' && saldoAtual < quantia) { alert("Saldo insuficiente!"); return; }
             const novoSaldo = operacao === 'somar' ? (saldoAtual + quantia) : (saldoAtual - quantia);
             
             try {
-                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoId), { moedas: novoSaldo });
-            } catch (err) {
-                console.error(err);
-            }
+                const updateData = tipoMoeda === 'normal' ? { moedas: novoSaldo } : { moedasExclusivas: novoSaldo };
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoId), updateData);
+            } catch (err) { console.error(err); }
         }
 
         function filtrarAlunosDistribuicao() {
-            const fGrade = document.getElementById('select-filter-grade').value;
-            const fLetter = document.getElementById('select-filter-letter').value;
-            const select = document.getElementById('select-dist-student'); 
-            if(!select) return;
-            
-            const bkp = select.value;
-            select.innerHTML = '<option value="">-- Selecione o Aluno --</option>';
-            
+            const fGrade = document.getElementById('select-filter-grade').value; const fLetter = document.getElementById('select-filter-letter').value;
+            const select = document.getElementById('select-dist-student'); if(!select) return;
+            const bkp = select.value; select.innerHTML = '<option value="">-- Selecione o Aluno --</option>';
             bancoDeAlunos.filter(u => u.role === "aluno").forEach(a => {
-                const matchGrade = (fGrade === "todos" || a.grade === fGrade);
-                const matchLetter = (fLetter === "todos" || a.letter === fLetter);
+                const matchGrade = (fGrade === "todos" || a.grade === fGrade); const matchLetter = (fLetter === "todos" || a.letter === fLetter);
                 if(matchGrade && matchLetter) select.add(new Option(`${a.nome} (${a.grade || ''} ${a.letter || ''})`, a.nome));
             });
-
             if (bkp && Array.from(select.options).some(o => o.value === bkp)) select.value = bkp;
         }
 
         function atualizarSelectFigurinhasDistribuicao() {
             const albId = document.getElementById('select-dist-album-filter').value;
-            const select = document.getElementById('select-dist-card'); 
-            if(!select) return;
-            
-            const bkp = select.value;
-            select.innerHTML = '<option value="">-- Selecione a Figurinha --</option>';
-            
+            const select = document.getElementById('select-dist-card'); if(!select) return;
+            const bkp = select.value; select.innerHTML = '<option value="">-- Selecione a Figurinha --</option>';
             bancoDeCartas.filter(c => c.albumId === albId).forEach(c => select.add(new Option(c.nome, c.nome)));
-
             if (bkp && Array.from(select.options).some(o => o.value === bkp)) select.value = bkp;
         }
 
@@ -1051,110 +1151,100 @@
 
             try {
                 await addDoc(getPublicCollection('historico'), {
-                    alunoNome: alunoObj.nome,
-                    alunoSerie: alunoObj.grade || "-",
-                    alunoLetter: alunoObj.letter || "-",
-                    albumId: idAlbum,
-                    albumTitulo: albumObj ? albumObj.titulo : "Direto",
-                    cartaNome: cartaObj.nome,
-                    raridade: cartaObj.raridade,
-                    data: new Date().toLocaleDateString('pt-BR') + ' 🚀 Staff',
-                    timestamp: Date.now()
+                    alunoNome: alunoObj.nome, alunoSerie: alunoObj.grade || "-", alunoLetter: alunoObj.letter || "-",
+                    albumId: idAlbum, albumTitulo: albumObj ? albumObj.titulo : "Direto", cartaNome: cartaObj.nome,
+                    raridade: cartaObj.raridade, data: new Date().toLocaleDateString('pt-BR') + ' 🚀 Staff', timestamp: Date.now()
                 });
                 alert(`✅ Sucesso! Figurinha colada para ${alunoObj.nome}!`);
-            } catch (err) {
-                console.error("Erro ao distribuir carta:", err);
-            }
+            } catch (err) { console.error(err); }
         }
 
-        /* --- CONTROLADORES DE FIGURINHAS --- */
-        function carregarCartaParaEdicao(id) {
-            const c = bancoDeCartas.find(item => item.id === id); if(!c) return;
-            document.getElementById('card-edit-id').value = c.id;
-            document.getElementById('card-name').value = c.nome;
-            document.getElementById('card-album-select').value = c.albumId;
-            document.getElementById('card-rarity').value = c.raridade;
-            document.getElementById('card-points').value = c.pontos;
-            document.getElementById('card-price').value = c.preço || 0;
-            document.getElementById('card-img').value = c.imagem || "";
-            document.getElementById('card-desc').value = c.habilidade || "";
-            
-            document.getElementById('title-card-form').innerText = "🔄 Modificar Dados da Figurinha";
-            document.getElementById('wrapper-card-buttons').innerHTML = `
-                <button onclick="salvarCarta()" style="background:#2a9d8f;">Salvar Alterações</button>
-                <button class="btn-secondary" style="margin-top:6px;" onclick="limparFormularioCarta()">Cancelar</button>
-            `;
-        }
+        /* --- CONTROLADORES DE ITENS DA LOJINHA --- */
+        async function salvarItemLoja() {
+            const idEdit = document.getElementById('store-edit-id').value;
+            const n = document.getElementById('store-name').value.trim();
+            const p = document.getElementById('store-price').value;
+            const img = document.getElementById('store-img').value.trim();
+            const d = document.getElementById('store-desc').value;
 
-        function limparFormularioCarta() {
-            document.getElementById('card-edit-id').value = ""; document.getElementById('card-name').value = "";
-            document.getElementById('card-price').value = ""; document.getElementById('card-img').value = ""; document.getElementById('card-desc').value = "";
-            document.getElementById('title-card-form').innerText = "🃏 Cadastrar Nova Figurinha";
-            document.getElementById('wrapper-card-buttons').innerHTML = `<button onclick="salvarCarta()">Adicionar Figurinha</button>`;
-        }
+            if(!n || !p) { alert("Nome e Preço são obrigatórios!"); return; }
 
-        async function salvarCarta() { 
-            const idEdit = document.getElementById('card-edit-id').value;
-            const n = document.getElementById('card-name').value.trim(); 
-            const al = document.getElementById('card-album-select').value; 
-            const p = document.getElementById('card-price').value; 
-            const r = document.getElementById('card-rarity').value; 
-            const pts = document.getElementById('card-points').value || 5; 
-            const img = document.getElementById('card-img').value.trim(); 
-            const d = document.getElementById('card-desc').value; 
-            if(!n) { alert("⚠️ Digite ao menos o nome da figurinha!"); return; } 
-            
             try {
                 if(idEdit && idEdit.trim() !== "") {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', idEdit), {
-                        id: idEdit, albumId: al, nome: n, raridade: r, pontos: parseInt(pts), preço: parseInt(p) || 0, imagem: img, habilidade: d
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', idEdit), {
+                        id: idEdit, nome: n, preco: parseInt(p), imagem: img, desc: d
                     });
-                    alert("✅ Figurinha atualizada com sucesso!");
                 } else {
-                    const novoId = "c_" + Date.now();
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', novoId), {
-                        id: novoId, albumId: al, nome: n, raridade: r, pontos: parseInt(pts), preço: parseInt(p) || 0, imagem: img, habilidade: d
+                    const novoId = "lj_" + Date.now();
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', novoId), {
+                        id: novoId, nome: n, preco: parseInt(p), imagem: img, desc: d
                     });
-                    alert(`✅ Figurinha "${n}" cadastrada com sucesso!`);
                 }
-                limparFormularioCarta();
-            } catch (err) {
-                console.error("Erro ao salvar carta:", err);
-            }
+                limparFormularioStore();
+            } catch (err) { console.error(err); }
         }
 
-        async function deletarCartaDoBanco(cardId) {
-            if (cargoLogado === "auxiliar" || !confirm("Deseja realmente excluir esta figurinha permanentemente?")) return;
-            try {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', cardId));
-            } catch (err) {
-                console.error(err);
-            }
+        function limparFormularioStore() {
+            document.getElementById('store-edit-id').value = ""; document.getElementById('store-name').value = "";
+            document.getElementById('store-price').value = ""; document.getElementById('store-img').value = ""; document.getElementById('store-desc').value = "";
+            document.getElementById('title-store-form').innerText = "🛍️ Gerenciar Itens da Lojinha";
+            document.getElementById('wrapper-store-buttons').innerHTML = `<button class="btn-store" onclick="salvarItemLoja()">Cadastrar Item na Loja</button>`;
+        }
+
+        function carregarItemLojaParaEdicao(id) {
+            const item = bancoLoja.find(i => i.id === id); if(!item) return;
+            document.getElementById('store-edit-id').value = item.id; document.getElementById('store-name').value = item.nome;
+            document.getElementById('store-price').value = item.preco; document.getElementById('store-img').value = item.imagem || "";
+            document.getElementById('store-desc').value = item.desc || "";
+            document.getElementById('title-store-form').innerText = "🔄 Editar Item da Loja";
+            document.getElementById('wrapper-store-buttons').innerHTML = `<button class="btn-store" onclick="salvarItemLoja()">Salvar Item</button><button class="btn-secondary" style="margin-top:6px;" onclick="limparFormularioStore()">Cancelar</button>`;
+        }
+
+        async function deletarItemLoja(id) {
+            if(!confirm("Deletar item da loja?")) return;
+            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', id)); } catch(err) { console.error(err); }
         }
 
         function listarCartasCadastradasAdmin() {
-            const container = document.getElementById('list-cards'); 
-            const filtroAlbumId = document.getElementById('filter-cards-by-album').value;
+            const container = document.getElementById('list-cards'); const filtroAlbumId = document.getElementById('filter-cards-by-album').value;
             if(!container) return;
-            
             let cartasFiltradas = (filtroAlbumId !== "todos") ? bancoDeCartas.filter(c => c.albumId === filtroAlbumId) : bancoDeCartas;
 
-            if (cartasFiltradas.length === 0) { 
-                container.innerHTML = `<div style="padding:15px; color:#7c7c8a; font-size:0.85rem; text-align:center;">Nenhuma figurinha nesta lista.</div>`; 
-                return; 
-            }
+            if (cartasFiltradas.length === 0) { container.innerHTML = `<div style="padding:15px; color:#7c7c8a; font-size:0.85rem; text-align:center;">Nenhuma figurinha nesta lista.</div>`; return; }
             container.innerHTML = cartasFiltradas.map(c => {
                 const alb = bancoAlbuns.find(a => a.id === c.albumId);
-                return `
-                    <div class="list-item">
-                        <div><b>${c.nome}</b> <small style="color:#a8a8b3;">(${c.raridade})</small><div style="font-size:0.75rem; color:var(--accent-color);">Álbum: ${alb?alb.titulo:'Desconhecido'}</div></div>
-                        <div class="box-acoes-botoes">
-                            <button class="btn-edit" onclick="carregarCartaParaEdicao('${c.id}')">✏️</button>
-                            <button class="btn-danger" style="padding:4px 8px;" onclick="deletarCartaDoBanco('${c.id}')">❌</button>
-                        </div>
-                    </div>
-                `;
+                return `<div class="list-item"><div><b>${c.nome}</b> <small style="color:${c.raridade === 'exclusiva' ? '#f72585' : '#a8a8b3'}; font-weight:bold;">(${c.raridade})</small><div style="font-size:0.75rem; color:var(--accent-color);">Álbum: ${alb?alb.titulo:'Desconhecido'}</div></div><div class="box-acoes-botoes"><button class="btn-edit" onclick="carregarCartaParaEdicao('${c.id}')">✏️</button><button class="btn-danger" style="padding:4px 8px;" onclick="deletarCartaDoBanco('${c.id}')">❌</button></div></div>`;
             }).join('');
+        }
+
+        function carregarCartaParaEdicao(id) {
+            const c = bancoDeCartas.find(item => item.id === id); if(!c) return;
+            document.getElementById('card-edit-id').value = c.id; document.getElementById('card-name').value = c.nome;
+            document.getElementById('card-album-select').value = c.albumId; document.getElementById('card-rarity').value = c.raridade;
+            document.getElementById('card-points').value = c.pontos; document.getElementById('card-price').value = c.preço || 0;
+            document.getElementById('card-img').value = c.imagem || ""; document.getElementById('card-desc').value = c.habilidade || "";
+            document.getElementById('title-card-form').innerText = "🔄 Modificar Dados da Figurinha";
+            document.getElementById('wrapper-card-buttons').innerHTML = `<button onclick="salvarCarta()" style="background:#2a9d8f;">Salvar Alterações</button><button class="btn-secondary" style="margin-top:6px;" onclick="limparFormularioCarta()">Cancelar</button>`;
+        }
+        function limparFormularioCarta() {
+            document.getElementById('card-edit-id').value = ""; document.getElementById('card-name').value = ""; document.getElementById('card-price').value = ""; document.getElementById('card-img').value = ""; document.getElementById('card-desc').value = "";
+            document.getElementById('title-card-form').innerText = "🃏 Cadastrar Nova Figurinha";
+            document.getElementById('wrapper-card-buttons').innerHTML = `<button onclick="salvarCarta()">Adicionar Figurinha</button>`;
+        }
+        async function salvarCarta() { 
+            const idEdit = document.getElementById('card-edit-id').value; const n = document.getElementById('card-name').value.trim(); const al = document.getElementById('card-album-select').value; 
+            const p = document.getElementById('card-price').value; const r = document.getElementById('card-rarity').value; const pts = document.getElementById('card-points').value || 5; 
+            const img = document.getElementById('card-img').value.trim(); const d = document.getElementById('card-desc').value; 
+            if(!n) { alert("⚠️ Digite ao menos o nome da figurinha!"); return; } 
+            try {
+                if(idEdit && idEdit.trim() !== "") { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', idEdit), { id: idEdit, albumId: al, nome: n, raridade: r, pontos: parseInt(pts), preço: parseInt(p) || 0, imagem: img, habilidade: d }); } 
+                else { const novoId = "c_" + Date.now(); await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', novoId), { id: novoId, albumId: al, nome: n, raridade: r, pontos: parseInt(pts), preço: parseInt(p) || 0, imagem: img, habilidade: d }); }
+                limparFormularioCarta();
+            } catch (err) { console.error(err); }
+        }
+        async function deletarCartaDoBanco(cardId) {
+            if (cargoLogado === "auxiliar" || !confirm("Deseja realmente excluir esta figurinha permanentemente?")) return;
+            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', cardId)); } catch (err) { console.error(err); }
         }
 
         /* --- CONTROLADORES DE ALBUNS NO FIREBASE --- */
@@ -1164,99 +1254,81 @@
             document.getElementById('album-edit-id').value = alb.id; document.getElementById('album-new-title').value = alb.titulo;
             document.getElementById('album-new-image').value = alb.imagem || ""; document.getElementById('album-new-color').value = alb.cor || "#8b0000";
             document.getElementById('title-album-form').innerText = "🔄 Modificar Dados do Álbum";
-            
-            document.getElementById('wrapper-album-buttons').innerHTML = `
-                <button onclick="salvarNovoAlbum()" style="background:#2a9d8f;">Salvar</button>
-                <button class="btn-secondary" style="margin-top:6px;" onclick="limparFormularioAlbum()">Cancelar</button>
-            `;
+            document.getElementById('wrapper-album-buttons').innerHTML = `<button onclick="salvarNovoAlbum()" style="background:#2a9d8f;">Salvar</button><button class="btn-secondary" style="margin-top:6px;" onclick="limparFormularioAlbum()">Cancelar</button>`;
         }
-        
         function limparFormularioAlbum() {
             document.getElementById('album-edit-id').value = ""; document.getElementById('album-new-title').value = ""; document.getElementById('album-new-image').value = ""; document.getElementById('album-new-color').value = "#8b0000";
             document.getElementById('title-album-form').innerText = "📁 Gerenciar / Criar Álbuns";
             document.getElementById('wrapper-album-buttons').innerHTML = `<button onclick="salvarNovoAlbum()">Criar Álbum</button>`;
         }
-        
         async function salvarNovoAlbum() {
             if (cargoLogado === "auxiliar") return;
-            const idEdit = document.getElementById('album-edit-id').value; 
-            const titulo = document.getElementById('album-new-title').value.trim();
-            const imagem = document.getElementById('album-new-image').value.trim(); 
-            const cor = document.getElementById('album-new-color').value;
+            const idEdit = document.getElementById('album-edit-id').value; const titulo = document.getElementById('album-new-title').value.trim();
+            const imagem = document.getElementById('album-new-image').value.trim(); const cor = document.getElementById('album-new-color').value;
             if(!titulo) { alert("Digite o nome do álbum!"); return; }
-
             try {
-                if(idEdit && idEdit.trim() !== "") {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', idEdit), {
-                        id: idEdit, titulo, cor, imagem
-                    });
-                } else {
-                    const novoId = "alb_" + Date.now();
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', novoId), {
-                        id: novoId, titulo, cor, imagem
-                    });
-                }
+                if(idEdit && idEdit.trim() !== "") await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', idEdit), { id: idEdit, titulo, cor, imagem });
+                else { const novoId = "alb_" + Date.now(); await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', novoId), { id: novoId, titulo, cor, imagem }); }
                 limparFormularioAlbum();
-            } catch (err) {
-                console.error("Erro ao salvar álbum:", err);
-            }
+            } catch (err) { console.error(err); }
+        }
+        async function deletarAlbum(id) {
+            if(cargoLogado === "auxiliar" || !confirm("⚠️ ALERTA: Deseja mesmo excluir este Álbum?\nIsso NÃO apagará as figurinhas já criadas, elas ficarão órfãs (sem capa para exibi-las).")) return;
+            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', id)); } catch(err) { console.error(err); }
         }
 
         /* --- ATUALIZAÇÕES VISUAIS COM RETENÇÃO DE ESTADO --- */
         function atualizarListasAdmin() {
-            const s1 = document.getElementById('card-album-select'); 
-            const s2 = document.getElementById('select-dist-album-filter'); 
-            const s3 = document.getElementById('filter-cards-by-album');
-            
+            const s1 = document.getElementById('card-album-select'); const s2 = document.getElementById('select-dist-album-filter'); const s3 = document.getElementById('filter-cards-by-album');
             if(s1 && s2 && s3) {
                 const bkp1 = s1.value; const bkp2 = s2.value; const bkp3 = s3.value;
                 s1.innerHTML = ''; s2.innerHTML = '<option value="">-- Escolha o Álbum --</option>'; s3.innerHTML = '<option value="todos">-- Ver Todos --</option>';
-                bancoAlbuns.forEach(a => { 
-                    s1.add(new Option(a.titulo, a.id)); 
-                    s2.add(new Option(a.titulo, a.id)); 
-                    s3.add(new Option(a.titulo, a.id)); 
-                });
+                bancoAlbuns.forEach(a => { s1.add(new Option(a.titulo, a.id)); s2.add(new Option(a.titulo, a.id)); s3.add(new Option(a.titulo, a.id)); });
                 if(bkp1 && Array.from(s1.options).some(o => o.value === bkp1)) s1.value = bkp1;
                 if(bkp2 && Array.from(s2.options).some(o => o.value === bkp2)) s2.value = bkp2;
                 if(bkp3 && Array.from(s3.options).some(o => o.value === bkp3)) s3.value = bkp3;
             }
             
-            filtrarAlunosDistribuicao(); 
-            atualizarSelectFigurinhasDistribuicao(); 
-            listarCartasCadastradasAdmin();
+            filtrarAlunosDistribuicao(); atualizarSelectFigurinhasDistribuicao(); listarCartasCadastradasAdmin();
+
+            const itemsList = document.getElementById('list-store-items');
+            if(itemsList) {
+                itemsList.innerHTML = bancoLoja.map(i => `<div class="list-item"><div>${i.imagem||'📦'} <b>${i.nome}</b> <span style="color:#ffb703; font-size:0.8rem;">(🪙 ${i.preco})</span></div><div class="box-acoes-botoes"><button class="btn-edit" style="background:#b5179e;" onclick="carregarItemLojaParaEdicao('${i.id}')">✏️</button><button class="btn-danger" style="padding:4px 8px;" onclick="deletarItemLoja('${i.id}')">❌</button></div></div>`).join('');
+            }
 
             const usersGrid = document.getElementById('list-all-users');
             if (usersGrid) {
                 usersGrid.innerHTML = bancoDeAlunos.map(u => {
                     const colorRole = u.role === 'administrador' ? '#e63946' : (u.role === 'aluno' ? '#00b4d8' : '#f4a261');
                     const badgeSeries = u.grade !== '-' ? `(${u.grade} ${u.letter})` : '';
-                    return `
-                        <div class="list-item">
-                            <span><b>${u.nome}</b> <br><small style="color:${colorRole}; font-weight:bold;">[${u.role.toUpperCase()}]</small> <small style="color:#a8a8b3;">${badgeSeries}</small></span>
-                            <div class="box-acoes-botoes">
-                                <button class="btn-edit" onclick="carregarUsuarioParaEdicao('${u.id}')">✏️ Editar</button>
-                                <button class="btn-danger" style="padding:4px 8px;" onclick="deletarAluno('${u.id}')">❌</button>
-                            </div>
-                        </div>
-                    `;
+                    return `<div class="list-item"><span><b>${u.nome}</b> <br><small style="color:${colorRole}; font-weight:bold;">[${u.role.toUpperCase()}]</small> <small style="color:#a8a8b3;">${badgeSeries}</small></span><div class="box-acoes-botoes"><button class="btn-edit" onclick="carregarUsuarioParaEdicao('${u.id}')">✏️</button><button class="btn-danger" style="padding:4px 8px;" onclick="deletarAluno('${u.id}')">❌</button></div></div>`;
                 }).join('');
             }
 
-            const fNameInput = document.getElementById('filter-user-name');
-            const fName = fNameInput ? fNameInput.value.toLowerCase() : "";
-            const fGrade = document.getElementById('filter-user-grade').value;
-            const fLetter = document.getElementById('filter-user-letter').value;
-            
+            const fNameInput = document.getElementById('filter-user-name'); const fName = fNameInput ? fNameInput.value.toLowerCase() : "";
+            const fGrade = document.getElementById('filter-user-grade').value; const fLetter = document.getElementById('filter-user-letter').value;
             const apenasAlunos = bancoDeAlunos.filter(u => u.role === "aluno" && u.nome.toLowerCase().includes(fName) && (fGrade === "todos" || u.grade === fGrade) && (fLetter === "todos" || u.letter === fLetter));
 
             const walletList = document.getElementById('list-only-students-wallets');
             if (walletList) {
                 walletList.innerHTML = apenasAlunos.map(al => `
-                    <div class="list-item">
-                        <div><span><b>${al.nome}</b> <small style="color:#a8a8b3;">(${al.grade || ''} ${al.letter || ''})</small></span><div style="color:#ffb703; font-weight:bold; font-size:0.85rem;">Saldo: 🪙 ${al.moedas || 0}</div></div>
-                        <div class="box-acoes-botoes">
-                            <button class="btn-coin" onclick="modificarMoedasAluno('${al.id}', 'somar')"><b>➕ 🪙</b></button>
-                            <button class="btn-coin" style="background:#e63946; color:#fff;" onclick="modificarMoedasAluno('${al.id}', 'subtrair')"><b>➖ 🪙</b></button>
+                    <div class="list-item" style="flex-wrap: wrap;">
+                        <div style="width:100%; margin-bottom:6px;"><span><b>${al.nome}</b> <small style="color:#a8a8b3;">(${al.grade || ''} ${al.letter || ''})</small></span></div>
+                        
+                        <div style="display:flex; justify-content:space-between; width:100%; align-items:center; background:#1a1a1e; padding:6px; border-radius:6px; margin-bottom:4px;">
+                            <span style="color:#ffb703; font-weight:bold; font-size:0.9rem;">Saldo: 🪙 ${al.moedas || 0}</span>
+                            <div class="box-acoes-botoes">
+                                <button class="btn-coin" style="padding: 4px 8px;" onclick="modificarMoedasAluno('${al.id}', 'somar', 'normal')"><b>➕ 🪙</b></button>
+                                <button class="btn-coin" style="background:#e63946; color:#fff; padding: 4px 8px;" onclick="modificarMoedasAluno('${al.id}', 'subtrair', 'normal')"><b>➖ 🪙</b></button>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; width:100%; align-items:center; background:#1a1a1e; padding:6px; border-radius:6px;">
+                            <span style="color:#f72585; font-weight:bold; font-size:0.9rem;">Especial: 💎 ${al.moedasExclusivas || 0}</span>
+                            <div class="box-acoes-botoes">
+                                <button class="btn-diamond" style="padding: 4px 8px;" onclick="modificarMoedasAluno('${al.id}', 'somar', 'exclusiva')"><b>➕ 💎</b></button>
+                                <button class="btn-diamond" style="background:#e63946; color:#fff; padding: 4px 8px;" onclick="modificarMoedasAluno('${al.id}', 'subtrair', 'exclusiva')"><b>➖ 💎</b></button>
+                            </div>
                         </div>
                     </div>
                 `).join('');
@@ -1267,17 +1339,18 @@
                 activeList.innerHTML = bancoAlbuns.map(a => `
                     <div class="list-item">
                         <span>${a.imagem || '📘'} <b>${a.titulo}</b></span>
-                        <button class="btn-edit" onclick="carregarAlbumParaEdicao('${a.id}')">✏️ Editar</button>
+                        <div class="box-acoes-botoes">
+                            <button class="btn-edit" onclick="carregarAlbumParaEdicao('${a.id}')">✏️</button>
+                            <button class="btn-danger" style="padding:4px 8px;" onclick="deletarAlbum('${a.id}')">❌</button>
+                        </div>
                     </div>
                 `).join('');
             }
-            
             atualizarTabelaHistorico();
         }
 
         function atualizarTabelaHistorico() {
-            const tbody = document.getElementById('history-table-body'); 
-            if(!tbody) return;
+            const tbody = document.getElementById('history-table-body'); if(!tbody) return;
             const fStudent = document.getElementById('filter-history-student').value.toLowerCase();
             const fGrade = document.getElementById('filter-history-grade').value;
             const fLetter = document.getElementById('filter-history-letter').value;
@@ -1291,60 +1364,31 @@
 
             tbody.innerHTML = historicoFiltrado.map(h => {
                 const albRef = bancoAlbuns.find(a => a.id === h.albumId);
-                const nomeAlbumExibicao = albRef ? albRef.titulo : (h.albumTitulo || "Álbum Deletado");
+                const nomeAlbumExibicao = albRef ? albRef.titulo : (h.albumTitulo || "Deletado/Loja");
                 
-                return `
-                    <tr>
-                        <td><b>${h.alunoNome}</b></td>
-                        <td>${h.alunoSerie || '-'} ${h.alunoLetter && h.alunoLetter !== '-' ? h.alunoLetter : ''}</td>
-                        <td>${nomeAlbumExibicao}</td>
-                        <td>${h.cartaNome}</td>
-                        <td><span class="card-raridade">${h.raridade}</span></td>
-                        <td>${h.data}</td>
-                    </tr>
-                `;
+                return `<tr><td><b>${h.alunoNome}</b></td><td>${h.alunoSerie || '-'} ${h.alunoLetter && h.alunoLetter !== '-' ? h.alunoLetter : ''}</td><td>${nomeAlbumExibicao}</td><td>${h.cartaNome}</td><td><span class="card-raridade">${h.raridade}</span></td><td>${h.data}</td></tr>`;
             }).join('');
         }
 
         async function limparHistoricoGeral() { 
             if(confirm("Limpar todo o histórico?")) { 
-                try {
-                    for (const h of historicoEnvios) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'historico', h.id));
-                    alert("Histórico esvaziado no Firebase!");
-                } catch (err) { console.error(err); }
+                try { for (const h of historicoEnvios) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'historico', h.id)); alert("Histórico esvaziado no Firebase!"); } catch (err) { console.error(err); }
             } 
         }
 
-        window.fazerLogin = fazerLogin;
-        window.mudarTela = mudarTela;
-        window.fazerLogout = fazerLogout;
-        window.verEstanteComoAdmin = verEstanteComoAdmin;
-        window.folhearPagina = folhearPagina;
-        window.comprarFigurinhaDireta = comprarFigurinhaDireta;
-        window.fecharAmpliacao = fecharAmpliacao;
-        window.fecharAmpliacaoObg = fecharAmpliacaoObg;
-        window.adicionarAluno = adicionarAluno;
-        window.carregarUsuarioParaEdicao = carregarUsuarioParaEdicao;
-        window.salvarAtualizacaoUsuario = salvarAtualizacaoUsuario;
-        window.limparFormularioUsuario = limparFormularioUsuario;
-        window.deletarAluno = deletarAluno;
-        window.modificarMoedasAluno = modificarMoedasAluno;
-        window.filtrarAlunosDistribuicao = filtrarAlunosDistribuicao;
-        window.atualizarSelectFigurinhasDistribuicao = atualizarSelectFigurinhasDistribuicao;
-        window.distribuirCarta = distribuirCarta;
-        window.carregarCartaParaEdicao = carregarCartaParaEdicao;
-        window.limparFormularioCarta = limparFormularioCarta;
-        window.salvarCarta = salvarCarta;
-        window.deletarCartaDoBanco = deletarCartaDoBanco;
-        window.listarCartasCadastradasAdmin = listarCartasCadastradasAdmin;
-        window.carregarAlbumParaEdicao = carregarAlbumParaEdicao;
-        window.limparFormularioAlbum = limparFormularioAlbum;
-        window.salvarNovoAlbum = salvarNovoAlbum;
-        window.atualizarListasAdmin = atualizarListasAdmin;
-        window.atualizarTabelaHistorico = atualizarTabelaHistorico;
-        window.limparHistoricoGeral = limparHistoricoGeral;
-        window.abrirAlbumEspecifico = abrirAlbumEspecifico;
-        window.marcarComoVistaEAmpliar = marcarComoVistaEAmpliar;
+        // Exposições
+        window.fazerLogin = fazerLogin; window.mudarTela = mudarTela; window.fazerLogout = fazerLogout; window.verEstanteComoAdmin = verEstanteComoAdmin;
+        window.folhearPagina = folhearPagina; window.comprarItemDaLojinha = comprarItemDaLojinha; window.comprarFigurinhaAlbumDireto = comprarFigurinhaAlbumDireto;
+        window.fecharAmpliacao = fecharAmpliacao; window.fecharAmpliacaoObg = fecharAmpliacaoObg; window.adicionarAluno = adicionarAluno;
+        window.carregarUsuarioParaEdicao = carregarUsuarioParaEdicao; window.salvarAtualizacaoUsuario = salvarAtualizacaoUsuario; window.limparFormularioUsuario = limparFormularioUsuario;
+        window.deletarAluno = deletarAluno; window.modificarMoedasAluno = modificarMoedasAluno; window.filtrarAlunosDistribuicao = filtrarAlunosDistribuicao;
+        window.atualizarSelectFigurinhasDistribuicao = atualizarSelectFigurinhasDistribuicao; window.distribuirCarta = distribuirCarta;
+        window.carregarCartaParaEdicao = carregarCartaParaEdicao; window.limparFormularioCarta = limparFormularioCarta; window.salvarCarta = salvarCarta;
+        window.deletarCartaDoBanco = deletarCartaDoBanco; window.listarCartasCadastradasAdmin = listarCartasCadastradasAdmin;
+        window.carregarAlbumParaEdicao = carregarAlbumParaEdicao; window.limparFormularioAlbum = limparFormularioAlbum; window.salvarNovoAlbum = salvarNovoAlbum; window.deletarAlbum = deletarAlbum;
+        window.atualizarListasAdmin = atualizarListasAdmin; window.atualizarTabelaHistorico = atualizarTabelaHistorico; window.limparHistoricoGeral = limparHistoricoGeral;
+        window.abrirAlbumEspecifico = abrirAlbumEspecifico; window.marcarComoVistaEAmpliar = marcarComoVistaEAmpliar;
+        window.salvarItemLoja = salvarItemLoja; window.limparFormularioStore = limparFormularioStore; window.carregarItemLojaParaEdicao = carregarItemLojaParaEdicao; window.deletarItemLoja = deletarItemLoja; window.alterarMinhaSenhaAdmin = alterarMinhaSenhaAdmin;
     </script>
 </body>
 </html>
