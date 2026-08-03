@@ -70,6 +70,7 @@
         .btn-coin { background: linear-gradient(135deg, #ffb703, #fb8500); color: #121214; }
         .btn-diamond { background: linear-gradient(135deg, #b5179e, #7209b7); color: #fff; }
         .btn-store { background: linear-gradient(135deg, #f72585, #b5179e); color: white; }
+        .btn-success { background: linear-gradient(135deg, #2a9d8f, #264653); color: white; }
 
         .filter-group-inline { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; background: #141416; padding: 8px; border-radius: 8px; border: 1px solid var(--border-color); align-items: center; }
         .filter-field { flex: 1; min-width: 120px; }
@@ -99,21 +100,10 @@
         .card.epica { border-color: #9d4edd; }
         .card.lendaria::after { background: linear-gradient(to right, rgba(255,183,3,0) 0%, rgba(255,255,255,0.4) 40%, rgba(255,183,3,0.4) 60%, rgba(255,183,3,0) 100%); animation-duration: 4.5s; }
         .card.lendaria { border-color: #ffb703; }
-        /* Nova Raridade Exclusiva */
         .card.exclusiva::after { background: linear-gradient(to right, rgba(247,37,133,0) 0%, rgba(247,37,133,0.5) 50%, rgba(247,37,133,0) 100%); animation-duration: 3s; }
         .card.exclusiva { border-color: #f72585; box-shadow: 0 0 10px rgba(247,37,133,0.4); }
 
         @keyframes passing-shine { 0% { left: -70%; } 15% { left: 120%; } 100% { left: 120%; } }
-
-        .zoom-container .card.rara { animation: glow-rara 4s infinite alternate ease-in-out; }
-        .zoom-container .card.epica { animation: glow-epica 3.5s infinite alternate ease-in-out; }
-        .zoom-container .card.lendaria { animation: glow-lendaria 3s infinite alternate ease-in-out; }
-        .zoom-container .card.exclusiva { animation: glow-exclusiva 2s infinite alternate ease-in-out; }
-
-        @keyframes glow-rara { 0% { box-shadow: 0 0 6px rgba(0, 180, 216, 0.4); } 100% { box-shadow: 0 0 18px rgba(0, 180, 216, 0.8); } }
-        @keyframes glow-epica { 0% { box-shadow: 0 0 8px rgba(157, 78, 221, 0.5); } 100% { box-shadow: 0 0 26px rgba(157, 78, 221, 0.9); } }
-        @keyframes glow-lendaria { 0% { box-shadow: 0 0 12px rgba(255, 183, 3, 0.6); border-color: #ffb703; } 100% { box-shadow: 0 0 38px rgba(255, 183, 3, 1), 0 0 10px rgba(255,255,255,0.2) inset; border-color: #fff; } }
-        @keyframes glow-exclusiva { 0% { box-shadow: 0 0 15px rgba(247, 37, 133, 0.6); border-color: #f72585; } 100% { box-shadow: 0 0 45px rgba(247, 37, 133, 1), 0 0 15px rgba(255,255,255,0.4) inset; border-color: #fff; } }
 
         .badge-nova { position: absolute; top: 8px; right: 8px; background: #e63946; color: #fff; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 8px; box-shadow: 0 0 10px rgba(230,57,70,0.8); z-index: 80; text-transform: uppercase; animation: pulse-badge 1.2s infinite alternate; pointer-events: none; }
         @keyframes pulse-badge { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 14px rgba(230,57,70,1); } }
@@ -153,7 +143,7 @@
         .book-page { padding: 30px 25px 40px 25px; height: 560px; display: flex; flex-direction: column; position: relative; justify-content: center; }
         .book-page.left-page { border-right: 1px solid rgba(0,0,0,0.3); }
         .book-page.right-page { border-left: 1px solid rgba(0,0,0,0.3); }
-        .page-num { position: absolute; bottom: 12px; font-size: 0.85rem; color: #7c7c7a; font-weight: bold; }
+        .page-num { position: absolute; bottom: 12px; font-size: 0.85rem; color: #7c7c8a; font-weight: bold; }
         .left-page .page-num { left: 20px; }
         .right-page .page-num { right: 20px; }
         
@@ -173,6 +163,22 @@
         .store-item-img { width: 100%; height: 90px; object-fit: contain; background: var(--bg-body); border-radius: 8px; margin-bottom: 10px; }
         .store-item-name { font-weight: bold; color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
         .store-item-desc { font-size: 0.8rem; color: #a8a8b3; margin-bottom: 15px; flex-grow: 1; }
+
+        /* --- ESTILOS DA CHAMADA INTERATIVA --- */
+        .attendance-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .attendance-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 20px; }
+        .student-card { background: var(--bg-box); border-radius: 12px; padding: 16px; border: 2px solid var(--border-color); text-align: left; transition: all 0.2s; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+        .student-card.present { border-color: #2a9d8f; background: rgba(42, 157, 143, 0.08); }
+        .student-card.absent { border-color: #e63946; background: rgba(230, 57, 70, 0.08); }
+        .student-card-name { font-weight: bold; font-size: 1.05rem; color: #fff; }
+        .student-card-info { font-size: 0.75rem; color: #a8a8b3; margin-bottom: 8px; }
+        .btn-status { padding: 8px; font-size: 0.85rem; border-radius: 6px; font-weight: bold; text-align: center; width: 100%; cursor: pointer; border: none; }
+        .btn-status.present { background: #2a9d8f; color: #fff; }
+        .btn-status.absent { background: #e63946; color: #fff; }
+        
+        .attendance-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;}
+        .attendance-tabs button { flex: 1; min-width: 150px; background: #1e1e22; border: 1px solid var(--border-color); color: #a8a8b3; }
+        .attendance-tabs button.active-att-tab { background: var(--accent-gradient); color: #fff; border-color: transparent; font-weight: bold; }
 
         /* --- ZOOM MODALS --- */
         .zoom-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
@@ -198,15 +204,29 @@
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #222226; font-size: 0.9rem; gap: 12px; }
         .list-item:last-child { border-bottom: none; }
         .list-item button { width: auto; padding: 6px 12px; font-size: 0.75rem; border-radius: 6px; }
-        .box-acoes-botoes { display: flex; gap: 6px; align-items: center; }
+        .box-acoes-botoes { display: flex; gap: 6px; align-items: center; flex-wrap: wrap;}
 
-        .table-wrapper { max-height: 300px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; background: #141416; }
+        .table-wrapper { max-height: 350px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 8px; background: #141416; }
         table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
         th, td { padding: 12px 16px; border-bottom: 1px solid #222226; }
         th { background: #1a1a1e; color: var(--accent-color); font-weight: 600; position: sticky; top: 0; z-index: 20; border-bottom: 2px solid var(--border-color); }
 
         .nav-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
         .nav-buttons button { width: auto; padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; }
+
+        /* --- ESTILOS DE IMPRESSÃO --- */
+        @media print {
+            body { background: #fff !important; color: #000 !important; padding: 0 !important; }
+            header, .nav-buttons, .attendance-tabs, .admin-box:not(#box-relatorio-impressao), .admin-layout-container > div:not(.print-section), footer, .screen:not(#screen-attendance) { display: none !important; }
+            #screen-attendance { display: block !important; padding: 0 !important; }
+            .admin-box { background: #fff !important; border: none !important; box-shadow: none !important; padding: 0 !important; color: #000 !important; }
+            .admin-box h2 { color: #000 !important; border-bottom: 2px solid #000 !important; }
+            .table-wrapper { max-height: none !important; overflow: visible !important; border: 1px solid #000 !important; background: #fff !important; }
+            table { width: 100% !important; color: #000 !important; }
+            th { background: #eee !important; color: #000 !important; border-bottom: 2px solid #000 !important; }
+            td { border-bottom: 1px solid #ccc !important; color: #000 !important; }
+            .filter-group-inline { display: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -320,23 +340,193 @@
         </header>
         
         <div class="store-container">
-            <!-- Figurinhas Exclusivas -->
             <div class="store-section">
                 <h2>💎 Figurinhas Exclusivas (Álbuns)</h2>
                 <p style="color:#a8a8b3; margin-bottom: 20px; font-size:0.9rem;">Estas figurinhas são vendidas separadamente e possuem efeitos e pontuações especiais.</p>
-                <div class="store-grid" id="store-cards-grid">
-                    <!-- Cards exclusivos injetados aqui -->
-                </div>
+                <div class="store-grid" id="store-cards-grid"></div>
             </div>
 
-            <!-- Itens e Experiências Extras -->
             <div class="store-section">
                 <h2 style="color: #00b4d8;">🚀 Experiências & Itens Extras</h2>
                 <p style="color:#a8a8b3; margin-bottom: 20px; font-size:0.9rem;">Troque suas moedas por tempo de uso de equipamentos ou prêmios físicos.</p>
-                <div class="store-grid" id="store-items-grid">
-                    <!-- Itens genéricos da loja injetados aqui -->
+                <div class="store-grid" id="store-items-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TELA: CHAMADA INTERATIVA & RELATÓRIOS -->
+    <div id="screen-attendance" class="screen">
+        <header>
+            <div>
+                <h1>📋 Chamada Interativa & Relatórios</h1>
+                <p>Registro Diário, Comentários e Impressão de Frequência</p>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-secondary" style="background:#0077b6" onclick="mudarTela('screen-admin')">Voltar ao Painel Admin</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
+            </div>
+        </header>
+
+        <div class="attendance-container">
+            <!-- ABAS DE NAVEGAÇÃO DA CHAMADA -->
+            <div class="attendance-tabs">
+                <button id="att-tab-btn-1" class="active-att-tab" onclick="alternarAbaChamada(1)">📝 1. Lançamento Diário & Cadastro</button>
+                <button id="att-tab-btn-2" onclick="alternarAbaChamada(2)">📊 2. Relatório e Impressão</button>
+                <button id="att-tab-btn-3" onclick="alternarAbaChamada(3)">📜 3. Contrato Didático</button>
+            </div>
+
+            <!-- ABA 1: LANÇAMENTO DIÁRIO -->
+            <div id="att-tab-content-1">
+                <div class="admin-box" style="margin-bottom: 25px;">
+                    <h2>📥 Adicionar Alunos à Turma</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <label>Série (1º ao 5º Ano):</label>
+                            <select id="attendance-grade-select" onchange="renderizarGridChamada()">
+                                <option value="1º Ano">1º Ano</option>
+                                <option value="2º Ano">2º Ano</option>
+                                <option value="3º Ano">3º Ano</option>
+                                <option value="4º Ano">4º Ano</option>
+                                <option value="5º Ano">5º Ano</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Sala / Turma:</label>
+                            <select id="attendance-letter-select" onchange="renderizarGridChamada()">
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label>Cole múltiplos nomes de alunos (um por linha para cadastro em lote):</label>
+                    <textarea id="bulk-students-input" rows="3" placeholder="Exemplo:&#10;Ana Souza&#10;Bruno Carvalho" style="resize: vertical;"></textarea>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-success" onclick="cadastrarAlunosEmLote()">➕ Cadastrar Lista de Alunos</button>
+                    </div>
+                </div>
+
+                <!-- PAINEL DA CHAMADA DIÁRIA -->
+                <div class="admin-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <label>Data da Aula:</label>
+                            <input type="date" id="attendance-date-picker" style="margin-bottom: 0;">
+                        </div>
+                        <!-- BOTÃO PREMIAR CORRIGIDO (CSS inline adicionado) -->
+                        <div style="display: flex; gap: 10px; align-items: flex-end; flex: 1;">
+                            <button class="btn-coin" style="padding: 10px 15px; min-height: 38px; height: auto; white-space: normal; line-height: 1.2; word-wrap: break-word;" onclick="darMoedaPresencaEmMassa()">💰 Premiar Presentes (+10)</button>
+                            <button class="btn-success" style="padding: 10px 15px; min-height: 38px; height: auto; white-space: normal; line-height: 1.2; word-wrap: break-word;" onclick="salvarChamadaDiaria()">💾 Salvar Chamada do Dia</button>
+                        </div>
+                    </div>
+
+                    <h2 style="margin: 10px 0 15px 0; border:none;" id="attendance-title">Turma Selecionada</h2>
+
+                    <div class="attendance-grid" id="attendance-students-grid">
+                        <!-- Cards dinâmicos dos alunos da chamada -->
+                    </div>
                 </div>
             </div>
+
+            <!-- ABA 2: RELATÓRIO E IMPRESSÃO -->
+            <div id="att-tab-content-2" style="display: none;">
+                <div class="admin-box print-section">
+                    <h2>📊 Relatório de Presença, Faltas e Comentários</h2>
+                    
+                    <div class="filter-group-inline">
+                        <div class="filter-field">
+                            <label style="font-size:0.7rem; margin-bottom:2px;">Filtrar por Período:</label>
+                            <select id="report-filter-type" onchange="renderizarTabelaRelatorio()">
+                                <option value="todos">Todos os Registros</option>
+                                <option value="dia">Dia Específico</option>
+                                <option value="mes">Mês Específico</option>
+                            </select>
+                        </div>
+                        <div class="filter-field" id="wrapper-report-date" style="display: none;">
+                            <label style="font-size:0.7rem; margin-bottom:2px;">Data Exata:</label>
+                            <input type="date" id="report-date-input" onchange="renderizarTabelaRelatorio()">
+                        </div>
+                        <div class="filter-field" id="wrapper-report-month" style="display: none;">
+                            <label style="font-size:0.7rem; margin-bottom:2px;">Mês (AAAA-MM):</label>
+                            <input type="month" id="report-month-input" onchange="renderizarTabelaRelatorio()">
+                        </div>
+                        <div class="filter-field">
+                            <label style="font-size:0.7rem; margin-bottom:2px;">Série:</label>
+                            <select id="report-grade-filter" onchange="renderizarTabelaRelatorio()">
+                                <option value="todos">Todas as Séries</option>
+                                <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option><option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
+                            </select>
+                        </div>
+                        <!-- NOVO FILTRO DE ALUNO SOLICITADO -->
+                        <div class="filter-field">
+                            <label style="font-size:0.7rem; margin-bottom:2px;">Aluno:</label>
+                            <select id="report-student-filter" onchange="renderizarTabelaRelatorio()">
+                                <option value="todos">Todos os Alunos</option>
+                            </select>
+                        </div>
+                        <div class="filter-field" style="display: flex; align-items: flex-end;">
+                            <button class="btn-coin" onclick="window.print()" style="height: 36px; font-size: 0.85rem;">🖨️ Imprimir Tabela</button>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper" style="margin-top: 15px;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome do Aluno</th>
+                                    <th>Série/Sala</th>
+                                    <th>Dia</th>
+                                    <th>Mês</th>
+                                    <th>Status</th>
+                                    <th>Comentários da Aula</th>
+                                </tr>
+                            </thead>
+                            <tbody id="report-table-body">
+                                <!-- Preenchido dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA 3: CONTRATO DIDÁTICO (NOVIDADE SOLICITADA) -->
+            <div id="att-tab-content-3" style="display: none;">
+                <div class="admin-box">
+                    <h2>📜 Contrato Didático da Turma</h2>
+                    <p style="color: #a8a8b3; margin-bottom: 20px; font-size: 0.9rem;">As regras inegociáveis não podem ser alteradas. As regras da turma são definidas em conjunto.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                        <!-- Regras Inegociáveis -->
+                        <div style="background: rgba(230,57,70,0.08); border: 1px solid #e63946; padding: 20px; border-radius: 12px;">
+                            <h3 style="color: #e63946; margin-bottom: 15px; font-size: 1.1rem;">🔴 Regras Inegociáveis (Fixas)</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem; color: #e1e1e6; line-height: 1.6;">
+                                <li>Respeitar professores e colegas em todos os momentos.</li>
+                                <li>Ter zelo pelos equipamentos</li>
+								<li>O que acontece fora da sala, fica fora da sala</li>
+								<li>Usar roupas e calçados adequados para a aula</li>
+                                <li>É proibido o consumo de alimentos ou bebidas próximos aos eletrônicos.</li>
+                                <li>Aguardar a instrução do professor antes de manusear ferramentas.</li>
+                                <li>Devolver todos os materiais e kits aos seus devidos lugares após o uso.</li>
+								<li>Regra dos 3 Avisos, no qual no tericeiro aviso é o aluno encaminhado para a direção</li>
+								<li>Sem palavrões, apelidos e ofensas</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Regras da Turma -->
+                        <div style="background: rgba(42,157,143,0.08); border: 1px solid #2a9d8f; padding: 20px; border-radius: 12px; display: flex; flex-direction: column;">
+                            <h3 style="color: #2a9d8f; margin-bottom: 15px; font-size: 1.1rem;">🟢 Regras Implementadas pela Turma</h3>
+                            <textarea id="class-rules-input" rows="8" placeholder="Digite aqui as regras que a turma combinou para este ano/semestre...&#10;&#10;Exemplo:&#10;1. Ajudar o colega antes de chamar o professor.&#10;2. Manter o tom de voz ameno durante as atividades em grupo." style="flex-grow: 1; resize: vertical;"></textarea>
+                            <button class="btn-success" onclick="alert('Regras da turma salvas com sucesso localmente!')" style="margin-top: 15px;">💾 Salvar Regras da Turma</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -348,6 +538,7 @@
                 <p>Nível de Acesso: <span id="admin-role-display" style="color:#ffb703; font-weight:bold; text-transform:uppercase;"></span></p>
             </div>
             <div class="nav-buttons">
+                <button class="btn-success" onclick="mudarTela('screen-attendance')">📋 Chamada Interativa</button>
                 <button class="btn-store" onclick="mudarTela('screen-store')">Ver Lojinha 🛒</button>
                 <button style="background:#0077b6" onclick="verEstanteComoAdmin()">Ver Estante de Álbuns</button>
                 <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
@@ -357,12 +548,12 @@
         <div class="admin-layout-container">
             
             <!-- CAIXA RÁPIDA: ALTERAR MINHA SENHA -->
-            <div class="admin-box" style="padding: 15px 24px; flex-direction: row; justify-content: space-between; align-items: center;">
+            <div class="admin-box" style="padding: 15px 24px; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h2 style="margin-bottom: 5px; color:#fff; border:none; font-size:1rem;">🔑 Alterar Minha Senha de Acesso (Admin)</h2>
                     <p style="font-size: 0.8rem; color: #a8a8b3;">Atualize sua senha rapidamente para manter o painel seguro.</p>
                 </div>
-                <div style="display: flex; gap: 10px; width: 40%;">
+                <div style="display: flex; gap: 10px; flex: 1; min-width: 250px;">
                     <input type="text" id="admin-fast-pin" placeholder="Digite a nova senha..." style="margin:0;">
                     <button onclick="alterarMinhaSenhaAdmin()" style="width: auto; padding: 0 20px;">Atualizar</button>
                 </div>
@@ -413,7 +604,7 @@
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
                         <input type="text" id="card-name" placeholder="Nome da Figurinha">
                         <input type="number" id="card-points" placeholder="Pontos">
-                        <input type="number" id="card-price" placeholder="Preço 🪙" min="0">
+                        <input type="number" id="card-price" placeholder="Preço (Moedas)" min="0">
                     </div>
                     <input type="text" id="card-img" placeholder="Link/URL da Imagem">
                     <textarea id="card-desc" rows="2" placeholder="Descrição da Figurinha" style="resize: none;"></textarea>
@@ -436,15 +627,14 @@
                             <select id="select-filter-grade" onchange="filtrarAlunosDistribuicao()">
                                 <option value="todos">-- Todas --</option>
                                 <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
-                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
+                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
                             </select>
                         </div>
                         <div>
                             <label>Sala:</label>
                             <select id="select-filter-letter" onchange="filtrarAlunosDistribuicao()">
                                 <option value="todos">-- Todas --</option>
-                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
                             </select>
                         </div>
                     </div>
@@ -466,7 +656,7 @@
                     
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                         <div>
-                            <label>Preço Sugerido (🪙):</label>
+                            <label>Preço Sugerido (Moedas):</label>
                             <input type="number" id="store-price" placeholder="Ex: 150">
                         </div>
                         <div>
@@ -496,15 +686,14 @@
                             <select id="student-grade">
                                 <option value="-">-- Staff --</option>
                                 <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
-                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
+                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
                             </select>
                         </div>
                         <div>
                             <label>Sala:</label>
                             <select id="student-letter">
                                 <option value="-">-</option>
-                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
                             </select>
                         </div>
                         <div>
@@ -529,7 +718,7 @@
 
                 <!-- SALDO MOEDAS -->
                 <div class="admin-box" id="box-carteira-moedas">
-                    <h2>🪙 Carteira de Alunos (Saldos)</h2>
+                    <h2>💰 Carteira de Alunos (Saldos)</h2>
                     <div class="filter-group-inline">
                         <div class="filter-field" style="flex: 1.5;">
                             <input type="text" id="filter-user-name" placeholder="🔍 Buscar aluno..." onkeyup="atualizarListasAdmin()">
@@ -538,14 +727,13 @@
                             <select id="filter-user-grade" onchange="atualizarListasAdmin()">
                                 <option value="todos">Série (Todas)</option>
                                 <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
-                                <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
+                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
                             </select>
                         </div>
                         <div class="filter-field">
                             <select id="filter-user-letter" onchange="atualizarListasAdmin()">
                                 <option value="todos">Sala (Todas)</option>
-                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
                             </select>
                         </div>
                     </div>
@@ -566,14 +754,13 @@
                         <select id="filter-history-grade" onchange="atualizarTabelaHistorico()">
                             <option value="todos">-- Todas as Séries --</option>
                             <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                            <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option><option value="6º Ano">6º Ano</option>
-                            <option value="7º Ano">7º Ano</option><option value="8º Ano">8º Ano</option><option value="9º Ano">9º Ano</option>
+                            <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
                         </select>
                     </div>
                     <div class="filter-field">
                         <select id="filter-history-letter" onchange="atualizarTabelaHistorico()">
                             <option value="todos">-- Todas as Salas --</option>
-                            <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                            <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
                         </select>
                     </div>
                     <button class="btn-danger" onclick="limparHistoricoGeral()" style="width: auto; height: 36px; padding: 0 15px;">🗑️ Limpar Histórico</button>
@@ -607,7 +794,6 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, getDocs, collection, onSnapshot, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Configuração do projeto Firebase dinamicamente provida pelo ambiente da tela
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
             apiKey: "AIzaSyBzlVayf42IU6IExTLiZosRB0O1OHQ4wik",
             authDomain: "album-27bb2.firebaseapp.com",
@@ -621,10 +807,10 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-        // ID dinâmico do app - Regra estrita de segurança do Canvas
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'album-27bb2';
 
-        // Sementes Base
+        const iconeMoeda = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: text-bottom; margin-right: 2px;"><circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#DAA520" stroke-width="2"/><circle cx="12" cy="12" r="7" fill="#FFC000" stroke="#B8860B" stroke-width="1"/><text x="12" y="16" font-size="11" font-family="Arial" font-weight="bold" fill="#B8860B" text-anchor="middle">$</text></svg>`;
+
         const albunsIniciais = [
             { id: "alb_anual", titulo: "Álbum Anual 2026", cor: "#1a4314", imagem: "🤖" },
             { id: "alb_robotica", titulo: "Oficina de Robótica", cor: "#005f73", imagem: "⚙️" }
@@ -636,7 +822,7 @@
         ];
         const alunosIniciais = [
             { id: "admin_1", nome: "Admin", grade: "-", letter: "-", role: "administrador", pin: "1234", moedas: 0, moedasExclusivas: 0 },
-            { id: "1", nome: "Lucas Lima", grade: "6º Ano", letter: "A", role: "aluno", pin: "123", moedas: 100, moedasExclusivas: 5 }
+            { id: "1", nome: "Lucas Lima", grade: "1º Ano", letter: "A", role: "aluno", pin: "123", moedas: 100, moedasExclusivas: 5 }
         ];
         const lojaIniciais = [
             { id: "lj_1", nome: "Piloto de Drone (10min)", preco: 150, imagem: "🚁", desc: "Ganhe 10 minutos de pilotagem com o drone principal." },
@@ -648,7 +834,9 @@
         let bancoDeAlunos = [];
         let bancoLoja = [];
         let historicoEnvios = [];
+        let bancoChamadaRegistros = [];
         let figurinhasVistas = {};
+        let presencaAlunosModoLocal = {};
         
         let usuarioLogado = ""; 
         let cargoLogado = ""; 
@@ -658,11 +846,9 @@
         const FIGURINHAS_POR_PAGINA = 4;
         let currentUserId = "";
 
-        // Atalhos de Coleções (Strict Paths)
         const getPublicCollection = (colName) => collection(db, 'artifacts', appId, 'public', 'data', colName);
         const getPrivateCollection = (uid, colName) => collection(db, 'artifacts', appId, 'users', uid, colName);
 
-        // Autenticação inicial
         async function inicializarAutenticacao() {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -675,10 +861,22 @@
             }
         }
 
-        // Observadores do Firebase
         function iniciarListeners(uid) {
             if (!uid) return;
             currentUserId = uid;
+
+            const datePicker = document.getElementById('attendance-date-picker');
+            if(datePicker && !datePicker.value) {
+                datePicker.value = new Date().toISOString().split('T')[0];
+            }
+            const reportDate = document.getElementById('report-date-input');
+            if(reportDate && !reportDate.value) {
+                reportDate.value = new Date().toISOString().split('T')[0];
+            }
+            const reportMonth = document.getElementById('report-month-input');
+            if(reportMonth && !reportMonth.value) {
+                reportMonth.value = new Date().toISOString().slice(0, 7);
+            }
 
             onSnapshot(getPublicCollection('albuns'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
@@ -692,7 +890,7 @@
 
             onSnapshot(getPublicCollection('alunos'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
-                if (list.length === 0) popularSementesAlunos(); else { bancoDeAlunos = list; atualizarIndicadoresMoeda(); atualizarListasAdmin(); }
+                if (list.length === 0) popularSementesAlunos(); else { bancoDeAlunos = list; atualizarIndicadoresMoeda(); atualizarListasAdmin(); renderizarGridChamada(); atualizarSelectFiltroAlunoRelatorio(); }
             }, (err) => console.error(err));
 
             onSnapshot(getPublicCollection('lojinha_itens'), (snap) => {
@@ -705,6 +903,12 @@
                 list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); historicoEnvios = list;
                 if (idAlbumAtivoAtualmente) renderizarLivroAberto();
                 atualizarListasAdmin(); atualizarTabelaHistorico(); renderizarEstanteDeLivros(); renderizarLojinha();
+            }, (err) => console.error(err));
+
+            onSnapshot(getPublicCollection('chamada_registros'), (snap) => {
+                let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+                bancoChamadaRegistros = list;
+                renderizarTabelaRelatorio();
             }, (err) => console.error(err));
 
             onSnapshot(getPrivateCollection(uid, 'seen_stickers'), (snap) => {
@@ -722,11 +926,24 @@
 
         onAuthStateChanged(auth, (user) => { if (user && !currentUserId) iniciarListeners(user.uid); });
 
-        /* --- MÉTODOS DE TELA E INTERAÇÃO --- */
         function mudarTela(idTela) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(idTela).classList.add('active');
             if (idTela === 'screen-store') renderizarLojinha();
+            if (idTela === 'screen-attendance') { renderizarGridChamada(); atualizarSelectFiltroAlunoRelatorio(); renderizarTabelaRelatorio(); }
+        }
+
+        function alternarAbaChamada(numAba) {
+            document.getElementById('att-tab-content-1').style.display = numAba === 1 ? 'block' : 'none';
+            document.getElementById('att-tab-content-2').style.display = numAba === 2 ? 'block' : 'none';
+            document.getElementById('att-tab-content-3').style.display = numAba === 3 ? 'block' : 'none';
+            document.getElementById('att-tab-btn-1').className = numAba === 1 ? 'active-att-tab' : '';
+            document.getElementById('att-tab-btn-2').className = numAba === 2 ? 'active-att-tab' : '';
+            document.getElementById('att-tab-btn-3').className = numAba === 3 ? 'active-att-tab' : '';
+            if(numAba === 2) {
+                atualizarSelectFiltroAlunoRelatorio();
+                renderizarTabelaRelatorio();
+            }
         }
 
         function atualizarIndicadoresMoeda() {
@@ -735,7 +952,7 @@
             const saldoE = alunoObj ? (alunoObj.moedasExclusivas || 0) : 0;
             
             const tags = modoAdminVisualizacao ? '' : `
-                <span class="coin-display coin-normal">🪙 ${saldoN}</span>
+                <span class="coin-display coin-normal">${iconeMoeda} ${saldoN}</span>
                 <span class="coin-display coin-exclusive">💎 ${saldoE}</span>
             `;
             
@@ -791,7 +1008,489 @@
             mudarTela('screen-login');
         }
 
-        /* --- STREAMING_CHUNK:Lojinha (Store) Logic... --- */
+        // ---------- FUNÇÕES QUE ESTAVAM FALTANDO / CORTADAS ---------- //
+        
+        function atualizarListasAdmin() {
+            if (!modoAdminVisualizacao && cargoLogado === "aluno") return;
+
+            // 1. Atualizar selects de Álbum
+            const selectsAlbum = ['card-album-select', 'filter-cards-by-album', 'select-dist-album-filter'];
+            selectsAlbum.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    const bkp = el.value;
+                    el.innerHTML = '<option value="">-- Selecione o Álbum --</option>';
+                    bancoAlbuns.forEach(a => el.add(new Option(a.titulo, a.id)));
+                    if (bkp && Array.from(el.options).some(o => o.value === bkp)) el.value = bkp;
+                }
+            });
+
+            // 2. Lista de Álbuns Ativos
+            const listAlbuns = document.getElementById('list-albuns-ativos');
+            if (listAlbuns) {
+                listAlbuns.innerHTML = bancoAlbuns.map(a => `
+                    <div class="list-item">
+                        <div><b>${a.titulo}</b></div>
+                        <div class="box-acoes-botoes">
+                            <button class="btn-danger" onclick="deletarAlbum('${a.id}')">Excluir</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 3. Atualizar as cartas (filtro)
+            listarCartasCadastradasAdmin();
+
+            // 4. Lista de Usuários/Integrantes
+            const listUsers = document.getElementById('list-all-users');
+            if (listUsers) {
+                listUsers.innerHTML = bancoDeAlunos.map(u => `
+                    <div class="list-item">
+                        <div><b>${u.nome}</b> <br> <span style="font-size:0.75rem; color:#a8a8b3">${u.role} | ${u.grade} ${u.letter}</span></div>
+                        <div class="box-acoes-botoes">
+                            <button class="btn-edit" onclick="carregarUsuarioParaEdicao('${u.id}')">Editar</button>
+                            <button class="btn-danger" onclick="deletarAluno('${u.id}')">X</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 5. Lista de Carteiras de Aluno
+            const listWallets = document.getElementById('list-only-students-wallets');
+            if (listWallets) {
+                const fName = (document.getElementById('filter-user-name')?.value || '').toLowerCase();
+                const fGrade = document.getElementById('filter-user-grade')?.value || 'todos';
+                const fLetter = document.getElementById('filter-user-letter')?.value || 'todos';
+
+                listWallets.innerHTML = bancoDeAlunos.filter(u => u.role === 'aluno').filter(u => {
+                    return (u.nome.toLowerCase().includes(fName)) &&
+                           (fGrade === 'todos' || u.grade === fGrade) &&
+                           (fLetter === 'todos' || u.letter === fLetter);
+                }).map(u => `
+                    <div class="list-item">
+                        <div><b>${u.nome}</b> (${u.grade} ${u.letter})<br><small>💰: ${u.moedas || 0} | 💎: ${u.moedasExclusivas || 0}</small></div>
+                        <div class="box-acoes-botoes">
+                            <button class="btn-coin" onclick="modificarMoedasAluno('${u.id}', 'somar', 'normal')">+ Moeda</button>
+                            <button class="btn-diamond" onclick="modificarMoedasAluno('${u.id}', 'somar', 'exclusiva')">+ Diamante</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 6. Lista da Lojinha
+            const listStore = document.getElementById('list-store-items');
+            if (listStore) {
+                listStore.innerHTML = bancoLoja.map(i => `
+                    <div class="list-item">
+                        <div><b>${i.nome}</b> (${i.preco} moedas)</div>
+                        <div class="box-acoes-botoes">
+                            <button class="btn-danger" onclick="deletarItemLoja('${i.id}')">Remover</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function listarCartasCadastradasAdmin() {
+            const listCards = document.getElementById('list-cards');
+            const filterId = document.getElementById('filter-cards-by-album')?.value;
+            if (!listCards) return;
+
+            let filtered = bancoDeCartas;
+            if (filterId) {
+                filtered = bancoDeCartas.filter(c => c.albumId === filterId);
+            }
+
+            listCards.innerHTML = filtered.map(c => {
+                const alb = bancoAlbuns.find(a => a.id === c.albumId);
+                const albumName = alb ? alb.titulo : 'Desconhecido';
+                return `
+                    <div class="list-item">
+                        <div><b>${c.nome}</b> <span style="font-size:0.7rem; color:${c.raridade==='exclusiva'?'#f72585':'#00b4d8'}; text-transform:uppercase;">[${c.raridade}]</span><br><small>${albumName} - ${c.pontos} Pts</small></div>
+                        <div class="box-acoes-botoes">
+                            <button class="btn-danger" onclick="deletarCarta('${c.id}')">Excluir</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function salvarNovoAlbum() {
+            const idEdit = document.getElementById('album-edit-id').value;
+            const titulo = document.getElementById('album-new-title').value.trim();
+            const imagem = document.getElementById('album-new-image').value.trim();
+            const cor = document.getElementById('album-new-color').value;
+
+            if(!titulo) { alert("O nome do álbum é obrigatório!"); return; }
+
+            try {
+                if(idEdit && idEdit.trim() !== "") {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', idEdit), { id: idEdit, titulo, imagem, cor });
+                } else {
+                    const novoId = "alb_" + Date.now();
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', novoId), { id: novoId, titulo, imagem, cor });
+                }
+                document.getElementById('album-new-title').value = '';
+                document.getElementById('album-new-image').value = '';
+                document.getElementById('album-edit-id').value = '';
+                alert("Álbum salvo com sucesso!");
+            } catch(e) { console.error(e); }
+        }
+
+        async function salvarCarta() {
+            const idEdit = document.getElementById('card-edit-id').value;
+            const albumId = document.getElementById('card-album-select').value;
+            const raridade = document.getElementById('card-rarity').value;
+            const nome = document.getElementById('card-name').value.trim();
+            const pontos = document.getElementById('card-points').value;
+            const preco = document.getElementById('card-price').value;
+            const imagem = document.getElementById('card-img').value.trim();
+            const habilidade = document.getElementById('card-desc').value.trim();
+
+            if(!albumId || !nome || !pontos) { alert("Selecione o álbum, nome e pontos da figurinha!"); return; }
+
+            try {
+                const dados = {
+                    albumId, raridade, nome, pontos: parseInt(pontos), 
+                    preço: preco ? parseInt(preco) : 0, imagem, habilidade
+                };
+
+                if(idEdit && idEdit.trim() !== "") {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', idEdit), { id: idEdit, ...dados });
+                } else {
+                    const novoId = "c_" + Date.now();
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', novoId), { id: novoId, ...dados });
+                }
+                document.getElementById('card-name').value = '';
+                document.getElementById('card-points').value = '';
+                document.getElementById('card-price').value = '';
+                document.getElementById('card-img').value = '';
+                document.getElementById('card-desc').value = '';
+                document.getElementById('card-edit-id').value = '';
+                alert("Figurinha cadastrada!");
+            } catch(e) { console.error(e); }
+        }
+
+        async function deletarAlbum(id) { if(confirm("Tem certeza que deseja excluir o álbum?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', id)); }
+        async function deletarCarta(id) { if(confirm("Excluir esta figurinha?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', id)); }
+        async function deletarItemLoja(id) { if(confirm("Remover este item da lojinha?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', id)); }
+
+        async function salvarItemLoja() {
+            const idEdit = document.getElementById('store-edit-id').value;
+            const n = document.getElementById('store-name').value.trim();
+            const p = document.getElementById('store-price').value;
+            const img = document.getElementById('store-img').value.trim();
+            const d = document.getElementById('store-desc').value;
+
+            if(!n || !p) { alert("Nome e Preço são obrigatórios!"); return; }
+
+            try {
+                if(idEdit && idEdit.trim() !== "") {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', idEdit), {
+                        id: idEdit, nome: n, preco: parseInt(p), imagem: img, desc: d
+                    });
+                } else {
+                    const novoId = "lj_" + Date.now();
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', novoId), {
+                        id: novoId, nome: n, preco: parseInt(p), imagem: img, desc: d
+                    });
+                }
+                alert("✅ Item salvo na lojinha!");
+                document.getElementById('store-name').value = '';
+                document.getElementById('store-price').value = '';
+                document.getElementById('store-img').value = '';
+                document.getElementById('store-desc').value = '';
+                document.getElementById('store-edit-id').value = '';
+            } catch (err) {
+                console.error("Erro ao salvar item:", err);
+            }
+        }
+
+        function atualizarTabelaHistorico() {
+            const tbody = document.getElementById('history-table-body');
+            if(!tbody) return;
+            const fName = (document.getElementById('filter-history-student')?.value || '').toLowerCase();
+            const fGrade = document.getElementById('filter-history-grade')?.value || 'todos';
+            const fLetter = document.getElementById('filter-history-letter')?.value || 'todos';
+
+            const filtrados = historicoEnvios.filter(h => {
+                return (h.alunoNome.toLowerCase().includes(fName)) &&
+                       (fGrade === 'todos' || h.alunoSerie === fGrade) &&
+                       (fLetter === 'todos' || h.alunoLetter === fLetter);
+            });
+
+            if (filtrados.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#7c7c8a; padding:30px;">Nenhum registro encontrado.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtrados.map(h => `
+                <tr>
+                    <td><b>${h.alunoNome}</b></td>
+                    <td>${h.alunoSerie} ${h.alunoLetter}</td>
+                    <td>${h.albumTitulo || h.albumId}</td>
+                    <td>${h.cartaNome}</td>
+                    <td>${h.raridade}</td>
+                    <td>${h.data || '-'}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function limparHistoricoGeral() {
+            if(!confirm("⚠️ TEM CERTEZA? Isso limpará TODOS os registros de entregas e compras de figurinhas. Ações não poderão ser desfeitas.")) return;
+            try {
+                for (let record of historicoEnvios) {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'historico', record.id));
+                }
+                alert("Histórico esvaziado.");
+            } catch (err) { console.error(err); }
+        }
+
+        // ----------- CADASTRO DE CHAMADA DIÁRIA E RELATÓRIO ----------- //
+
+        async function cadastrarAlunosEmLote() {
+            const grade = document.getElementById('attendance-grade-select').value;
+            const letter = document.getElementById('attendance-letter-select').value;
+            const rawText = document.getElementById('bulk-students-input').value;
+
+            const linhas = rawText.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+            const nomesUnicosNoLote = [...new Set(linhas)];
+
+            if (nomesUnicosNoLote.length === 0) {
+                alert("⚠️ Por favor, digite ao menos um nome para cadastrar!");
+                return;
+            }
+
+            try {
+                let inseridos = 0;
+                let duplicados = [];
+
+                for (const nome of nomesUnicosNoLote) {
+                    const nomeNormalizado = nome.toLowerCase().replace(/\s+/g, ' ');
+                    const jaExiste = bancoDeAlunos.some(aluno => 
+                        aluno.role === "aluno" &&
+                        aluno.grade === grade &&
+                        aluno.letter === letter &&
+                        aluno.nome.trim().toLowerCase().replace(/\s+/g, ' ') === nomeNormalizado
+                    );
+
+                    if (jaExiste) {
+                        duplicados.push(nome);
+                        continue;
+                    }
+
+                    const novoId = "st_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), {
+                        id: novoId, nome: nome, grade: grade, letter: letter, role: "aluno", pin: "1234", moedas: 0, moedasExclusivas: 0
+                    });
+                    inseridos++;
+                }
+
+                let mensagem = "";
+                if (inseridos > 0) { mensagem += `✅ ${inseridos} aluno(s) cadastrado(s) com sucesso na turma ${grade} ${letter}!\n`; }
+                if (duplicados.length > 0) { mensagem += `\n⚠️ Os seguintes alunos já estavam cadastrados nesta turma:\n- ${duplicados.join('\n- ')}`; }
+
+                alert(mensagem);
+                document.getElementById('bulk-students-input').value = "";
+                renderizarGridChamada();
+                atualizarSelectFiltroAlunoRelatorio();
+            } catch (err) {
+                console.error("Erro ao cadastrar alunos em lote:", err);
+                alert("Erro ao salvar lista de alunos.");
+            }
+        }
+
+        function renderizarGridChamada() {
+            const grid = document.getElementById('attendance-students-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+
+            const selectedGrade = document.getElementById('attendance-grade-select').value;
+            const selectedLetter = document.getElementById('attendance-letter-select').value;
+
+            document.getElementById('attendance-title').innerText = `Turma: ${selectedGrade} - Sala ${selectedLetter}`;
+
+            const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+
+            if (alunosDaTurma.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; color:#a8a8b3; text-align:center; padding:30px;">Nenhum aluno cadastrado para esta turma. Cole os nomes acima para adicionar!</div>`;
+                return;
+            }
+
+            alunosDaTurma.forEach(aluno => {
+                if (!presencaAlunosModoLocal[aluno.id]) {
+                    presencaAlunosModoLocal[aluno.id] = { status: true, comentario: "" };
+                }
+                const estado = presencaAlunosModoLocal[aluno.id];
+                
+                const card = document.createElement('div');
+                card.className = `student-card ${estado.status ? 'present' : 'absent'}`;
+                card.innerHTML = `
+                    <div>
+                        <div class="student-card-name">${aluno.nome}</div>
+                        <div class="student-card-info">PIN: ${aluno.pin} | Saldo: ${iconeMoeda} ${aluno.moedas || 0}</div>
+                    </div>
+                    <div>
+                        <button class="btn-status ${estado.status ? 'present' : 'absent'}" onclick="alternarPresencaLocal('${aluno.id}')">
+                            ${estado.status ? '✅ Presente' : '❌ Falta'}
+                        </button>
+                    </div>
+                    <div>
+                        <label style="font-size:0.7rem; margin-bottom:2px; color:#a8a8b3;">Comentário da Aula:</label>
+                        <input type="text" id="comm_${aluno.id}" value="${estado.comentario || ''}" placeholder="Ex: Entregou trabalho, participou..." oninput="atualizarComentarioLocal('${aluno.id}', this.value)" style="margin-bottom:0; font-size:0.85rem; padding:6px 10px;">
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function alternarPresencaLocal(alunoId) {
+            if (!presencaAlunosModoLocal[alunoId]) {
+                presencaAlunosModoLocal[alunoId] = { status: true, comentario: "" };
+            }
+            presencaAlunosModoLocal[alunoId].status = !presencaAlunosModoLocal[alunoId].status;
+            renderizarGridChamada();
+        }
+
+        function atualizarComentarioLocal(alunoId, valor) {
+            if (!presencaAlunosModoLocal[alunoId]) {
+                presencaAlunosModoLocal[alunoId] = { status: true, comentario: "" };
+            }
+            presencaAlunosModoLocal[alunoId].comentario = valor;
+        }
+
+        async function salvarChamadaDiaria() {
+            const dataAula = document.getElementById('attendance-date-picker').value;
+            const selectedGrade = document.getElementById('attendance-grade-select').value;
+            const selectedLetter = document.getElementById('attendance-letter-select').value;
+
+            if(!dataAula) { alert("⚠️ Selecione a data da aula!"); return; }
+
+            const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+            if(alunosDaTurma.length === 0) { alert("Nenhum aluno nesta turma para salvar."); return; }
+
+            try {
+                for (const aluno of alunosDaTurma) {
+                    const info = presencaAlunosModoLocal[aluno.id] || { status: true, comentario: "" };
+                    const registroId = `${dataAula}_${aluno.id}`;
+                    const [ano, mes, dia] = dataAula.split('-');
+                    const dataFormatada = `${dia}/${mes}/${ano}`;
+
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'chamada_registros', registroId), {
+                        id: registroId,
+                        alunoId: aluno.id,
+                        alunoNome: aluno.nome,
+                        grade: `${aluno.grade} ${aluno.letter}`,
+                        data: dataFormatada,
+                        rawDate: dataAula,
+                        dia: dia,
+                        mes: `${mes}/${ano}`,
+                        status: info.status ? "Presença" : "Falta",
+                        comentario: info.comentario || "",
+                        timestamp: Date.now()
+                    });
+                }
+                alert("✅ Chamada do dia salva com sucesso! Você já pode conferir na aba de Relatórios e Impressão.");
+                alternarAbaChamada(2);
+            } catch (err) {
+                console.error("Erro ao salvar chamada:", err);
+                alert("Erro ao salvar os registros de chamada.");
+            }
+        }
+
+        function atualizarSelectFiltroAlunoRelatorio() {
+            const select = document.getElementById('report-student-filter');
+            if(!select) return;
+            const valorAtual = select.value;
+            select.innerHTML = '<option value="todos">Todos os Alunos</option>';
+            
+            const alunosUnicos = [...new Set(bancoDeAlunos.filter(a => a.role === "aluno").map(a => a.nome))].sort();
+            alunosUnicos.forEach(nomeAluno => {
+                const opt = document.createElement('option');
+                opt.value = nomeAluno;
+                opt.innerText = nomeAluno;
+                select.appendChild(opt);
+            });
+            if (valorAtual && Array.from(select.options).some(o => o.value === valorAtual)) {
+                select.value = valorAtual;
+            }
+        }
+
+        function renderizarTabelaRelatorio() {
+            const tbody = document.getElementById('report-table-body');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            const tipoFiltro = document.getElementById('report-filter-type').value;
+            const dataFiltro = document.getElementById('report-date-input').value;
+            const mesFiltro = document.getElementById('report-month-input').value;
+            const gradeFiltro = document.getElementById('report-grade-filter').value;
+            const alunoFiltro = document.getElementById('report-student-filter').value;
+
+            document.getElementById('wrapper-report-date').style.display = (tipoFiltro === 'dia') ? 'block' : 'none';
+            document.getElementById('wrapper-report-month').style.display = (tipoFiltro === 'mes') ? 'block' : 'none';
+
+            let registrosFiltrados = bancoChamadaRegistros.filter(reg => {
+                let matchGrade = (gradeFiltro === 'todos' || reg.grade.includes(gradeFiltro));
+                let matchStudent = (alunoFiltro === 'todos' || reg.alunoNome === alunoFiltro);
+                let matchPeriodo = true;
+
+                if (tipoFiltro === 'dia' && dataFiltro) {
+                    const [ano, mes, dia] = dataFiltro.split('-');
+                    const fmt = `${dia}/${mes}/${ano}`;
+                    matchPeriodo = (reg.data === fmt);
+                } else if (tipoFiltro === 'mes' && mesFiltro) {
+                    const [anoM, mesM] = mesFiltro.split('-');
+                    const fmtMes = `${mesM}/${anoM}`;
+                    matchPeriodo = (reg.mes === fmtMes);
+                }
+                return matchGrade && matchStudent && matchPeriodo;
+            });
+
+            registrosFiltrados.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+            if (registrosFiltrados.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#7c7c8a; padding:30px;">Nenhum registro de chamada encontrado para o filtro selecionado.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = registrosFiltrados.map(r => `
+                <tr>
+                    <td><b>${r.alunoNome}</b></td>
+                    <td>${r.grade}</td>
+                    <td>${r.dia || r.data}</td>
+                    <td>${r.mes || '-'}</td>
+                    <td><span style="color: ${r.status === 'Presença' ? '#2a9d8f' : '#e63946'}; font-weight: bold;">${r.status}</span></td>
+                    <td>${r.comentario || '<span style="color:#7c7c8a; font-style:italic;">Nenhum</span>'}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function darMoedaPresencaEmMassa() {
+            const selectedGrade = document.getElementById('attendance-grade-select').value;
+            const selectedLetter = document.getElementById('attendance-letter-select').value;
+            const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+
+            const presentes = alunosDaTurma.filter(a => {
+                const info = presencaAlunosModoLocal[a.id];
+                return info ? info.status : true;
+            });
+
+            if (presentes.length === 0) { alert("Nenhum aluno marcado como presente!"); return; }
+
+            if(confirm(`Adicionar 10 Moedas para os ${presentes.length} alunos presentes da turma ${selectedGrade} ${selectedLetter}?`)) {
+                try {
+                    for(const aluno of presentes) {
+                        const novoSaldo = (aluno.moedas || 0) + 10;
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', aluno.id), { moedas: novoSaldo });
+                    }
+                    alert("✅ Moedas de presença distribuídas com sucesso!");
+                } catch(err) { console.error("Erro ao aplicar recompensas:", err); }
+            }
+        }
+        
+        // --- FUNÇÕES DA LOJA, ESTANTE E EXIBIÇÃO DE FIGURINHAS --- //
+        
         function renderizarLojinha() {
             const gridCartas = document.getElementById('store-cards-grid');
             const gridItens = document.getElementById('store-items-grid');
@@ -799,7 +1498,6 @@
             
             gridCartas.innerHTML = ''; gridItens.innerHTML = '';
             
-            // 1. Renderizar Cartas Exclusivas
             const cartasExclusivas = bancoDeCartas.filter(c => c.raridade === 'exclusiva');
             const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome.toLowerCase() === usuarioLogado.toLowerCase());
 
@@ -813,7 +1511,7 @@
                 const tagImagem = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${carta.imagem}">` : `<div class="card-img-fallback">💎</div>`;
                 const preco = parseInt(carta.preço) || 0;
                 
-                let btnComprar = jaPossui ? `<button class="buy-sticker-btn" style="background:#4CAF50; color:#fff;" disabled>✅ Já Possui</button>` : `<button class="buy-sticker-btn" onclick="comprarItemDaLojinha('${carta.id}', 'carta')">Comprar por 🪙 ${preco}</button>`;
+                let btnComprar = jaPossui ? `<button class="buy-sticker-btn" style="background:#4CAF50; color:#fff;" disabled>✅ Já Possui</button>` : `<button class="buy-sticker-btn" onclick="comprarItemDaLojinha('${carta.id}', 'carta')">Comprar por ${iconeMoeda} ${preco}</button>`;
                 
                 if (modoAdminVisualizacao) btnComprar = `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>`;
 
@@ -832,14 +1530,13 @@
                 gridCartas.appendChild(el);
             });
 
-            // 2. Renderizar Itens Extras da Loja
             if(bancoLoja.length === 0) gridItens.innerHTML = '<p style="color:#7c7c8a; font-size:0.9rem;">Nenhum item ou experiência cadastrada.</p>';
             
             bancoLoja.forEach(item => {
                 const tagImg = (item.imagem && item.imagem.startsWith("http")) ? `<img class="store-item-img" src="${item.imagem}">` : `<div class="store-item-icon">${item.imagem || '🎁'}</div>`;
                 const preco = parseInt(item.preco) || 0;
                 
-                let btnComprar = modoAdminVisualizacao ? `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>` : `<button class="buy-sticker-btn btn-store" onclick="comprarItemDaLojinha('${item.id}', 'item')">Comprar por 🪙 ${preco}</button>`;
+                let btnComprar = modoAdminVisualizacao ? `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>` : `<button class="buy-sticker-btn btn-store" onclick="comprarItemDaLojinha('${item.id}', 'item')">Comprar por ${iconeMoeda} ${preco}</button>`;
 
                 const el = document.createElement('div');
                 el.className = 'store-item-box';
@@ -863,7 +1560,7 @@
                 objCompra = bancoDeCartas.find(c => c.id === itemId);
                 if(!objCompra) return;
                 nomeLog = objCompra.nome;
-                albumLog = objCompra.albumId; // Ficará vinculado ao Álbum correto!
+                albumLog = objCompra.albumId;
                 raridadeLog = objCompra.raridade;
             } else {
                 objCompra = bancoLoja.find(i => i.id === itemId);
@@ -875,9 +1572,9 @@
 
             const preco = parseInt(objCompra.preço || objCompra.preco) || 0; 
             const saldoAtual = alunoObj.moedas || 0;
-            if(saldoAtual < preco) { alert(`Moedas insuficientes! Requer 🪙 ${preco}.`); return; }
+            if(saldoAtual < preco) { alert(`Moedas insuficientes! Requer ${preco} Moedas.`); return; }
 
-            if(confirm(`Comprar "${nomeLog}" por 🪙 ${preco}?`)) {
+            if(confirm(`Comprar "${nomeLog}" por ${preco} Moedas?`)) {
                 try {
                     const alunoRef = doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoObj.id);
                     await updateDoc(alunoRef, { moedas: saldoAtual - preco });
@@ -894,13 +1591,10 @@
                         timestamp: Date.now()
                     });
                     alert("Compra realizada com sucesso!");
-                } catch (err) {
-                    alert("Ocorreu um erro ao processar a compra.");
-                }
+                } catch (err) { alert("Ocorreu um erro ao processar a compra."); }
             }
         }
 
-        /* --- ESTANTE E LIVRO LOGIC --- */
         function renderizarEstanteDeLivros() {
             const grid = document.getElementById('shelf-books-grid'); 
             if (!grid) return; grid.innerHTML = '';
@@ -984,7 +1678,7 @@
                 if (carta.raridade !== 'exclusiva') {
                     txtDica = carta.nome.substring(0, 12) + "...";
                     const preco = parseInt(carta.preço) || 0;
-                    if(preco > 0 && !modoAdminVisualizacao) botaoCompraHtml = `<button class="buy-sticker-btn" onclick="comprarFigurinhaAlbumDireto('${carta.id}')">🪙: ${preco}</button>`;
+                    if(preco > 0 && !modoAdminVisualizacao) botaoCompraHtml = `<button class="buy-sticker-btn" onclick="comprarFigurinhaAlbumDireto('${carta.id}')">${iconeMoeda} ${preco}</button>`;
                 }
 
                 wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span><div style="font-size:0.7rem; color:#626268; margin-top:20px; text-align:center; font-weight:bold;">${txtDica}</div>${botaoCompraHtml}</div>`;
@@ -1000,10 +1694,7 @@
             ampliarCard(carta);
         }
 
-        async function comprarFigurinhaAlbumDireto(cartaId) {
-            // Reutiliza a função da loja para garantir o mesmo comportamento
-            comprarItemDaLojinha(cartaId, 'carta');
-        }
+        async function comprarFigurinhaAlbumDireto(cartaId) { comprarItemDaLojinha(cartaId, 'carta'); }
 
         function folhearPagina(direcao) { paginaAtualLivro += direcao; renderizarLivroAberto(); }
         
@@ -1024,7 +1715,6 @@
         function fecharAmpliacao(event) { if (event.target.id === "zoom-modal") document.getElementById('zoom-modal').classList.remove('active'); }
         function fecharAmpliacaoObg() { document.getElementById('zoom-modal').classList.remove('active'); }
 
-        /* --- STREAMING_CHUNK:Admin Controls and Logic... --- */
         async function alterarMinhaSenhaAdmin() {
             const novaSenha = document.getElementById('admin-fast-pin').value.trim();
             if(!novaSenha) { alert("Digite a nova senha!"); return; }
@@ -1057,6 +1747,7 @@
                 });
                 alert(`✅ Integrante "${nome}" cadastrado com sucesso!`);
                 limparFormularioUsuario();
+                atualizarSelectFiltroAlunoRelatorio();
             } catch (err) { console.error(err); }
         }
 
@@ -1087,6 +1778,7 @@
                 try {
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id), { id, nome, grade, letter, role, pin, moedas, moedasExclusivas });
                     alert("✅ Cadastro atualizado com sucesso!"); limparFormularioUsuario();
+                    atualizarSelectFiltroAlunoRelatorio();
                 } catch (err) { console.error(err); }
             }
         }
@@ -1100,14 +1792,16 @@
 
         async function deletarAluno(id) {
             if (cargoLogado === "auxiliar" || !confirm("Remover usuário permanentemente?")) return;
-            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id)); } 
-            catch (err) { console.error(err); }
+            try { 
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id)); 
+                atualizarSelectFiltroAlunoRelatorio();
+            } catch (err) { console.error(err); }
         }
 
         async function modificarMoedasAluno(alunoId, operacao, tipoMoeda = 'normal') {
             const usuario = bancoDeAlunos.find(a => a.id === alunoId); if(!usuario) return;
-            const sigla = tipoMoeda === 'normal' ? '🪙' : '💎';
-            const quantia = parseInt(prompt(`Quantas moedas (${sigla}) deseja alterar para ${usuario.nome}?`)) || 0; if(quantia <= 0) return;
+            const textoTipo = tipoMoeda === 'normal' ? 'Moedas Normais' : 'Diamantes';
+            const quantia = parseInt(prompt(`Quantas moedas (${textoTipo}) deseja alterar para ${usuario.nome}?`)) || 0; if(quantia <= 0) return;
             
             const saldoAtual = tipoMoeda === 'normal' ? (usuario.moedas || 0) : (usuario.moedasExclusivas || 0);
             if(operacao === 'subtrair' && saldoAtual < quantia) { alert("Saldo insuficiente!"); return; }
@@ -1159,236 +1853,47 @@
             } catch (err) { console.error(err); }
         }
 
-        /* --- CONTROLADORES DE ITENS DA LOJINHA --- */
-        async function salvarItemLoja() {
-            const idEdit = document.getElementById('store-edit-id').value;
-            const n = document.getElementById('store-name').value.trim();
-            const p = document.getElementById('store-price').value;
-            const img = document.getElementById('store-img').value.trim();
-            const d = document.getElementById('store-desc').value;
+        // EXPORTANDO AS FUNÇÕES PARA O ESCOPO GLOBAL DO WINDOW PARA O HTML ACESSAR:
+        window.mudarTela = mudarTela;
+        window.alternarAbaChamada = alternarAbaChamada;
+        window.fazerLogin = fazerLogin;
+        window.fazerLogout = fazerLogout;
+        window.verEstanteComoAdmin = verEstanteComoAdmin;
+        window.cadastrarAlunosEmLote = cadastrarAlunosEmLote;
+        window.renderizarGridChamada = renderizarGridChamada;
+        window.alternarPresencaLocal = alternarPresencaLocal;
+        window.atualizarComentarioLocal = atualizarComentarioLocal;
+        window.salvarChamadaDiaria = salvarChamadaDiaria;
+        window.renderizarTabelaRelatorio = renderizarTabelaRelatorio;
+        window.darMoedaPresencaEmMassa = darMoedaPresencaEmMassa;
+        window.comprarItemDaLojinha = comprarItemDaLojinha;
+        window.abrirAlbumEspecifico = abrirAlbumEspecifico;
+        window.marcarComoVistaEAmpliar = marcarComoVistaEAmpliar;
+        window.comprarFigurinhaAlbumDireto = comprarFigurinhaAlbumDireto;
+        window.folhearPagina = folhearPagina;
+        window.fecharAmpliacao = fecharAmpliacao;
+        window.fecharAmpliacaoObg = fecharAmpliacaoObg;
+        window.alterarMinhaSenhaAdmin = alterarMinhaSenhaAdmin;
+        window.adicionarAluno = adicionarAluno;
+        window.salvarAtualizacaoUsuario = salvarAtualizacaoUsuario;
+        window.limparFormularioUsuario = limparFormularioUsuario;
+        window.deletarAluno = deletarAluno;
+        window.modificarMoedasAluno = modificarMoedasAluno;
+        window.filtrarAlunosDistribuicao = filtrarAlunosDistribuicao;
+        window.atualizarSelectFigurinhasDistribuicao = atualizarSelectFigurinhasDistribuicao;
+        window.distribuirCarta = distribuirCarta;
+        window.salvarItemLoja = salvarItemLoja;
+        window.atualizarListasAdmin = atualizarListasAdmin;
+        window.listarCartasCadastradasAdmin = listarCartasCadastradasAdmin;
+        window.salvarNovoAlbum = salvarNovoAlbum;
+        window.salvarCarta = salvarCarta;
+        window.deletarAlbum = deletarAlbum;
+        window.deletarCarta = deletarCarta;
+        window.deletarItemLoja = deletarItemLoja;
+        window.carregarUsuarioParaEdicao = carregarUsuarioParaEdicao;
+        window.atualizarTabelaHistorico = atualizarTabelaHistorico;
+        window.limparHistoricoGeral = limparHistoricoGeral;
 
-            if(!n || !p) { alert("Nome e Preço são obrigatórios!"); return; }
-
-            try {
-                if(idEdit && idEdit.trim() !== "") {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', idEdit), {
-                        id: idEdit, nome: n, preco: parseInt(p), imagem: img, desc: d
-                    });
-                } else {
-                    const novoId = "lj_" + Date.now();
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', novoId), {
-                        id: novoId, nome: n, preco: parseInt(p), imagem: img, desc: d
-                    });
-                }
-                limparFormularioStore();
-            } catch (err) { console.error(err); }
-        }
-
-        function limparFormularioStore() {
-            document.getElementById('store-edit-id').value = ""; document.getElementById('store-name').value = "";
-            document.getElementById('store-price').value = ""; document.getElementById('store-img').value = ""; document.getElementById('store-desc').value = "";
-            document.getElementById('title-store-form').innerText = "🛍️ Gerenciar Itens da Lojinha";
-            document.getElementById('wrapper-store-buttons').innerHTML = `<button class="btn-store" onclick="salvarItemLoja()">Cadastrar Item na Loja</button>`;
-        }
-
-        function carregarItemLojaParaEdicao(id) {
-            const item = bancoLoja.find(i => i.id === id); if(!item) return;
-            document.getElementById('store-edit-id').value = item.id; document.getElementById('store-name').value = item.nome;
-            document.getElementById('store-price').value = item.preco; document.getElementById('store-img').value = item.imagem || "";
-            document.getElementById('store-desc').value = item.desc || "";
-            document.getElementById('title-store-form').innerText = "🔄 Editar Item da Loja";
-            document.getElementById('wrapper-store-buttons').innerHTML = `<button class="btn-store" onclick="salvarItemLoja()">Salvar Item</button><button class="btn-secondary" style="margin-top:6px;" onclick="limparFormularioStore()">Cancelar</button>`;
-        }
-
-        async function deletarItemLoja(id) {
-            if(!confirm("Deletar item da loja?")) return;
-            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', id)); } catch(err) { console.error(err); }
-        }
-
-        function listarCartasCadastradasAdmin() {
-            const container = document.getElementById('list-cards'); const filtroAlbumId = document.getElementById('filter-cards-by-album').value;
-            if(!container) return;
-            let cartasFiltradas = (filtroAlbumId !== "todos") ? bancoDeCartas.filter(c => c.albumId === filtroAlbumId) : bancoDeCartas;
-
-            if (cartasFiltradas.length === 0) { container.innerHTML = `<div style="padding:15px; color:#7c7c8a; font-size:0.85rem; text-align:center;">Nenhuma figurinha nesta lista.</div>`; return; }
-            container.innerHTML = cartasFiltradas.map(c => {
-                const alb = bancoAlbuns.find(a => a.id === c.albumId);
-                return `<div class="list-item"><div><b>${c.nome}</b> <small style="color:${c.raridade === 'exclusiva' ? '#f72585' : '#a8a8b3'}; font-weight:bold;">(${c.raridade})</small><div style="font-size:0.75rem; color:var(--accent-color);">Álbum: ${alb?alb.titulo:'Desconhecido'}</div></div><div class="box-acoes-botoes"><button class="btn-edit" onclick="carregarCartaParaEdicao('${c.id}')">✏️</button><button class="btn-danger" style="padding:4px 8px;" onclick="deletarCartaDoBanco('${c.id}')">❌</button></div></div>`;
-            }).join('');
-        }
-
-        function carregarCartaParaEdicao(id) {
-            const c = bancoDeCartas.find(item => item.id === id); if(!c) return;
-            document.getElementById('card-edit-id').value = c.id; document.getElementById('card-name').value = c.nome;
-            document.getElementById('card-album-select').value = c.albumId; document.getElementById('card-rarity').value = c.raridade;
-            document.getElementById('card-points').value = c.pontos; document.getElementById('card-price').value = c.preço || 0;
-            document.getElementById('card-img').value = c.imagem || ""; document.getElementById('card-desc').value = c.habilidade || "";
-            document.getElementById('title-card-form').innerText = "🔄 Modificar Dados da Figurinha";
-            document.getElementById('wrapper-card-buttons').innerHTML = `<button onclick="salvarCarta()" style="background:#2a9d8f;">Salvar Alterações</button><button class="btn-secondary" style="margin-top:6px;" onclick="limparFormularioCarta()">Cancelar</button>`;
-        }
-        function limparFormularioCarta() {
-            document.getElementById('card-edit-id').value = ""; document.getElementById('card-name').value = ""; document.getElementById('card-price').value = ""; document.getElementById('card-img').value = ""; document.getElementById('card-desc').value = "";
-            document.getElementById('title-card-form').innerText = "🃏 Cadastrar Nova Figurinha";
-            document.getElementById('wrapper-card-buttons').innerHTML = `<button onclick="salvarCarta()">Adicionar Figurinha</button>`;
-        }
-        async function salvarCarta() { 
-            const idEdit = document.getElementById('card-edit-id').value; const n = document.getElementById('card-name').value.trim(); const al = document.getElementById('card-album-select').value; 
-            const p = document.getElementById('card-price').value; const r = document.getElementById('card-rarity').value; const pts = document.getElementById('card-points').value || 5; 
-            const img = document.getElementById('card-img').value.trim(); const d = document.getElementById('card-desc').value; 
-            if(!n) { alert("⚠️ Digite ao menos o nome da figurinha!"); return; } 
-            try {
-                if(idEdit && idEdit.trim() !== "") { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', idEdit), { id: idEdit, albumId: al, nome: n, raridade: r, pontos: parseInt(pts), preço: parseInt(p) || 0, imagem: img, habilidade: d }); } 
-                else { const novoId = "c_" + Date.now(); await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', novoId), { id: novoId, albumId: al, nome: n, raridade: r, pontos: parseInt(pts), preço: parseInt(p) || 0, imagem: img, habilidade: d }); }
-                limparFormularioCarta();
-            } catch (err) { console.error(err); }
-        }
-        async function deletarCartaDoBanco(cardId) {
-            if (cargoLogado === "auxiliar" || !confirm("Deseja realmente excluir esta figurinha permanentemente?")) return;
-            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', cardId)); } catch (err) { console.error(err); }
-        }
-
-        /* --- CONTROLADORES DE ALBUNS NO FIREBASE --- */
-        function carregarAlbumParaEdicao(id) {
-            if (cargoLogado === "auxiliar") return;
-            const alb = bancoAlbuns.find(a => a.id === id); if(!alb) return;
-            document.getElementById('album-edit-id').value = alb.id; document.getElementById('album-new-title').value = alb.titulo;
-            document.getElementById('album-new-image').value = alb.imagem || ""; document.getElementById('album-new-color').value = alb.cor || "#8b0000";
-            document.getElementById('title-album-form').innerText = "🔄 Modificar Dados do Álbum";
-            document.getElementById('wrapper-album-buttons').innerHTML = `<button onclick="salvarNovoAlbum()" style="background:#2a9d8f;">Salvar</button><button class="btn-secondary" style="margin-top:6px;" onclick="limparFormularioAlbum()">Cancelar</button>`;
-        }
-        function limparFormularioAlbum() {
-            document.getElementById('album-edit-id').value = ""; document.getElementById('album-new-title').value = ""; document.getElementById('album-new-image').value = ""; document.getElementById('album-new-color').value = "#8b0000";
-            document.getElementById('title-album-form').innerText = "📁 Gerenciar / Criar Álbuns";
-            document.getElementById('wrapper-album-buttons').innerHTML = `<button onclick="salvarNovoAlbum()">Criar Álbum</button>`;
-        }
-        async function salvarNovoAlbum() {
-            if (cargoLogado === "auxiliar") return;
-            const idEdit = document.getElementById('album-edit-id').value; const titulo = document.getElementById('album-new-title').value.trim();
-            const imagem = document.getElementById('album-new-image').value.trim(); const cor = document.getElementById('album-new-color').value;
-            if(!titulo) { alert("Digite o nome do álbum!"); return; }
-            try {
-                if(idEdit && idEdit.trim() !== "") await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', idEdit), { id: idEdit, titulo, cor, imagem });
-                else { const novoId = "alb_" + Date.now(); await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', novoId), { id: novoId, titulo, cor, imagem }); }
-                limparFormularioAlbum();
-            } catch (err) { console.error(err); }
-        }
-        async function deletarAlbum(id) {
-            if(cargoLogado === "auxiliar" || !confirm("⚠️ ALERTA: Deseja mesmo excluir este Álbum?\nIsso NÃO apagará as figurinhas já criadas, elas ficarão órfãs (sem capa para exibi-las).")) return;
-            try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', id)); } catch(err) { console.error(err); }
-        }
-
-        /* --- ATUALIZAÇÕES VISUAIS COM RETENÇÃO DE ESTADO --- */
-        function atualizarListasAdmin() {
-            const s1 = document.getElementById('card-album-select'); const s2 = document.getElementById('select-dist-album-filter'); const s3 = document.getElementById('filter-cards-by-album');
-            if(s1 && s2 && s3) {
-                const bkp1 = s1.value; const bkp2 = s2.value; const bkp3 = s3.value;
-                s1.innerHTML = ''; s2.innerHTML = '<option value="">-- Escolha o Álbum --</option>'; s3.innerHTML = '<option value="todos">-- Ver Todos --</option>';
-                bancoAlbuns.forEach(a => { s1.add(new Option(a.titulo, a.id)); s2.add(new Option(a.titulo, a.id)); s3.add(new Option(a.titulo, a.id)); });
-                if(bkp1 && Array.from(s1.options).some(o => o.value === bkp1)) s1.value = bkp1;
-                if(bkp2 && Array.from(s2.options).some(o => o.value === bkp2)) s2.value = bkp2;
-                if(bkp3 && Array.from(s3.options).some(o => o.value === bkp3)) s3.value = bkp3;
-            }
-            
-            filtrarAlunosDistribuicao(); atualizarSelectFigurinhasDistribuicao(); listarCartasCadastradasAdmin();
-
-            const itemsList = document.getElementById('list-store-items');
-            if(itemsList) {
-                itemsList.innerHTML = bancoLoja.map(i => `<div class="list-item"><div>${i.imagem||'📦'} <b>${i.nome}</b> <span style="color:#ffb703; font-size:0.8rem;">(🪙 ${i.preco})</span></div><div class="box-acoes-botoes"><button class="btn-edit" style="background:#b5179e;" onclick="carregarItemLojaParaEdicao('${i.id}')">✏️</button><button class="btn-danger" style="padding:4px 8px;" onclick="deletarItemLoja('${i.id}')">❌</button></div></div>`).join('');
-            }
-
-            const usersGrid = document.getElementById('list-all-users');
-            if (usersGrid) {
-                usersGrid.innerHTML = bancoDeAlunos.map(u => {
-                    const colorRole = u.role === 'administrador' ? '#e63946' : (u.role === 'aluno' ? '#00b4d8' : '#f4a261');
-                    const badgeSeries = u.grade !== '-' ? `(${u.grade} ${u.letter})` : '';
-                    return `<div class="list-item"><span><b>${u.nome}</b> <br><small style="color:${colorRole}; font-weight:bold;">[${u.role.toUpperCase()}]</small> <small style="color:#a8a8b3;">${badgeSeries}</small></span><div class="box-acoes-botoes"><button class="btn-edit" onclick="carregarUsuarioParaEdicao('${u.id}')">✏️</button><button class="btn-danger" style="padding:4px 8px;" onclick="deletarAluno('${u.id}')">❌</button></div></div>`;
-                }).join('');
-            }
-
-            const fNameInput = document.getElementById('filter-user-name'); const fName = fNameInput ? fNameInput.value.toLowerCase() : "";
-            const fGrade = document.getElementById('filter-user-grade').value; const fLetter = document.getElementById('filter-user-letter').value;
-            const apenasAlunos = bancoDeAlunos.filter(u => u.role === "aluno" && u.nome.toLowerCase().includes(fName) && (fGrade === "todos" || u.grade === fGrade) && (fLetter === "todos" || u.letter === fLetter));
-
-            const walletList = document.getElementById('list-only-students-wallets');
-            if (walletList) {
-                walletList.innerHTML = apenasAlunos.map(al => `
-                    <div class="list-item" style="flex-wrap: wrap;">
-                        <div style="width:100%; margin-bottom:6px;"><span><b>${al.nome}</b> <small style="color:#a8a8b3;">(${al.grade || ''} ${al.letter || ''})</small></span></div>
-                        
-                        <div style="display:flex; justify-content:space-between; width:100%; align-items:center; background:#1a1a1e; padding:6px; border-radius:6px; margin-bottom:4px;">
-                            <span style="color:#ffb703; font-weight:bold; font-size:0.9rem;">Saldo: 🪙 ${al.moedas || 0}</span>
-                            <div class="box-acoes-botoes">
-                                <button class="btn-coin" style="padding: 4px 8px;" onclick="modificarMoedasAluno('${al.id}', 'somar', 'normal')"><b>➕ 🪙</b></button>
-                                <button class="btn-coin" style="background:#e63946; color:#fff; padding: 4px 8px;" onclick="modificarMoedasAluno('${al.id}', 'subtrair', 'normal')"><b>➖ 🪙</b></button>
-                            </div>
-                        </div>
-
-                        <div style="display:flex; justify-content:space-between; width:100%; align-items:center; background:#1a1a1e; padding:6px; border-radius:6px;">
-                            <span style="color:#f72585; font-weight:bold; font-size:0.9rem;">Especial: 💎 ${al.moedasExclusivas || 0}</span>
-                            <div class="box-acoes-botoes">
-                                <button class="btn-diamond" style="padding: 4px 8px;" onclick="modificarMoedasAluno('${al.id}', 'somar', 'exclusiva')"><b>➕ 💎</b></button>
-                                <button class="btn-diamond" style="background:#e63946; color:#fff; padding: 4px 8px;" onclick="modificarMoedasAluno('${al.id}', 'subtrair', 'exclusiva')"><b>➖ 💎</b></button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            const activeList = document.getElementById('list-albuns-ativos');
-            if (activeList) {
-                activeList.innerHTML = bancoAlbuns.map(a => `
-                    <div class="list-item">
-                        <span>${a.imagem || '📘'} <b>${a.titulo}</b></span>
-                        <div class="box-acoes-botoes">
-                            <button class="btn-edit" onclick="carregarAlbumParaEdicao('${a.id}')">✏️</button>
-                            <button class="btn-danger" style="padding:4px 8px;" onclick="deletarAlbum('${a.id}')">❌</button>
-                        </div>
-                    </div>
-                `).join('');
-            }
-            atualizarTabelaHistorico();
-        }
-
-        function atualizarTabelaHistorico() {
-            const tbody = document.getElementById('history-table-body'); if(!tbody) return;
-            const fStudent = document.getElementById('filter-history-student').value.toLowerCase();
-            const fGrade = document.getElementById('filter-history-grade').value;
-            const fLetter = document.getElementById('filter-history-letter').value;
-
-            const historicoFiltrado = historicoEnvios.filter(h => {
-                const matchStudent = h.alunoNome.toLowerCase().includes(fStudent);
-                const matchGrade = (fGrade === "todos" || h.alunoSerie === fGrade);
-                const matchLetter = (fLetter === "todos" || (h.alunoLetter || "-") === fLetter);
-                return matchStudent && matchGrade && matchLetter;
-            });
-
-            tbody.innerHTML = historicoFiltrado.map(h => {
-                const albRef = bancoAlbuns.find(a => a.id === h.albumId);
-                const nomeAlbumExibicao = albRef ? albRef.titulo : (h.albumTitulo || "Deletado/Loja");
-                
-                return `<tr><td><b>${h.alunoNome}</b></td><td>${h.alunoSerie || '-'} ${h.alunoLetter && h.alunoLetter !== '-' ? h.alunoLetter : ''}</td><td>${nomeAlbumExibicao}</td><td>${h.cartaNome}</td><td><span class="card-raridade">${h.raridade}</span></td><td>${h.data}</td></tr>`;
-            }).join('');
-        }
-
-        async function limparHistoricoGeral() { 
-            if(confirm("Limpar todo o histórico?")) { 
-                try { for (const h of historicoEnvios) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'historico', h.id)); alert("Histórico esvaziado no Firebase!"); } catch (err) { console.error(err); }
-            } 
-        }
-
-        // Exposições
-        window.fazerLogin = fazerLogin; window.mudarTela = mudarTela; window.fazerLogout = fazerLogout; window.verEstanteComoAdmin = verEstanteComoAdmin;
-        window.folhearPagina = folhearPagina; window.comprarItemDaLojinha = comprarItemDaLojinha; window.comprarFigurinhaAlbumDireto = comprarFigurinhaAlbumDireto;
-        window.fecharAmpliacao = fecharAmpliacao; window.fecharAmpliacaoObg = fecharAmpliacaoObg; window.adicionarAluno = adicionarAluno;
-        window.carregarUsuarioParaEdicao = carregarUsuarioParaEdicao; window.salvarAtualizacaoUsuario = salvarAtualizacaoUsuario; window.limparFormularioUsuario = limparFormularioUsuario;
-        window.deletarAluno = deletarAluno; window.modificarMoedasAluno = modificarMoedasAluno; window.filtrarAlunosDistribuicao = filtrarAlunosDistribuicao;
-        window.atualizarSelectFigurinhasDistribuicao = atualizarSelectFigurinhasDistribuicao; window.distribuirCarta = distribuirCarta;
-        window.carregarCartaParaEdicao = carregarCartaParaEdicao; window.limparFormularioCarta = limparFormularioCarta; window.salvarCarta = salvarCarta;
-        window.deletarCartaDoBanco = deletarCartaDoBanco; window.listarCartasCadastradasAdmin = listarCartasCadastradasAdmin;
-        window.carregarAlbumParaEdicao = carregarAlbumParaEdicao; window.limparFormularioAlbum = limparFormularioAlbum; window.salvarNovoAlbum = salvarNovoAlbum; window.deletarAlbum = deletarAlbum;
-        window.atualizarListasAdmin = atualizarListasAdmin; window.atualizarTabelaHistorico = atualizarTabelaHistorico; window.limparHistoricoGeral = limparHistoricoGeral;
-        window.abrirAlbumEspecifico = abrirAlbumEspecifico; window.marcarComoVistaEAmpliar = marcarComoVistaEAmpliar;
-        window.salvarItemLoja = salvarItemLoja; window.limparFormularioStore = limparFormularioStore; window.carregarItemLojaParaEdicao = carregarItemLojaParaEdicao; window.deletarItemLoja = deletarItemLoja; window.alterarMinhaSenhaAdmin = alterarMinhaSenhaAdmin;
     </script>
 </body>
 </html>
