@@ -6,7 +6,7 @@
     <title>Maker Labs São Roque - Sistema e Lojinha</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
+
         :root {
             --bg-body: #121214;
             --bg-decoration: radial-gradient(#1f1f23 20%, transparent 20%), radial-gradient(#1f1f23 20%, transparent 20%);
@@ -22,14 +22,14 @@
             --page-bg: #1a1a1e;
         }
 
-        body { 
-            background-color: var(--bg-body); color: var(--text-color); padding: 20px 20px 80px 20px; 
+        body {
+            background-color: var(--bg-body); color: var(--text-color); padding: 20px 20px 80px 20px;
             background-image: var(--bg-decoration); background-size: var(--bg-size); background-repeat: repeat; background-attachment: fixed;
             position: relative; min-height: 100vh; transition: all 0.3s ease;
         }
 
-        header { 
-            display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto 30px auto; padding: 20px 25px; 
+        header {
+            display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto 30px auto; padding: 20px 25px;
             background-image: linear-gradient(135deg, #00b4d8, #0077b6); background-size: cover; background-position: center;
             border-radius: 16px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); flex-wrap: wrap; gap: 15px;
         }
@@ -50,22 +50,22 @@
         .screen { display: none; position: relative; z-index: 10; }
         .screen.active { display: block; }
 
-        .login-container { max-width: 400px; margin: 80px auto; background: var(--bg-box); padding: 35px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center; border: 1px solid var(--border-color); }
-        .login-container h1 { font-size: 2rem; color: var(--accent-color); margin-bottom: 5px; }
-        .login-container h2 { font-size: 1.1rem; color: #a8a8b3; margin-bottom: 25px; }
+        .login-container, .change-password-container { max-width: 400px; margin: 80px auto; background: var(--bg-box); padding: 35px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); text-align: center; border: 1px solid var(--border-color); }
+        .login-container h1, .change-password-container h1 { font-size: 2rem; color: var(--accent-color); margin-bottom: 5px; }
+        .login-container h2, .change-password-container h2 { font-size: 1.1rem; color: #a8a8b3; margin-bottom: 25px; }
 
         input, select, textarea { width: 100%; padding: 11px 14px; margin-bottom: 12px; border: 1px solid var(--border-color); background: #141416; color: #fff; border-radius: 8px; font-size: 0.95rem; transition: border 0.2s; }
         input:focus, select:focus, textarea:focus { border-color: var(--accent-color); outline: none; background: #161619; }
         label { display: block; text-align: left; margin-bottom: 6px; font-size: 0.8rem; color: #a8a8b3; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        button { width: 100%; padding: 12px; background: var(--accent-gradient); color: white; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; transition: background 0.2s, transform 0.1s; }
-        button:hover { filter: brightness(1.1); }
-        button:active { transform: scale(0.99); }
-        button:disabled { background: #29292e !important; color: #7c7c7a !important; cursor: not-allowed; transform: none !important; filter: none; }
-        
+
+        button { width: 100%; padding: 12px; background: var(--accent-gradient); color: white; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: bold; cursor: pointer; transition: background 0.2s, transform 0.1s, opacity 0.2s; }
+        button:hover:not(:disabled) { filter: brightness(1.1); }
+        button:active:not(:disabled) { transform: scale(0.99); }
+        button:disabled { background: #29292e !important; color: #7c7c7a !important; cursor: not-allowed; transform: none !important; filter: none; opacity: 0.7; }
+
         .btn-danger { background: linear-gradient(135deg, #e63946, #ff4d6d); }
         .btn-secondary { background: #29292e; color: #e1e1e6; border: 1px solid var(--border-color); }
-        .btn-secondary:hover { background: #323238; }
+        .btn-secondary:hover:not(:disabled) { background: #323238; }
         .btn-edit { background: linear-gradient(135deg, #f4a261, #e76f51); padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; width: auto; color: #fff; }
         .btn-coin { background: linear-gradient(135deg, #ffb703, #fb8500); color: #121214; }
         .btn-diamond { background: linear-gradient(135deg, #b5179e, #7209b7); color: #fff; }
@@ -79,7 +79,7 @@
         /* --- ESTANTE DE LIVROS --- */
         .bookcase-container { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .shelf { background: linear-gradient(transparent 90%, #5c3d2e 90%, #3d251a 100%); padding: 30px 20px 25px 20px; margin-bottom: 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; border-bottom: 12px solid #2b1810; }
-        
+
         .book-cover-item { width: 170px; height: 240px; border-radius: 4px 12px 12px 4px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; cursor: pointer; position: relative; box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset 8px 0 8px rgba(0,0,0,0.3); border-left: 6px solid rgba(0,0,0,0.4); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); justify-self: center; text-align: center; }
         .book-cover-item:hover { transform: translateY(-15px) scale(1.05); box-shadow: 10px 15px 25px rgba(0,0,0,0.7); }
         .book-cover-title { font-size: 1rem; font-weight: bold; color: #fff; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); text-transform: uppercase; line-height: 1.2; width: 100%; word-wrap: break-word; }
@@ -113,14 +113,14 @@
 
         .buy-sticker-btn { margin-top: 10px; background: #ffb703; color: #121214; font-size: 0.75rem; font-weight: bold; border: none; padding: 4px 10px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: transform 0.2s; z-index: 70; justify-content: center; width: auto; }
         .buy-sticker-btn:hover { transform: scale(1.08); background: #fff; }
-        
+
         .card-raridade { font-size: 0.65rem; text-transform: uppercase; font-weight: bold; padding: 2px 8px; border-radius: 20px; margin-bottom: 4px; background: var(--bg-body); }
         .comum .card-raridade { color: #b0b0b8; }
         .rara .card-raridade { color: #00b4d8; }
         .epica .card-raridade { color: #9d4edd; }
         .lendaria .card-raridade { color: #ffb703; }
         .exclusiva .card-raridade { color: #f72585; text-shadow: 0 0 5px rgba(247,37,133,0.5); }
-        
+
         .card-img-container { width: 100%; height: 80px; background-color: var(--bg-body); border-radius: 8px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .card-img { width: 100%; height: 100%; object-fit: cover; }
         .card-img-fallback { font-size: 2rem; }
@@ -139,14 +139,15 @@
         .book-container { max-width: 1050px; margin: 0 auto 30px auto; background: #0f0f11; padding: 20px; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.6); border: 4px solid #2d2d30; }
         .book-wrapper { display: grid; grid-template-columns: 1fr 1fr; background: var(--page-bg); border-radius: 12px; position: relative; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid #3c3c42; }
         .book-wrapper::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 100%; background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%); z-index: 50; pointer-events: none; }
-        
+
         .book-page { padding: 30px 25px 40px 25px; height: 560px; display: flex; flex-direction: column; position: relative; justify-content: center; }
+        @media (max-height: 800px) { .book-page { height: calc(100vh - 350px); min-height: 400px; } }
         .book-page.left-page { border-right: 1px solid rgba(0,0,0,0.3); }
         .book-page.right-page { border-left: 1px solid rgba(0,0,0,0.3); }
         .page-num { position: absolute; bottom: 12px; font-size: 0.85rem; color: #7c7c8a; font-weight: bold; }
         .left-page .page-num { left: 20px; }
         .right-page .page-num { right: 20px; }
-        
+
         .page-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 20px; width: 100%; height: 100%; max-width: 440px; margin: 0 auto; align-items: center; justify-content: center; }
         .book-controls { display: flex; justify-content: space-between; max-width: 1050px; margin: 0 auto; gap: 20px; }
         .book-controls button { width: auto; flex: 1; padding: 15px; }
@@ -156,7 +157,7 @@
         .store-section { background: rgba(30, 30, 34, 0.6); border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
         .store-section h2 { color: #f72585; margin-bottom: 20px; border-bottom: 2px solid #3c3c42; padding-bottom: 10px; font-size: 1.4rem; text-transform: uppercase; }
         .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        
+
         .store-item-box { background: var(--bg-box); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; align-items: center; text-align: center; border: 2px solid var(--border-color); box-shadow: 0 4px 10px var(--card-shadow); transition: transform 0.2s; position: relative; }
         .store-item-box:hover { transform: translateY(-5px); border-color: #b5179e; }
         .store-item-icon { font-size: 3.5rem; margin-bottom: 10px; background: var(--bg-body); width: 100%; border-radius: 8px; padding: 10px 0; }
@@ -175,7 +176,7 @@
         .btn-status { padding: 8px; font-size: 0.85rem; border-radius: 6px; font-weight: bold; text-align: center; width: 100%; cursor: pointer; border: none; }
         .btn-status.present { background: #2a9d8f; color: #fff; }
         .btn-status.absent { background: #e63946; color: #fff; }
-        
+
         .attendance-tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;}
         .attendance-tabs button { flex: 1; min-width: 150px; background: #1e1e22; border: 1px solid var(--border-color); color: #a8a8b3; }
         .attendance-tabs button.active-att-tab { background: var(--accent-gradient); color: #fff; border-color: transparent; font-weight: bold; }
@@ -199,7 +200,7 @@
         .admin-box h2 { margin-bottom: 16px; color: #ffb703; font-size: 1.15rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
         .admin-box.disabled-box { opacity: 0.25; pointer-events: none; position: relative; filter: grayscale(100%); }
         .admin-box.disabled-box::after { content: "🔒 Seção Bloqueada"; position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5); color:#fff; font-weight:bold; font-size: 1.1rem; border-radius: 12px; }
-        
+
         .manage-list { max-height: 220px; overflow-y: auto; background: #141416; padding: 6px; border-radius: 8px; margin-bottom: 16px; border: 1px solid var(--border-color); flex-grow: 1; }
         .list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #222226; font-size: 0.9rem; gap: 12px; }
         .list-item:last-child { border-bottom: none; }
@@ -213,6 +214,10 @@
 
         .nav-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
         .nav-buttons button { width: auto; padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; }
+
+        /* --- SPINNER DE CARREGAMENTO --- */
+        .spinner-inline { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid #fff; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; vertical-align: middle; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* --- ESTILOS DE IMPRESSÃO --- */
         @media print {
@@ -243,13 +248,13 @@
         <div class="login-container">
             <h1>MAKER LABS</h1>
             <h2>🚀 São Roque 🚀</h2>
-            
+
             <label for="username">Usuário / Login:</label>
             <input type="text" id="username" placeholder="Digite seu Nome ou Login">
-            
+
             <label for="password">Código de Acesso (Senha):</label>
             <input type="password" id="password" placeholder="Código / PIN de Acesso">
-            
+
             <label for="login-role">Entrar Como (Cargo):</label>
             <select id="login-role">
                 <option value="aluno" selected>Aluno</option>
@@ -257,8 +262,26 @@
                 <option value="instrutor">Instrutor / Adjunto</option>
                 <option value="administrador">Administrador</option>
             </select>
-            
-            <button onclick="fazerLogin()">Abrir Painel / Álbum 📖</button>
+
+            <button id="btn-login-submit" onclick="fazerLogin()">Abrir Painel / Álbum 📖</button>
+        </div>
+    </div>
+
+    <!-- TELA DE ALTERAÇÃO DE SENHA (PRIMEIRO LOGIN) -->
+    <div id="screen-change-password" class="screen">
+        <div class="change-password-container">
+            <h1>🔐 Primeiro Acesso</h1>
+            <h2>Olá, <span id="change-pwd-name"></span>!</h2>
+            <p style="color: #a8a8b3; margin-bottom: 20px;">Por segurança, você precisa criar uma nova senha antes de continuar.</p>
+
+            <label for="new-password">Nova Senha:</label>
+            <input type="password" id="new-password" placeholder="Digite a nova senha">
+
+            <label for="confirm-password">Confirmar Senha:</label>
+            <input type="password" id="confirm-password" placeholder="Repita a nova senha">
+
+            <button id="btn-confirm-change-password" onclick="confirmarTrocaSenha()">Salvar Nova Senha ✅</button>
+            <button class="btn-secondary" style="margin-top: 10px;" onclick="cancelarTrocaSenha()">Cancelar e Voltar ao Login</button>
         </div>
     </div>
 
@@ -267,7 +290,7 @@
         <header>
             <div>
                 <h1>Estante de Álbuns Maker</h1>
-                <p>Usuário: <span id="shelf-user-display" style="color: #ffb703; font-weight: bold;"></span> 
+                <p>Usuário: <span id="shelf-user-display" style="color: #ffb703; font-weight: bold;"></span>
                     <span id="shelf-coins-wrapper"></span>
                 </p>
             </div>
@@ -288,7 +311,7 @@
         <header>
             <div>
                 <h1 id="active-album-title">Nome do Álbum</h1>
-                <p>Usuário: <span id="user-display" style="color: #ffb703; font-weight: bold;"></span> 
+                <p>Usuário: <span id="user-display" style="color: #ffb703; font-weight: bold;"></span>
                    <span id="album-coins-wrapper"></span>
                 </p>
             </div>
@@ -338,7 +361,7 @@
                 <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
             </div>
         </header>
-        
+
         <div class="store-container">
             <div class="store-section">
                 <h2>💎 Figurinhas Exclusivas (Álbuns)</h2>
@@ -368,7 +391,6 @@
         </header>
 
         <div class="attendance-container">
-            <!-- ABAS DE NAVEGAÇÃO DA CHAMADA -->
             <div class="attendance-tabs">
                 <button id="att-tab-btn-1" class="active-att-tab" onclick="alternarAbaChamada(1)">📝 1. Lançamento Diário & Cadastro</button>
                 <button id="att-tab-btn-2" onclick="alternarAbaChamada(2)">📊 2. Relatório e Impressão</button>
@@ -379,7 +401,6 @@
             <div id="att-tab-content-1">
                 <div class="admin-box" style="margin-bottom: 25px;">
                     <h2>📥 Adicionar Alunos à Turma</h2>
-                    
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                         <div>
                             <label>Série (1º ao 5º Ano):</label>
@@ -402,12 +423,10 @@
                             </select>
                         </div>
                     </div>
-
                     <label>Cole múltiplos nomes de alunos (um por linha para cadastro em lote):</label>
                     <textarea id="bulk-students-input" rows="3" placeholder="Exemplo:&#10;Ana Souza&#10;Bruno Carvalho" style="resize: vertical;"></textarea>
-
                     <div style="display: flex; gap: 10px;">
-                        <button class="btn-success" onclick="cadastrarAlunosEmLote()">➕ Cadastrar Lista de Alunos</button>
+                        <button class="btn-success" id="btn-cadastrar-lote" onclick="cadastrarAlunosEmLote()">➕ Cadastrar Lista de Alunos</button>
                     </div>
                 </div>
 
@@ -418,10 +437,9 @@
                             <label>Data da Aula:</label>
                             <input type="date" id="attendance-date-picker" style="margin-bottom: 0;">
                         </div>
-                        <!-- BOTÃO PREMIAR CORRIGIDO (CSS inline adicionado) -->
                         <div style="display: flex; gap: 10px; align-items: flex-end; flex: 1;">
-                            <button class="btn-coin" style="padding: 10px 15px; min-height: 38px; height: auto; white-space: normal; line-height: 1.2; word-wrap: break-word;" onclick="darMoedaPresencaEmMassa()">💰 Premiar Presentes (+10)</button>
-                            <button class="btn-success" style="padding: 10px 15px; min-height: 38px; height: auto; white-space: normal; line-height: 1.2; word-wrap: break-word;" onclick="salvarChamadaDiaria()">💾 Salvar Chamada do Dia</button>
+                            <button class="btn-coin" id="btn-premiar-presenca" style="padding: 10px 15px; min-height: 38px; height: auto; white-space: normal; line-height: 1.2; word-wrap: break-word;" onclick="darMoedaPresencaEmMassa()">💰 Premiar Presentes (+10)</button>
+                            <button class="btn-success" id="btn-salvar-chamada" style="padding: 10px 15px; min-height: 38px; height: auto; white-space: normal; line-height: 1.2; word-wrap: break-word;" onclick="salvarChamadaDiaria()">💾 Salvar Chamada do Dia</button>
                         </div>
                     </div>
 
@@ -437,7 +455,7 @@
             <div id="att-tab-content-2" style="display: none;">
                 <div class="admin-box print-section">
                     <h2>📊 Relatório de Presença, Faltas e Comentários</h2>
-                    
+
                     <div class="filter-group-inline">
                         <div class="filter-field">
                             <label style="font-size:0.7rem; margin-bottom:2px;">Filtrar por Período:</label>
@@ -462,7 +480,6 @@
                                 <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option><option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
                             </select>
                         </div>
-                        <!-- NOVO FILTRO DE ALUNO SOLICITADO -->
                         <div class="filter-field">
                             <label style="font-size:0.7rem; margin-bottom:2px;">Aluno:</label>
                             <select id="report-student-filter" onchange="renderizarTabelaRelatorio()">
@@ -494,30 +511,26 @@
                 </div>
             </div>
 
-            <!-- ABA 3: CONTRATO DIDÁTICO (NOVIDADE SOLICITADA) -->
+            <!-- ABA 3: CONTRATO DIDÁTICO -->
             <div id="att-tab-content-3" style="display: none;">
                 <div class="admin-box">
                     <h2>📜 Contrato Didático da Turma</h2>
                     <p style="color: #a8a8b3; margin-bottom: 20px; font-size: 0.9rem;">As regras inegociáveis não podem ser alteradas. As regras da turma são definidas em conjunto.</p>
-                    
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                        <!-- Regras Inegociáveis -->
                         <div style="background: rgba(230,57,70,0.08); border: 1px solid #e63946; padding: 20px; border-radius: 12px;">
                             <h3 style="color: #e63946; margin-bottom: 15px; font-size: 1.1rem;">🔴 Regras Inegociáveis (Fixas)</h3>
                             <ul style="padding-left: 20px; font-size: 0.95rem; color: #e1e1e6; line-height: 1.6;">
                                 <li>Respeitar professores e colegas em todos os momentos.</li>
                                 <li>Ter zelo pelos equipamentos</li>
-								<li>O que acontece fora da sala, fica fora da sala</li>
-								<li>Usar roupas e calçados adequados para a aula</li>
+                                <li>O que acontece fora da sala, fica fora da sala</li>
+                                <li>Usar roupas e calçados adequados para a aula</li>
                                 <li>É proibido o consumo de alimentos ou bebidas próximos aos eletrônicos.</li>
                                 <li>Aguardar a instrução do professor antes de manusear ferramentas.</li>
                                 <li>Devolver todos os materiais e kits aos seus devidos lugares após o uso.</li>
-								<li>Regra dos 3 Avisos, no qual no tericeiro aviso é o aluno encaminhado para a direção</li>
-								<li>Sem palavrões, apelidos e ofensas</li>
+                                <li>Regra dos 3 Avisos, no qual no terceiro aviso é o aluno encaminhado para a direção</li>
+                                <li>Sem palavrões, apelidos e ofensas</li>
                             </ul>
                         </div>
-                        
-                        <!-- Regras da Turma -->
                         <div style="background: rgba(42,157,143,0.08); border: 1px solid #2a9d8f; padding: 20px; border-radius: 12px; display: flex; flex-direction: column;">
                             <h3 style="color: #2a9d8f; margin-bottom: 15px; font-size: 1.1rem;">🟢 Regras Implementadas pela Turma</h3>
                             <textarea id="class-rules-input" rows="8" placeholder="Digite aqui as regras que a turma combinou para este ano/semestre...&#10;&#10;Exemplo:&#10;1. Ajudar o colega antes de chamar o professor.&#10;2. Manter o tom de voz ameno durante as atividades em grupo." style="flex-grow: 1; resize: vertical;"></textarea>
@@ -526,7 +539,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -546,7 +558,7 @@
         </header>
 
         <div class="admin-layout-container">
-            
+
             <!-- CAIXA RÁPIDA: ALTERAR MINHA SENHA -->
             <div class="admin-box" style="padding: 15px 24px; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
@@ -555,28 +567,28 @@
                 </div>
                 <div style="display: flex; gap: 10px; flex: 1; min-width: 250px;">
                     <input type="text" id="admin-fast-pin" placeholder="Digite a nova senha..." style="margin:0;">
-                    <button onclick="alterarMinhaSenhaAdmin()" style="width: auto; padding: 0 20px;">Atualizar</button>
+                    <button id="btn-fast-pin-update" onclick="alterarMinhaSenhaAdmin()" style="width: auto; padding: 0 20px;">Atualizar</button>
                 </div>
             </div>
 
             <div class="admin-grid">
-                
+
                 <!-- BLOCO 1: GERENCIAR ÁLBUM -->
                 <div class="admin-box" id="box-gerenciar-albuns">
                     <h2 id="title-album-form">📁 Gerenciar / Criar Álbuns</h2>
                     <input type="hidden" id="album-edit-id" value="">
                     <input type="text" id="album-new-title" placeholder="Nome do Álbum (Ex: Anual 2026)">
-                    
+
                     <label>Desenho / Ilustração da Capa (Link URL ou Emoji):</label>
                     <input type="text" id="album-new-image" placeholder="Ex: https://link-da-imagem.png ou 🤖">
 
                     <label>Cor da Capa do Livro:</label>
                     <input type="color" id="album-new-color" value="#8b0000" style="height: 40px; padding: 2px; cursor: pointer;">
-                    
+
                     <div id="wrapper-album-buttons" style="margin-bottom: 20px;">
-                        <button onclick="salvarNovoAlbum()">Criar Álbum</button>
+                        <button id="btn-salvar-album" onclick="salvarNovoAlbum()">Criar Álbum</button>
                     </div>
-                    
+
                     <h2 style="font-size:1rem; color:#a8a8b3;">Álbuns Ativos</h2>
                     <div class="manage-list" id="list-albuns-ativos"></div>
                 </div>
@@ -609,9 +621,9 @@
                     <input type="text" id="card-img" placeholder="Link/URL da Imagem">
                     <textarea id="card-desc" rows="2" placeholder="Descrição da Figurinha" style="resize: none;"></textarea>
                     <div id="wrapper-card-buttons" style="margin-bottom: 20px;">
-                        <button onclick="salvarCarta()">Adicionar Figurinha</button>
+                        <button id="btn-salvar-carta" onclick="salvarCarta()">Adicionar Figurinha</button>
                     </div>
-                    
+
                     <h2 style="font-size:1rem; color:#a8a8b3; margin-bottom:5px;">Figurinhas Cadastradas</h2>
                     <label>🔍 Filtrar Lista por Álbum:</label>
                     <select id="filter-cards-by-album" onchange="listarCartasCadastradasAdmin()" style="border-color: var(--accent-color); padding: 6px; font-size:0.85rem; height:34px;"></select>
@@ -644,16 +656,16 @@
                     <select id="select-dist-album-filter" onchange="atualizarSelectFigurinhasDistribuicao()"></select>
                     <label>Escolha a Figurinha:</label>
                     <select id="select-dist-card" style="margin-bottom: 20px;"></select>
-                    <button style="background: #2a9d8f; padding: 14px;" onclick="distribuirCarta()">Colar Figurinha no Álbum</button>
+                    <button id="btn-distribuir-carta" style="background: #2a9d8f; padding: 14px;" onclick="distribuirCarta()">Colar Figurinha no Álbum</button>
                 </div>
 
                 <!-- BLOCO 4: ITENS DA LOJINHA -->
                 <div class="admin-box" id="box-gerenciar-lojinha">
                     <h2 id="title-store-form" style="color:#f72585;">🛍️ Gerenciar Itens da Lojinha</h2>
                     <input type="hidden" id="store-edit-id" value="">
-                    
+
                     <input type="text" id="store-name" placeholder="Nome do Item (Ex: Piloto de Drone 10min)">
-                    
+
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                         <div>
                             <label>Preço Sugerido (Moedas):</label>
@@ -665,35 +677,43 @@
                         </div>
                     </div>
                     <textarea id="store-desc" rows="2" placeholder="Descrição do que o item faz..." style="resize: none;"></textarea>
-                    
+
                     <div id="wrapper-store-buttons" style="margin-bottom: 20px;">
-                        <button class="btn-store" onclick="salvarItemLoja()">Cadastrar Item na Loja</button>
+                        <button class="btn-store" id="btn-salvar-loja" onclick="salvarItemLoja()">Cadastrar Item na Loja</button>
                     </div>
 
                     <h2 style="font-size:1rem; color:#a8a8b3;">Itens Cadastrados</h2>
                     <div class="manage-list" id="list-store-items"></div>
                 </div>
 
-                <!-- SEÇÃO INTEGRANTES -->
+                <!-- SEÇÃO INTEGRANTES (GERENCIADOR DE USUÁRIOS) -->
                 <div class="admin-box" id="box-gerenciar-alunos">
                     <h2 id="title-user-form">👥 Gerenciador de Usuários</h2>
                     <input type="hidden" id="student-edit-id" value="">
                     <input type="text" id="student-name" placeholder="Nome Completo">
-                    
+
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
                         <div>
-                            <label>Série Escolar:</label>
+                            <label>Série Escolar / Setor:</label>
                             <select id="student-grade">
-                                <option value="-">-- Staff --</option>
-                                <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
-                                <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
+                                <option value="MAKER">MAKER</option>
+                                <option value="WIT">WIT</option>
+                                <option value="1º Ano">1º Ano</option>
+                                <option value="2º Ano">2º Ano</option>
+                                <option value="3º Ano">3º Ano</option>
+                                <option value="4º Ano">4º Ano</option>
+                                <option value="5º Ano">5º Ano</option>
                             </select>
                         </div>
                         <div>
                             <label>Sala:</label>
                             <select id="student-letter">
                                 <option value="-">-</option>
-                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
                             </select>
                         </div>
                         <div>
@@ -707,13 +727,17 @@
                         </div>
                     </div>
                     <input type="text" id="student-pin" placeholder="Código / Senha de Acesso" style="margin-top:12px;">
-                    
+
                     <div id="wrapper-user-buttons" style="margin-bottom: 25px;">
                         <button id="btn-user-submit" onclick="adicionarAluno()">Cadastrar Integrante</button>
                     </div>
-                    
-                    <h2 style="font-size:1rem; color:#a8a8b3;">Todos os Integrantes Cadastrados</h2>
-                    <div class="manage-list" id="list-all-users" style="max-height: 180px;"></div>
+
+                    <!-- LISTAS SEPARADAS DE ALUNOS E STAFF -->
+                    <h2 style="font-size:1rem; color:#ffb703; margin-top: 10px;">👦👧 Alunos</h2>
+                    <div class="manage-list" id="list-alunos" style="max-height: 160px;"></div>
+
+                    <h2 style="font-size:1rem; color:#00b4d8; margin-top: 10px;">⚙️ Equipe MAKER / WIT</h2>
+                    <div class="manage-list" id="list-staff" style="max-height: 160px;"></div>
                 </div>
 
                 <!-- SALDO MOEDAS -->
@@ -737,7 +761,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="manage-list" id="list-only-students-wallets" style="max-height: 380px; flex-grow: 1;"></div>
                 </div>
 
@@ -763,7 +786,7 @@
                             <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
                         </select>
                     </div>
-                    <button class="btn-danger" onclick="limparHistoricoGeral()" style="width: auto; height: 36px; padding: 0 15px;">🗑️ Limpar Histórico</button>
+                    <button class="btn-danger" id="btn-limpar-historico" onclick="limparHistoricoGeral()" style="width: auto; height: 36px; padding: 0 15px;">🗑️ Limpar Histórico</button>
                 </div>
                 <div class="table-wrapper">
                     <table>
@@ -781,7 +804,7 @@
                     </table>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
@@ -806,22 +829,26 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        
+
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'album-27bb2';
 
         const iconeMoeda = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: text-bottom; margin-right: 2px;"><circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#DAA520" stroke-width="2"/><circle cx="12" cy="12" r="7" fill="#FFC000" stroke="#B8860B" stroke-width="1"/><text x="12" y="16" font-size="11" font-family="Arial" font-weight="bold" fill="#B8860B" text-anchor="middle">$</text></svg>`;
+
+        function getPublicRef(colName) {
+            return collection(db, 'artifacts', appId, 'public', 'data', colName);
+        }
 
         const albunsIniciais = [
             { id: "alb_anual", titulo: "Álbum Anual 2026", cor: "#1a4314", imagem: "🤖" },
             { id: "alb_robotica", titulo: "Oficina de Robótica", cor: "#005f73", imagem: "⚙️" }
         ];
         const cartasIniciais = [
-            { id: "c1", albumId: "alb_anual", nome: "Cérebro Eletrônico", raridade: "lendaria", pontos: 10, preço: 50, habilidade: "Duplica energia.", imagem: "" },
-            { id: "c2", albumId: "alb_anual", nome: "Cartão Dourado Maker", raridade: "exclusiva", pontos: 50, preço: 200, habilidade: "Passe Livre Vip", imagem: "🎫" },
-            { id: "c3", albumId: "alb_anual", nome: "Placa Arduino Uno", raridade: "epica", pontos: 8, preço: 30, habilidade: "Energia estável.", imagem: "" }
+            { id: "c1", albumId: "alb_anual", nome: "Cérebro Eletrônico", raridade: "lendaria", pontos: 10, preco: 50, habilidade: "Duplica energia.", imagem: "" },
+            { id: "c2", albumId: "alb_anual", nome: "Cartão Dourado Maker", raridade: "exclusiva", pontos: 50, preco: 200, habilidade: "Passe Livre Vip", imagem: "🎫" },
+            { id: "c3", albumId: "alb_anual", nome: "Placa Arduino Uno", raridade: "epica", pontos: 8, preco: 30, habilidade: "Energia estável.", imagem: "" }
         ];
         const alunosIniciais = [
-            { id: "admin_1", nome: "Admin", grade: "-", letter: "-", role: "administrador", pin: "1234", moedas: 0, moedasExclusivas: 0 },
+            { id: "admin_1", nome: "Admin", grade: "MAKER", letter: "-", role: "administrador", pin: "1234", moedas: 0, moedasExclusivas: 0 },
             { id: "1", nome: "Lucas Lima", grade: "1º Ano", letter: "A", role: "aluno", pin: "123", moedas: 100, moedasExclusivas: 5 }
         ];
         const lojaIniciais = [
@@ -837,17 +864,42 @@
         let bancoChamadaRegistros = [];
         let figurinhasVistas = {};
         let presencaAlunosModoLocal = {};
-        
-        let usuarioLogado = ""; 
-        let cargoLogado = ""; 
+
+        let usuarioLogado = "";
+        let cargoLogado = "";
         let modoAdminVisualizacao = false;
-        let idAlbumAtivoAtualmente = ""; 
-        let paginaAtualLivro = 1; 
+        let idAlbumAtivoAtualmente = "";
+        let paginaAtualLivro = 1;
         const FIGURINHAS_POR_PAGINA = 4;
         let currentUserId = "";
+        let alunoForcadoTrocarSenha = null;
 
-        const getPublicCollection = (colName) => collection(db, 'artifacts', appId, 'public', 'data', colName);
-        const getPrivateCollection = (uid, colName) => collection(db, 'artifacts', appId, 'users', uid, colName);
+        const unsubscribeFns = [];
+
+        function addUnsubscribe(fn) {
+            if (typeof fn === 'function') {
+                unsubscribeFns.push(fn);
+            }
+        }
+
+        function limparTodosListeners() {
+            unsubscribeFns.forEach(fn => {
+                try { fn(); } catch (e) { console.warn("Erro ao desinscrever listener:", e); }
+            });
+            unsubscribeFns.length = 0;
+        }
+
+        function executarComLoading(botaoId, fn) {
+            const btn = document.getElementById(botaoId);
+            if (!btn) return fn();
+            const textoOriginal = btn.textContent;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner-inline"></span> Processando...`;
+            return Promise.resolve(fn()).finally(() => {
+                btn.disabled = false;
+                btn.textContent = textoOriginal;
+            });
+        }
 
         async function inicializarAutenticacao() {
             try {
@@ -878,43 +930,52 @@
                 reportMonth.value = new Date().toISOString().slice(0, 7);
             }
 
-            onSnapshot(getPublicCollection('albuns'), (snap) => {
+            carregarPresencaDoSessionStorage();
+
+            const unsub1 = onSnapshot(getPublicRef('albuns'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
                 if (list.length === 0) popularSementesAlbuns(); else { bancoAlbuns = list; renderizarEstanteDeLivros(); atualizarListasAdmin(); }
             }, (err) => console.error(err));
+            addUnsubscribe(unsub1);
 
-            onSnapshot(getPublicCollection('cartas'), (snap) => {
+            const unsub2 = onSnapshot(getPublicRef('cartas'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
                 if (list.length === 0) popularSementesCartas(); else { bancoDeCartas = list; if (idAlbumAtivoAtualmente) renderizarLivroAberto(); atualizarListasAdmin(); renderizarLojinha(); }
             }, (err) => console.error(err));
+            addUnsubscribe(unsub2);
 
-            onSnapshot(getPublicCollection('alunos'), (snap) => {
+            const unsub3 = onSnapshot(getPublicRef('alunos'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
                 if (list.length === 0) popularSementesAlunos(); else { bancoDeAlunos = list; atualizarIndicadoresMoeda(); atualizarListasAdmin(); renderizarGridChamada(); atualizarSelectFiltroAlunoRelatorio(); }
             }, (err) => console.error(err));
+            addUnsubscribe(unsub3);
 
-            onSnapshot(getPublicCollection('lojinha_itens'), (snap) => {
+            const unsub4 = onSnapshot(getPublicRef('lojinha_itens'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
                 if (list.length === 0) popularSementesLoja(); else { bancoLoja = list; atualizarListasAdmin(); renderizarLojinha(); }
             }, (err) => console.error(err));
+            addUnsubscribe(unsub4);
 
-            onSnapshot(getPublicCollection('historico'), (snap) => {
+            const unsub5 = onSnapshot(getPublicRef('historico'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
                 list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); historicoEnvios = list;
                 if (idAlbumAtivoAtualmente) renderizarLivroAberto();
                 atualizarListasAdmin(); atualizarTabelaHistorico(); renderizarEstanteDeLivros(); renderizarLojinha();
             }, (err) => console.error(err));
+            addUnsubscribe(unsub5);
 
-            onSnapshot(getPublicCollection('chamada_registros'), (snap) => {
+            const unsub6 = onSnapshot(getPublicRef('chamada_registros'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
                 bancoChamadaRegistros = list;
                 renderizarTabelaRelatorio();
             }, (err) => console.error(err));
+            addUnsubscribe(unsub6);
 
-            onSnapshot(getPrivateCollection(uid, 'seen_stickers'), (snap) => {
+            const unsub7 = onSnapshot(collection(db, 'artifacts', appId, 'users', uid, 'seen_stickers'), (snap) => {
                 figurinhasVistas = {}; snap.forEach(docSnap => { figurinhasVistas[docSnap.id] = docSnap.data().vista || false; });
                 if (idAlbumAtivoAtualmente) renderizarLivroAberto();
             }, (err) => console.error(err));
+            addUnsubscribe(unsub7);
         }
 
         async function popularSementesAlbuns() { for (const item of albunsIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', item.id), item); }
@@ -926,11 +987,43 @@
 
         onAuthStateChanged(auth, (user) => { if (user && !currentUserId) iniciarListeners(user.uid); });
 
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('zoom-modal');
+                if (modal && modal.classList.contains('active')) {
+                    fecharAmpliacaoObg();
+                }
+            }
+        });
+
+        function salvarPresencaNoSessionStorage() {
+            try {
+                sessionStorage.setItem('presencaAlunosModoLocal', JSON.stringify(presencaAlunosModoLocal));
+            } catch (e) { /* ignora erro de quota */ }
+        }
+
+        function carregarPresencaDoSessionStorage() {
+            try {
+                const saved = sessionStorage.getItem('presencaAlunosModoLocal');
+                if (saved) {
+                    presencaAlunosModoLocal = JSON.parse(saved);
+                }
+            } catch (e) {
+                presencaAlunosModoLocal = {};
+            }
+        }
+
         function mudarTela(idTela) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(idTela).classList.add('active');
+            const tela = document.getElementById(idTela);
+            if (tela) tela.classList.add('active');
             if (idTela === 'screen-store') renderizarLojinha();
-            if (idTela === 'screen-attendance') { renderizarGridChamada(); atualizarSelectFiltroAlunoRelatorio(); renderizarTabelaRelatorio(); }
+            if (idTela === 'screen-attendance') {
+                carregarPresencaDoSessionStorage();
+                renderizarGridChamada();
+                atualizarSelectFiltroAlunoRelatorio();
+                renderizarTabelaRelatorio();
+            }
         }
 
         function alternarAbaChamada(numAba) {
@@ -950,15 +1043,76 @@
             const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno");
             const saldoN = alunoObj ? (alunoObj.moedas || 0) : 0;
             const saldoE = alunoObj ? (alunoObj.moedasExclusivas || 0) : 0;
-            
+
             const tags = modoAdminVisualizacao ? '' : `
                 <span class="coin-display coin-normal">${iconeMoeda} ${saldoN}</span>
                 <span class="coin-display coin-exclusive">💎 ${saldoE}</span>
             `;
-            
-            if(document.getElementById('shelf-coins-wrapper')) document.getElementById('shelf-coins-wrapper').innerHTML = tags;
-            if(document.getElementById('album-coins-wrapper')) document.getElementById('album-coins-wrapper').innerHTML = tags;
-            if(document.getElementById('store-coins-wrapper')) document.getElementById('store-coins-wrapper').innerHTML = tags;
+
+            const shelfWrapper = document.getElementById('shelf-coins-wrapper');
+            if(shelfWrapper) shelfWrapper.innerHTML = tags;
+            const albumWrapper = document.getElementById('album-coins-wrapper');
+            if(albumWrapper) albumWrapper.innerHTML = tags;
+            const storeWrapper = document.getElementById('store-coins-wrapper');
+            if(storeWrapper) storeWrapper.innerHTML = tags;
+        }
+
+        // ---------- TROCA DE SENHA NO PRIMEIRO LOGIN ----------
+        function iniciarTrocaSenha(alunoObj) {
+            alunoForcadoTrocarSenha = alunoObj;
+            document.getElementById('change-pwd-name').textContent = alunoObj.nome;
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            mudarTela('screen-change-password');
+        }
+
+        async function confirmarTrocaSenha() {
+            const nova = document.getElementById('new-password').value.trim();
+            const conf = document.getElementById('confirm-password').value.trim();
+
+            if (!nova || nova.length < 3) {
+                alert("A senha deve ter pelo menos 3 caracteres.");
+                return;
+            }
+            if (nova !== conf) {
+                alert("As senhas não coincidem. Tente novamente.");
+                return;
+            }
+            if (!alunoForcadoTrocarSenha) {
+                alert("Erro: nenhum aluno para atualizar. Faça login novamente.");
+                mudarTela('screen-login');
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoForcadoTrocarSenha.id), {
+                    pin: nova
+                });
+                alert("Senha alterada com sucesso! Redirecionando para a sua estante...");
+                const alunoAtualizado = { ...alunoForcadoTrocarSenha, pin: nova };
+                finalizarLoginAluno(alunoAtualizado);
+                alunoForcadoTrocarSenha = null;
+            } catch (err) {
+                console.error(err);
+                alert("Erro ao alterar a senha. Tente novamente.");
+            }
+        }
+
+        function cancelarTrocaSenha() {
+            alunoForcadoTrocarSenha = null;
+            mudarTela('screen-login');
+        }
+
+        function finalizarLoginAluno(contaValida) {
+            usuarioLogado = contaValida.nome;
+            cargoLogado = contaValida.role;
+            modoAdminVisualizacao = false;
+            const btnBack = document.getElementById('btn-shelf-back-admin');
+            if (btnBack) btnBack.style.display = "none";
+            document.getElementById('shelf-user-display').textContent = `${contaValida.nome} (${contaValida.grade} ${contaValida.letter})`;
+            atualizarIndicadoresMoeda();
+            renderizarEstanteDeLivros();
+            mudarTela('screen-bookcase');
         }
 
         function fazerLogin() {
@@ -969,68 +1123,89 @@
             const contaValida = bancoDeAlunos.find(a => a.nome.toLowerCase() === user.toLowerCase() && a.pin === pass && a.role === selectedRole);
 
             if (contaValida) {
-                usuarioLogado = contaValida.nome; cargoLogado = contaValida.role;
-                if (cargoLogado === "aluno") {
-                    modoAdminVisualizacao = false;
-                    document.getElementById('btn-shelf-back-admin').style.display = "none";
-                    document.getElementById('shelf-user-display').innerText = `${contaValida.nome} (${contaValida.grade}º ${contaValida.letter})`;
-                    atualizarIndicadoresMoeda(); renderizarEstanteDeLivros(); mudarTela('screen-bookcase');
-                } else { carregarModoAdmin(); }
+                if (contaValida.role === "aluno" && contaValida.pin === "1234") {
+                    iniciarTrocaSenha(contaValida);
+                    return;
+                }
+
+                if (contaValida.role === "aluno") {
+                    finalizarLoginAluno(contaValida);
+                } else {
+                    usuarioLogado = contaValida.nome;
+                    cargoLogado = contaValida.role;
+                    carregarModoAdmin();
+                }
             } else {
                 alert("Dados de acesso incorretos ou cargo inválido! Verifique o nome de usuário e a senha.");
             }
         }
 
         function carregarModoAdmin() {
-            document.getElementById('admin-role-display').innerText = cargoLogado;
-            document.getElementById('btn-shelf-back-admin').style.display = "block";
-            configurarPermissoesVisuais(); atualizarListasAdmin(); mudarTela('screen-admin');
+            document.getElementById('admin-role-display').textContent = cargoLogado;
+            const btnBack = document.getElementById('btn-shelf-back-admin');
+            if (btnBack) btnBack.style.display = "block";
+            configurarPermissoesVisuais();
+            atualizarListasAdmin();
+            mudarTela('screen-admin');
         }
 
         function configurarPermissoesVisuais() {
             const caixas = ['box-gerenciar-cartas', 'box-gerenciar-alunos', 'box-distribuir-cartas', 'box-historico', 'box-gerenciar-albuns', 'box-carteira-moedas', 'box-gerenciar-lojinha'];
-            caixas.forEach(id => document.getElementById(id).classList.remove('disabled-box'));
+            caixas.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('disabled-box');
+            });
             if (cargoLogado === "auxiliar") {
-                ['box-gerenciar-alunos', 'box-historico', 'box-gerenciar-albuns', 'box-gerenciar-lojinha'].forEach(id => document.getElementById(id).classList.add('disabled-box'));
+                ['box-gerenciar-alunos', 'box-historico', 'box-gerenciar-albuns', 'box-gerenciar-lojinha'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('disabled-box');
+                });
             }
         }
 
         function verEstanteComoAdmin() {
             modoAdminVisualizacao = true;
-            document.getElementById('shelf-user-display').innerText = `${usuarioLogado} (Modo Gerencial)`;
-            document.getElementById('shelf-coins-wrapper').innerHTML = '';
-            renderizarEstanteDeLivros(); mudarTela('screen-bookcase');
+            document.getElementById('shelf-user-display').textContent = `${usuarioLogado} (Modo Gerencial)`;
+            const shelfCoins = document.getElementById('shelf-coins-wrapper');
+            if (shelfCoins) shelfCoins.innerHTML = '';
+            renderizarEstanteDeLivros();
+            mudarTela('screen-bookcase');
         }
 
         function fazerLogout() {
-            usuarioLogado = ""; cargoLogado = "";
-            document.getElementById('username').value = ""; document.getElementById('password').value = "";
+            limparTodosListeners();
+            usuarioLogado = "";
+            cargoLogado = "";
+            alunoForcadoTrocarSenha = null;
+            document.getElementById('username').value = "";
+            document.getElementById('password').value = "";
+            sessionStorage.removeItem('presencaAlunosModoLocal');
+            presencaAlunosModoLocal = {};
             mudarTela('screen-login');
         }
 
-        // ---------- FUNÇÕES QUE ESTAVAM FALTANDO / CORTADAS ---------- //
-        
+        // ---------- FUNÇÕES ADMINISTRATIVAS ---------- //
         function atualizarListasAdmin() {
             if (!modoAdminVisualizacao && cargoLogado === "aluno") return;
 
-            // 1. Atualizar selects de Álbum
             const selectsAlbum = ['card-album-select', 'filter-cards-by-album', 'select-dist-album-filter'];
             selectsAlbum.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     const bkp = el.value;
                     el.innerHTML = '<option value="">-- Selecione o Álbum --</option>';
-                    bancoAlbuns.forEach(a => el.add(new Option(a.titulo, a.id)));
+                    const sorted = [...bancoAlbuns].sort((a, b) => a.titulo.localeCompare(b.titulo));
+                    sorted.forEach(a => el.add(new Option(a.titulo, a.id)));
                     if (bkp && Array.from(el.options).some(o => o.value === bkp)) el.value = bkp;
                 }
             });
 
-            // 2. Lista de Álbuns Ativos
             const listAlbuns = document.getElementById('list-albuns-ativos');
             if (listAlbuns) {
-                listAlbuns.innerHTML = bancoAlbuns.map(a => `
+                const sorted = [...bancoAlbuns].sort((a, b) => a.titulo.localeCompare(b.titulo));
+                listAlbuns.innerHTML = sorted.map(a => `
                     <div class="list-item">
-                        <div><b>${a.titulo}</b></div>
+                        <div><b>${escapeHtml(a.titulo)}</b></div>
                         <div class="box-acoes-botoes">
                             <button class="btn-danger" onclick="deletarAlbum('${a.id}')">Excluir</button>
                         </div>
@@ -1038,37 +1213,62 @@
                 `).join('');
             }
 
-            // 3. Atualizar as cartas (filtro)
             listarCartasCadastradasAdmin();
 
-            // 4. Lista de Usuários/Integrantes
-            const listUsers = document.getElementById('list-all-users');
-            if (listUsers) {
-                listUsers.innerHTML = bancoDeAlunos.map(u => `
-                    <div class="list-item">
-                        <div><b>${u.nome}</b> <br> <span style="font-size:0.75rem; color:#a8a8b3">${u.role} | ${u.grade} ${u.letter}</span></div>
-                        <div class="box-acoes-botoes">
-                            <button class="btn-edit" onclick="carregarUsuarioParaEdicao('${u.id}')">Editar</button>
-                            <button class="btn-danger" onclick="deletarAluno('${u.id}')">X</button>
+            const listAlunos = document.getElementById('list-alunos');
+            const listStaff = document.getElementById('list-staff');
+            if (listAlunos && listStaff) {
+                const alunos = bancoDeAlunos.filter(u => u.role === 'aluno').sort((a, b) => a.nome.localeCompare(b.nome));
+                const staffs = bancoDeAlunos.filter(u => u.role !== 'aluno').sort((a, b) => a.nome.localeCompare(b.nome));
+
+                const criarItemHTML = (u) => {
+                    const serieDisplay = (u.grade === 'MAKER' || u.grade === 'WIT') ? u.grade : `${u.grade} ${u.letter}`;
+                    return `
+                        <div class="list-item" data-userid="${u.id}">
+                            <div><b>${escapeHtml(u.nome)}</b> <br> <span style="font-size:0.75rem; color:#a8a8b3">${u.role} | ${serieDisplay}</span></div>
+                            <div class="box-acoes-botoes">
+                                <button class="btn-edit acao-editar">Editar</button>
+                                <button class="btn-danger acao-excluir">X</button>
+                            </div>
                         </div>
-                    </div>
-                `).join('');
+                    `;
+                };
+
+                listAlunos.innerHTML = alunos.map(criarItemHTML).join('');
+                listStaff.innerHTML = staffs.map(criarItemHTML).join('');
+
+                [listAlunos, listStaff].forEach(lista => {
+                    lista.onclick = (e) => {
+                        const btn = e.target.closest('button');
+                        if (!btn) return;
+                        const item = btn.closest('.list-item');
+                        const userId = item?.dataset.userid;
+                        if (!userId) return;
+
+                        if (btn.classList.contains('acao-editar')) {
+                            carregarUsuarioParaEdicao(userId);
+                        } else if (btn.classList.contains('acao-excluir')) {
+                            deletarAluno(userId);
+                        }
+                    };
+                });
             }
 
-            // 5. Lista de Carteiras de Aluno
             const listWallets = document.getElementById('list-only-students-wallets');
             if (listWallets) {
                 const fName = (document.getElementById('filter-user-name')?.value || '').toLowerCase();
                 const fGrade = document.getElementById('filter-user-grade')?.value || 'todos';
                 const fLetter = document.getElementById('filter-user-letter')?.value || 'todos';
 
-                listWallets.innerHTML = bancoDeAlunos.filter(u => u.role === 'aluno').filter(u => {
+                const filtered = bancoDeAlunos.filter(u => u.role === 'aluno').filter(u => {
                     return (u.nome.toLowerCase().includes(fName)) &&
                            (fGrade === 'todos' || u.grade === fGrade) &&
                            (fLetter === 'todos' || u.letter === fLetter);
-                }).map(u => `
+                }).sort((a, b) => a.nome.localeCompare(b.nome));
+
+                listWallets.innerHTML = filtered.map(u => `
                     <div class="list-item">
-                        <div><b>${u.nome}</b> (${u.grade} ${u.letter})<br><small>💰: ${u.moedas || 0} | 💎: ${u.moedasExclusivas || 0}</small></div>
+                        <div><b>${escapeHtml(u.nome)}</b> (${u.grade} ${u.letter})<br><small>💰: ${u.moedas || 0} | 💎: ${u.moedasExclusivas || 0}</small></div>
                         <div class="box-acoes-botoes">
                             <button class="btn-coin" onclick="modificarMoedasAluno('${u.id}', 'somar', 'normal')">+ Moeda</button>
                             <button class="btn-diamond" onclick="modificarMoedasAluno('${u.id}', 'somar', 'exclusiva')">+ Diamante</button>
@@ -1077,12 +1277,12 @@
                 `).join('');
             }
 
-            // 6. Lista da Lojinha
             const listStore = document.getElementById('list-store-items');
             if (listStore) {
-                listStore.innerHTML = bancoLoja.map(i => `
+                const sortedLoja = [...bancoLoja].sort((a, b) => a.nome.localeCompare(b.nome));
+                listStore.innerHTML = sortedLoja.map(i => `
                     <div class="list-item">
-                        <div><b>${i.nome}</b> (${i.preco} moedas)</div>
+                        <div><b>${escapeHtml(i.nome)}</b> (${i.preco} moedas)</div>
                         <div class="box-acoes-botoes">
                             <button class="btn-danger" onclick="deletarItemLoja('${i.id}')">Remover</button>
                         </div>
@@ -1100,13 +1300,14 @@
             if (filterId) {
                 filtered = bancoDeCartas.filter(c => c.albumId === filterId);
             }
+            filtered.sort((a, b) => a.nome.localeCompare(b.nome));
 
             listCards.innerHTML = filtered.map(c => {
                 const alb = bancoAlbuns.find(a => a.id === c.albumId);
                 const albumName = alb ? alb.titulo : 'Desconhecido';
                 return `
                     <div class="list-item">
-                        <div><b>${c.nome}</b> <span style="font-size:0.7rem; color:${c.raridade==='exclusiva'?'#f72585':'#00b4d8'}; text-transform:uppercase;">[${c.raridade}]</span><br><small>${albumName} - ${c.pontos} Pts</small></div>
+                        <div><b>${escapeHtml(c.nome)}</b> <span style="font-size:0.7rem; color:${c.raridade==='exclusiva'?'#f72585':'#00b4d8'}; text-transform:uppercase;">[${c.raridade}]</span><br><small>${albumName} - ${c.pontos} Pts</small></div>
                         <div class="box-acoes-botoes">
                             <button class="btn-danger" onclick="deletarCarta('${c.id}')">Excluir</button>
                         </div>
@@ -1115,95 +1316,125 @@
             }).join('');
         }
 
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         async function salvarNovoAlbum() {
-            const idEdit = document.getElementById('album-edit-id').value;
-            const titulo = document.getElementById('album-new-title').value.trim();
-            const imagem = document.getElementById('album-new-image').value.trim();
-            const cor = document.getElementById('album-new-color').value;
+            await executarComLoading('btn-salvar-album', async () => {
+                const idEdit = document.getElementById('album-edit-id').value;
+                const titulo = document.getElementById('album-new-title').value.trim();
+                const imagem = document.getElementById('album-new-image').value.trim();
+                const cor = document.getElementById('album-new-color').value;
 
-            if(!titulo) { alert("O nome do álbum é obrigatório!"); return; }
+                if(!titulo) { alert("O nome do álbum é obrigatório!"); return; }
 
-            try {
-                if(idEdit && idEdit.trim() !== "") {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', idEdit), { id: idEdit, titulo, imagem, cor });
-                } else {
-                    const novoId = "alb_" + Date.now();
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', novoId), { id: novoId, titulo, imagem, cor });
-                }
-                document.getElementById('album-new-title').value = '';
-                document.getElementById('album-new-image').value = '';
-                document.getElementById('album-edit-id').value = '';
-                alert("Álbum salvo com sucesso!");
-            } catch(e) { console.error(e); }
+                try {
+                    if(idEdit && idEdit.trim() !== "") {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', idEdit), { titulo, imagem, cor });
+                    } else {
+                        const novoId = "alb_" + Date.now();
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', novoId), { id: novoId, titulo, imagem, cor });
+                    }
+                    document.getElementById('album-new-title').value = '';
+                    document.getElementById('album-new-image').value = '';
+                    document.getElementById('album-edit-id').value = '';
+                    alert("Álbum salvo com sucesso!");
+                } catch(e) { console.error(e); alert("Erro ao salvar álbum."); }
+            });
         }
 
         async function salvarCarta() {
-            const idEdit = document.getElementById('card-edit-id').value;
-            const albumId = document.getElementById('card-album-select').value;
-            const raridade = document.getElementById('card-rarity').value;
-            const nome = document.getElementById('card-name').value.trim();
-            const pontos = document.getElementById('card-points').value;
-            const preco = document.getElementById('card-price').value;
-            const imagem = document.getElementById('card-img').value.trim();
-            const habilidade = document.getElementById('card-desc').value.trim();
+            await executarComLoading('btn-salvar-carta', async () => {
+                const idEdit = document.getElementById('card-edit-id').value;
+                const albumId = document.getElementById('card-album-select').value;
+                const raridade = document.getElementById('card-rarity').value;
+                const nome = document.getElementById('card-name').value.trim();
+                const pontos = document.getElementById('card-points').value;
+                const preco = document.getElementById('card-price').value;
+                const imagem = document.getElementById('card-img').value.trim();
+                const habilidade = document.getElementById('card-desc').value.trim();
 
-            if(!albumId || !nome || !pontos) { alert("Selecione o álbum, nome e pontos da figurinha!"); return; }
+                if(!albumId || !nome || !pontos) { alert("Selecione o álbum, nome e pontos da figurinha!"); return; }
 
-            try {
-                const dados = {
-                    albumId, raridade, nome, pontos: parseInt(pontos), 
-                    preço: preco ? parseInt(preco) : 0, imagem, habilidade
-                };
+                try {
+                    const dados = {
+                        albumId, raridade, nome, pontos: parseInt(pontos),
+                        preco: preco ? parseInt(preco) : 0, imagem, habilidade
+                    };
 
-                if(idEdit && idEdit.trim() !== "") {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', idEdit), { id: idEdit, ...dados });
-                } else {
-                    const novoId = "c_" + Date.now();
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', novoId), { id: novoId, ...dados });
-                }
-                document.getElementById('card-name').value = '';
-                document.getElementById('card-points').value = '';
-                document.getElementById('card-price').value = '';
-                document.getElementById('card-img').value = '';
-                document.getElementById('card-desc').value = '';
-                document.getElementById('card-edit-id').value = '';
-                alert("Figurinha cadastrada!");
-            } catch(e) { console.error(e); }
+                    if(idEdit && idEdit.trim() !== "") {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', idEdit), dados);
+                    } else {
+                        const novoId = "c_" + Date.now();
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', novoId), { id: novoId, ...dados });
+                    }
+                    document.getElementById('card-name').value = '';
+                    document.getElementById('card-points').value = '';
+                    document.getElementById('card-price').value = '';
+                    document.getElementById('card-img').value = '';
+                    document.getElementById('card-desc').value = '';
+                    document.getElementById('card-edit-id').value = '';
+                    alert("Figurinha cadastrada!");
+                } catch(e) { console.error(e); alert("Erro ao cadastrar figurinha."); }
+            });
         }
 
-        async function deletarAlbum(id) { if(confirm("Tem certeza que deseja excluir o álbum?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', id)); }
-        async function deletarCarta(id) { if(confirm("Excluir esta figurinha?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', id)); }
-        async function deletarItemLoja(id) { if(confirm("Remover este item da lojinha?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', id)); }
+        async function deletarAlbum(id) {
+            if(confirm("Tem certeza que deseja excluir o álbum?")) {
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', id));
+                } catch (e) { console.error(e); alert("Erro ao excluir."); }
+            }
+        }
+
+        async function deletarCarta(id) {
+            if(confirm("Excluir esta figurinha?")) {
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cartas', id));
+                } catch (e) { console.error(e); }
+            }
+        }
+
+        async function deletarItemLoja(id) {
+            if(confirm("Remover este item da lojinha?")) {
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', id));
+                } catch (e) { console.error(e); }
+            }
+        }
 
         async function salvarItemLoja() {
-            const idEdit = document.getElementById('store-edit-id').value;
-            const n = document.getElementById('store-name').value.trim();
-            const p = document.getElementById('store-price').value;
-            const img = document.getElementById('store-img').value.trim();
-            const d = document.getElementById('store-desc').value;
+            await executarComLoading('btn-salvar-loja', async () => {
+                const idEdit = document.getElementById('store-edit-id').value;
+                const n = document.getElementById('store-name').value.trim();
+                const p = document.getElementById('store-price').value;
+                const img = document.getElementById('store-img').value.trim();
+                const d = document.getElementById('store-desc').value;
 
-            if(!n || !p) { alert("Nome e Preço são obrigatórios!"); return; }
+                if(!n || !p) { alert("Nome e Preço são obrigatórios!"); return; }
 
-            try {
-                if(idEdit && idEdit.trim() !== "") {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', idEdit), {
-                        id: idEdit, nome: n, preco: parseInt(p), imagem: img, desc: d
-                    });
-                } else {
-                    const novoId = "lj_" + Date.now();
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', novoId), {
-                        id: novoId, nome: n, preco: parseInt(p), imagem: img, desc: d
-                    });
+                try {
+                    const dados = { nome: n, preco: parseInt(p), imagem: img, desc: d };
+                    if(idEdit && idEdit.trim() !== "") {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', idEdit), dados);
+                    } else {
+                        const novoId = "lj_" + Date.now();
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', novoId), { id: novoId, ...dados });
+                    }
+                    alert("✅ Item salvo na lojinha!");
+                    document.getElementById('store-name').value = '';
+                    document.getElementById('store-price').value = '';
+                    document.getElementById('store-img').value = '';
+                    document.getElementById('store-desc').value = '';
+                    document.getElementById('store-edit-id').value = '';
+                } catch (err) {
+                    console.error("Erro ao salvar item:", err);
+                    alert("Erro ao salvar item.");
                 }
-                alert("✅ Item salvo na lojinha!");
-                document.getElementById('store-name').value = '';
-                document.getElementById('store-price').value = '';
-                document.getElementById('store-img').value = '';
-                document.getElementById('store-desc').value = '';
-                document.getElementById('store-edit-id').value = '';
-            } catch (err) {
-                console.error("Erro ao salvar item:", err);
-            }
+            });
         }
 
         function atualizarTabelaHistorico() {
@@ -1214,7 +1445,7 @@
             const fLetter = document.getElementById('filter-history-letter')?.value || 'todos';
 
             const filtrados = historicoEnvios.filter(h => {
-                return (h.alunoNome.toLowerCase().includes(fName)) &&
+                return (h.alunoNome?.toLowerCase().includes(fName)) &&
                        (fGrade === 'todos' || h.alunoSerie === fGrade) &&
                        (fLetter === 'todos' || h.alunoLetter === fLetter);
             });
@@ -1226,78 +1457,81 @@
 
             tbody.innerHTML = filtrados.map(h => `
                 <tr>
-                    <td><b>${h.alunoNome}</b></td>
-                    <td>${h.alunoSerie} ${h.alunoLetter}</td>
-                    <td>${h.albumTitulo || h.albumId}</td>
-                    <td>${h.cartaNome}</td>
-                    <td>${h.raridade}</td>
-                    <td>${h.data || '-'}</td>
+                    <td><b>${escapeHtml(h.alunoNome || '')}</b></td>
+                    <td>${escapeHtml(h.alunoSerie || '')} ${escapeHtml(h.alunoLetter || '')}</td>
+                    <td>${escapeHtml(h.albumTitulo || h.albumId || '')}</td>
+                    <td>${escapeHtml(h.cartaNome || '')}</td>
+                    <td>${escapeHtml(h.raridade || '')}</td>
+                    <td>${escapeHtml(h.data || '-')}</td>
                 </tr>
             `).join('');
         }
 
         async function limparHistoricoGeral() {
             if(!confirm("⚠️ TEM CERTEZA? Isso limpará TODOS os registros de entregas e compras de figurinhas. Ações não poderão ser desfeitas.")) return;
-            try {
-                for (let record of historicoEnvios) {
-                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'historico', record.id));
-                }
-                alert("Histórico esvaziado.");
-            } catch (err) { console.error(err); }
+            await executarComLoading('btn-limpar-historico', async () => {
+                try {
+                    for (let record of historicoEnvios) {
+                        await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'historico', record.id));
+                    }
+                    alert("Histórico esvaziado.");
+                } catch (err) { console.error(err); alert("Erro ao limpar histórico."); }
+            });
         }
 
         // ----------- CADASTRO DE CHAMADA DIÁRIA E RELATÓRIO ----------- //
-
         async function cadastrarAlunosEmLote() {
-            const grade = document.getElementById('attendance-grade-select').value;
-            const letter = document.getElementById('attendance-letter-select').value;
-            const rawText = document.getElementById('bulk-students-input').value;
+            await executarComLoading('btn-cadastrar-lote', async () => {
+                const grade = document.getElementById('attendance-grade-select').value;
+                const letter = document.getElementById('attendance-letter-select').value;
+                const rawText = document.getElementById('bulk-students-input').value;
 
-            const linhas = rawText.split('\n').map(n => n.trim()).filter(n => n.length > 0);
-            const nomesUnicosNoLote = [...new Set(linhas)];
+                const linhas = rawText.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+                const nomesUnicosNoLote = [...new Set(linhas)];
 
-            if (nomesUnicosNoLote.length === 0) {
-                alert("⚠️ Por favor, digite ao menos um nome para cadastrar!");
-                return;
-            }
-
-            try {
-                let inseridos = 0;
-                let duplicados = [];
-
-                for (const nome of nomesUnicosNoLote) {
-                    const nomeNormalizado = nome.toLowerCase().replace(/\s+/g, ' ');
-                    const jaExiste = bancoDeAlunos.some(aluno => 
-                        aluno.role === "aluno" &&
-                        aluno.grade === grade &&
-                        aluno.letter === letter &&
-                        aluno.nome.trim().toLowerCase().replace(/\s+/g, ' ') === nomeNormalizado
-                    );
-
-                    if (jaExiste) {
-                        duplicados.push(nome);
-                        continue;
-                    }
-
-                    const novoId = "st_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), {
-                        id: novoId, nome: nome, grade: grade, letter: letter, role: "aluno", pin: "1234", moedas: 0, moedasExclusivas: 0
-                    });
-                    inseridos++;
+                if (nomesUnicosNoLote.length === 0) {
+                    alert("⚠️ Por favor, digite ao menos um nome para cadastrar!");
+                    return;
                 }
 
-                let mensagem = "";
-                if (inseridos > 0) { mensagem += `✅ ${inseridos} aluno(s) cadastrado(s) com sucesso na turma ${grade} ${letter}!\n`; }
-                if (duplicados.length > 0) { mensagem += `\n⚠️ Os seguintes alunos já estavam cadastrados nesta turma:\n- ${duplicados.join('\n- ')}`; }
+                try {
+                    let inseridos = 0;
+                    let duplicados = [];
 
-                alert(mensagem);
-                document.getElementById('bulk-students-input').value = "";
-                renderizarGridChamada();
-                atualizarSelectFiltroAlunoRelatorio();
-            } catch (err) {
-                console.error("Erro ao cadastrar alunos em lote:", err);
-                alert("Erro ao salvar lista de alunos.");
-            }
+                    for (const nome of nomesUnicosNoLote) {
+                        const nomeNormalizado = nome.toLowerCase().replace(/\s+/g, ' ');
+                        const jaExiste = bancoDeAlunos.some(aluno =>
+                            aluno.role === "aluno" &&
+                            aluno.grade === grade &&
+                            aluno.letter === letter &&
+                            aluno.nome.trim().toLowerCase().replace(/\s+/g, ' ') === nomeNormalizado
+                        );
+
+                        if (jaExiste) {
+                            duplicados.push(nome);
+                            continue;
+                        }
+
+                        const novoId = "st_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), {
+                            id: novoId, nome: nome, grade: grade, letter: letter, role: "aluno", pin: "1234", moedas: 0, moedasExclusivas: 0
+                        });
+                        inseridos++;
+                    }
+
+                    let mensagem = "";
+                    if (inseridos > 0) { mensagem += `✅ ${inseridos} aluno(s) cadastrado(s) com sucesso na turma ${grade} ${letter}!\n`; }
+                    if (duplicados.length > 0) { mensagem += `\n⚠️ Os seguintes alunos já estavam cadastrados nesta turma:\n- ${duplicados.join('\n- ')}`; }
+
+                    alert(mensagem);
+                    document.getElementById('bulk-students-input').value = "";
+                    renderizarGridChamada();
+                    atualizarSelectFiltroAlunoRelatorio();
+                } catch (err) {
+                    console.error("Erro ao cadastrar alunos em lote:", err);
+                    alert("Erro ao salvar lista de alunos.");
+                }
+            });
         }
 
         function renderizarGridChamada() {
@@ -1307,8 +1541,7 @@
 
             const selectedGrade = document.getElementById('attendance-grade-select').value;
             const selectedLetter = document.getElementById('attendance-letter-select').value;
-
-            document.getElementById('attendance-title').innerText = `Turma: ${selectedGrade} - Sala ${selectedLetter}`;
+            document.getElementById('attendance-title').textContent = `Turma: ${selectedGrade} - Sala ${selectedLetter}`;
 
             const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
 
@@ -1319,25 +1552,31 @@
 
             alunosDaTurma.forEach(aluno => {
                 if (!presencaAlunosModoLocal[aluno.id]) {
-                    presencaAlunosModoLocal[aluno.id] = { status: true, comentario: "" };
+                    presencaAlunosModoLocal[aluno.id] = { status: false, comentario: "" };
                 }
                 const estado = presencaAlunosModoLocal[aluno.id];
-                
+
                 const card = document.createElement('div');
                 card.className = `student-card ${estado.status ? 'present' : 'absent'}`;
                 card.innerHTML = `
                     <div>
-                        <div class="student-card-name">${aluno.nome}</div>
-                        <div class="student-card-info">PIN: ${aluno.pin} | Saldo: ${iconeMoeda} ${aluno.moedas || 0}</div>
+                        <div class="student-card-name">${escapeHtml(aluno.nome)}</div>
+                        <div class="student-card-info">Série: ${aluno.grade} | Sala: ${aluno.letter} | PIN: ${aluno.pin} | Saldo: ${iconeMoeda} ${aluno.moedas || 0}</div>
                     </div>
-                    <div>
-                        <button class="btn-status ${estado.status ? 'present' : 'absent'}" onclick="alternarPresencaLocal('${aluno.id}')">
-                            ${estado.status ? '✅ Presente' : '❌ Falta'}
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <button class="btn-status ${estado.status ? 'present' : 'absent'}" onclick="alternarPresencaLocal('${aluno.id}')" style="flex: 2;">
+                            ${estado.status ? '❌ Marcar Falta' : '✅ Marcar Presença'}
+                        </button>
+                        <button class="btn-edit" onclick="editarAlunoChamada('${aluno.id}')" style="flex: 1; padding: 6px 10px; font-size: 0.8rem;">
+                            ✏️ Editar
+                        </button>
+                        <button class="btn-danger" onclick="excluirAlunoChamada('${aluno.id}')" style="flex: 1; padding: 6px 10px; font-size: 0.8rem;">
+                            🗑️ Excluir
                         </button>
                     </div>
                     <div>
                         <label style="font-size:0.7rem; margin-bottom:2px; color:#a8a8b3;">Comentário da Aula:</label>
-                        <input type="text" id="comm_${aluno.id}" value="${estado.comentario || ''}" placeholder="Ex: Entregou trabalho, participou..." oninput="atualizarComentarioLocal('${aluno.id}', this.value)" style="margin-bottom:0; font-size:0.85rem; padding:6px 10px;">
+                        <input type="text" id="comm_${aluno.id}" value="${escapeHtml(estado.comentario || '')}" placeholder="Ex: Entregou trabalho, participou..." oninput="atualizarComentarioLocal('${aluno.id}', this.value)" style="margin-bottom:0; font-size:0.85rem; padding:6px 10px;">
                     </div>
                 `;
                 grid.appendChild(card);
@@ -1346,56 +1585,111 @@
 
         function alternarPresencaLocal(alunoId) {
             if (!presencaAlunosModoLocal[alunoId]) {
-                presencaAlunosModoLocal[alunoId] = { status: true, comentario: "" };
+                presencaAlunosModoLocal[alunoId] = { status: false, comentario: "" };
             }
             presencaAlunosModoLocal[alunoId].status = !presencaAlunosModoLocal[alunoId].status;
+            salvarPresencaNoSessionStorage();
             renderizarGridChamada();
         }
 
         function atualizarComentarioLocal(alunoId, valor) {
             if (!presencaAlunosModoLocal[alunoId]) {
-                presencaAlunosModoLocal[alunoId] = { status: true, comentario: "" };
+                presencaAlunosModoLocal[alunoId] = { status: false, comentario: "" };
             }
             presencaAlunosModoLocal[alunoId].comentario = valor;
+            salvarPresencaNoSessionStorage();
+        }
+
+        async function editarAlunoChamada(alunoId) {
+            const aluno = bancoDeAlunos.find(a => a.id === alunoId);
+            if (!aluno) return;
+
+            const novaGrade = prompt(`Alterar série de "${aluno.nome}"?\nSérie atual: ${aluno.grade}\n\nOpções: 1º Ano, 2º Ano, 3º Ano, 4º Ano, 5º Ano`, aluno.grade);
+            if (novaGrade === null) return;
+            const seriesValidas = ["1º Ano", "2º Ano", "3º Ano", "4º Ano", "5º Ano"];
+            if (!seriesValidas.includes(novaGrade)) {
+                alert("Série inválida! Use: 1º Ano, 2º Ano, 3º Ano, 4º Ano ou 5º Ano.");
+                return;
+            }
+
+            const novaSala = prompt(`Alterar sala de "${aluno.nome}"?\nSala atual: ${aluno.letter}\n\nOpções: A, B, C, D, E`, aluno.letter);
+            if (novaSala === null) return;
+            const salasValidas = ["A", "B", "C", "D", "E"];
+            if (!salasValidas.includes(novaSala.toUpperCase())) {
+                alert("Sala inválida! Use A, B, C, D ou E.");
+                return;
+            }
+
+            if (novaGrade === aluno.grade && novaSala.toUpperCase() === aluno.letter) {
+                alert("Nenhuma alteração realizada.");
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoId), {
+                    grade: novaGrade,
+                    letter: novaSala.toUpperCase()
+                });
+                alert(`✅ Dados de "${aluno.nome}" atualizados para ${novaGrade} - Sala ${novaSala.toUpperCase()}.`);
+            } catch (err) {
+                console.error(err);
+                alert("Erro ao atualizar aluno.");
+            }
+        }
+
+        async function excluirAlunoChamada(alunoId) {
+            const aluno = bancoDeAlunos.find(a => a.id === alunoId);
+            if (!aluno) return;
+            if (!confirm(`Tem certeza que deseja excluir permanentemente o aluno "${aluno.nome}"?\nEsta ação não pode ser desfeita!`)) return;
+
+            try {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoId));
+                alert(`🗑️ Aluno "${aluno.nome}" excluído com sucesso.`);
+            } catch (err) {
+                console.error(err);
+                alert("Erro ao excluir aluno.");
+            }
         }
 
         async function salvarChamadaDiaria() {
-            const dataAula = document.getElementById('attendance-date-picker').value;
-            const selectedGrade = document.getElementById('attendance-grade-select').value;
-            const selectedLetter = document.getElementById('attendance-letter-select').value;
+            await executarComLoading('btn-salvar-chamada', async () => {
+                const dataAula = document.getElementById('attendance-date-picker').value;
+                const selectedGrade = document.getElementById('attendance-grade-select').value;
+                const selectedLetter = document.getElementById('attendance-letter-select').value;
 
-            if(!dataAula) { alert("⚠️ Selecione a data da aula!"); return; }
+                if(!dataAula) { alert("⚠️ Selecione a data da aula!"); return; }
 
-            const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
-            if(alunosDaTurma.length === 0) { alert("Nenhum aluno nesta turma para salvar."); return; }
+                const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+                if(alunosDaTurma.length === 0) { alert("Nenhum aluno nesta turma para salvar."); return; }
 
-            try {
-                for (const aluno of alunosDaTurma) {
-                    const info = presencaAlunosModoLocal[aluno.id] || { status: true, comentario: "" };
-                    const registroId = `${dataAula}_${aluno.id}`;
-                    const [ano, mes, dia] = dataAula.split('-');
-                    const dataFormatada = `${dia}/${mes}/${ano}`;
+                try {
+                    for (const aluno of alunosDaTurma) {
+                        const info = presencaAlunosModoLocal[aluno.id] || { status: false, comentario: "" };
+                        const registroId = `${dataAula}_${aluno.id}`;
+                        const [ano, mes, dia] = dataAula.split('-');
+                        const dataFormatada = `${dia}/${mes}/${ano}`;
 
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'chamada_registros', registroId), {
-                        id: registroId,
-                        alunoId: aluno.id,
-                        alunoNome: aluno.nome,
-                        grade: `${aluno.grade} ${aluno.letter}`,
-                        data: dataFormatada,
-                        rawDate: dataAula,
-                        dia: dia,
-                        mes: `${mes}/${ano}`,
-                        status: info.status ? "Presença" : "Falta",
-                        comentario: info.comentario || "",
-                        timestamp: Date.now()
-                    });
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'chamada_registros', registroId), {
+                            id: registroId,
+                            alunoId: aluno.id,
+                            alunoNome: aluno.nome,
+                            grade: `${aluno.grade} ${aluno.letter}`,
+                            data: dataFormatada,
+                            rawDate: dataAula,
+                            dia: dia,
+                            mes: `${mes}/${ano}`,
+                            status: info.status ? "Presença" : "Falta",
+                            comentario: info.comentario || "",
+                            timestamp: Date.now()
+                        });
+                    }
+                    alert("✅ Chamada do dia salva com sucesso! Você já pode conferir na aba de Relatórios e Impressão.");
+                    alternarAbaChamada(2);
+                } catch (err) {
+                    console.error("Erro ao salvar chamada:", err);
+                    alert("Erro ao salvar os registros de chamada.");
                 }
-                alert("✅ Chamada do dia salva com sucesso! Você já pode conferir na aba de Relatórios e Impressão.");
-                alternarAbaChamada(2);
-            } catch (err) {
-                console.error("Erro ao salvar chamada:", err);
-                alert("Erro ao salvar os registros de chamada.");
-            }
+            });
         }
 
         function atualizarSelectFiltroAlunoRelatorio() {
@@ -1403,12 +1697,12 @@
             if(!select) return;
             const valorAtual = select.value;
             select.innerHTML = '<option value="todos">Todos os Alunos</option>';
-            
+
             const alunosUnicos = [...new Set(bancoDeAlunos.filter(a => a.role === "aluno").map(a => a.nome))].sort();
             alunosUnicos.forEach(nomeAluno => {
                 const opt = document.createElement('option');
                 opt.value = nomeAluno;
-                opt.innerText = nomeAluno;
+                opt.textContent = nomeAluno;
                 select.appendChild(opt);
             });
             if (valorAtual && Array.from(select.options).some(o => o.value === valorAtual)) {
@@ -1427,11 +1721,13 @@
             const gradeFiltro = document.getElementById('report-grade-filter').value;
             const alunoFiltro = document.getElementById('report-student-filter').value;
 
-            document.getElementById('wrapper-report-date').style.display = (tipoFiltro === 'dia') ? 'block' : 'none';
-            document.getElementById('wrapper-report-month').style.display = (tipoFiltro === 'mes') ? 'block' : 'none';
+            const wrapperDate = document.getElementById('wrapper-report-date');
+            const wrapperMonth = document.getElementById('wrapper-report-month');
+            if (wrapperDate) wrapperDate.style.display = (tipoFiltro === 'dia') ? 'block' : 'none';
+            if (wrapperMonth) wrapperMonth.style.display = (tipoFiltro === 'mes') ? 'block' : 'none';
 
             let registrosFiltrados = bancoChamadaRegistros.filter(reg => {
-                let matchGrade = (gradeFiltro === 'todos' || reg.grade.includes(gradeFiltro));
+                let matchGrade = (gradeFiltro === 'todos' || reg.grade?.includes(gradeFiltro));
                 let matchStudent = (alunoFiltro === 'todos' || reg.alunoNome === alunoFiltro);
                 let matchPeriodo = true;
 
@@ -1456,64 +1752,73 @@
 
             tbody.innerHTML = registrosFiltrados.map(r => `
                 <tr>
-                    <td><b>${r.alunoNome}</b></td>
-                    <td>${r.grade}</td>
-                    <td>${r.dia || r.data}</td>
-                    <td>${r.mes || '-'}</td>
-                    <td><span style="color: ${r.status === 'Presença' ? '#2a9d8f' : '#e63946'}; font-weight: bold;">${r.status}</span></td>
-                    <td>${r.comentario || '<span style="color:#7c7c8a; font-style:italic;">Nenhum</span>'}</td>
+                    <td><b>${escapeHtml(r.alunoNome || '')}</b></td>
+                    <td>${escapeHtml(r.grade || '')}</td>
+                    <td>${escapeHtml(r.dia || r.data || '')}</td>
+                    <td>${escapeHtml(r.mes || '-')}</td>
+                    <td><span style="color: ${r.status === 'Presença' ? '#2a9d8f' : '#e63946'}; font-weight: bold;">${escapeHtml(r.status || '')}</span></td>
+                    <td>${escapeHtml(r.comentario || '') || '<span style="color:#7c7c8a; font-style:italic;">Nenhum</span>'}</td>
                 </tr>
             `).join('');
         }
 
         async function darMoedaPresencaEmMassa() {
-            const selectedGrade = document.getElementById('attendance-grade-select').value;
-            const selectedLetter = document.getElementById('attendance-letter-select').value;
-            const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+            await executarComLoading('btn-premiar-presenca', async () => {
+                const selectedGrade = document.getElementById('attendance-grade-select').value;
+                const selectedLetter = document.getElementById('attendance-letter-select').value;
+                const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
 
-            const presentes = alunosDaTurma.filter(a => {
-                const info = presencaAlunosModoLocal[a.id];
-                return info ? info.status : true;
+                const presentes = alunosDaTurma.filter(a => {
+                    const info = presencaAlunosModoLocal[a.id];
+                    return info ? info.status : false;
+                });
+
+                if (presentes.length === 0) { alert("Nenhum aluno marcado como presente!"); return; }
+
+                if(confirm(`Adicionar 10 Moedas para os ${presentes.length} alunos presentes da turma ${selectedGrade} ${selectedLetter}?`)) {
+                    try {
+                        for(const aluno of presentes) {
+                            const novoSaldo = (aluno.moedas || 0) + 10;
+                            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', aluno.id), { moedas: novoSaldo });
+                        }
+                        alert("✅ Moedas de presença distribuídas com sucesso!");
+                    } catch(err) { console.error("Erro ao aplicar recompensas:", err); alert("Erro ao distribuir moedas."); }
+                }
             });
-
-            if (presentes.length === 0) { alert("Nenhum aluno marcado como presente!"); return; }
-
-            if(confirm(`Adicionar 10 Moedas para os ${presentes.length} alunos presentes da turma ${selectedGrade} ${selectedLetter}?`)) {
-                try {
-                    for(const aluno of presentes) {
-                        const novoSaldo = (aluno.moedas || 0) + 10;
-                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', aluno.id), { moedas: novoSaldo });
-                    }
-                    alert("✅ Moedas de presença distribuídas com sucesso!");
-                } catch(err) { console.error("Erro ao aplicar recompensas:", err); }
-            }
         }
-        
+
         // --- FUNÇÕES DA LOJA, ESTANTE E EXIBIÇÃO DE FIGURINHAS --- //
-        
         function renderizarLojinha() {
             const gridCartas = document.getElementById('store-cards-grid');
             const gridItens = document.getElementById('store-items-grid');
             if(!gridCartas || !gridItens) return;
-            
-            gridCartas.innerHTML = ''; gridItens.innerHTML = '';
-            
-            const cartasExclusivas = bancoDeCartas.filter(c => c.raridade === 'exclusiva');
-            const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome.toLowerCase() === usuarioLogado.toLowerCase());
 
-            if(cartasExclusivas.length === 0) gridCartas.innerHTML = '<p style="color:#7c7c8a; font-size:0.9rem;">Nenhuma figurinha exclusiva disponível no momento.</p>';
-            
+            gridCartas.innerHTML = '';
+            gridItens.innerHTML = '';
+
+            const cartasExclusivas = bancoDeCartas.filter(c => c.raridade === 'exclusiva');
+            const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase());
+
+            if(cartasExclusivas.length === 0) {
+                gridCartas.innerHTML = '<p style="color:#7c7c8a; font-size:0.9rem;">Nenhuma figurinha exclusiva disponível no momento.</p>';
+            }
+
             cartasExclusivas.forEach(carta => {
                 const albRef = bancoAlbuns.find(a => a.id === carta.albumId);
                 const nomeAlbum = albRef ? albRef.titulo : "Álbum Desconhecido";
                 const jaPossui = enviosDoAluno.some(e => e.cartaNome === carta.nome);
-                
-                const tagImagem = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${carta.imagem}">` : `<div class="card-img-fallback">💎</div>`;
-                const preco = parseInt(carta.preço) || 0;
-                
-                let btnComprar = jaPossui ? `<button class="buy-sticker-btn" style="background:#4CAF50; color:#fff;" disabled>✅ Já Possui</button>` : `<button class="buy-sticker-btn" onclick="comprarItemDaLojinha('${carta.id}', 'carta')">Comprar por ${iconeMoeda} ${preco}</button>`;
-                
-                if (modoAdminVisualizacao) btnComprar = `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>`;
+
+                const tagImagem = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${escapeHtml(carta.imagem)}" alt="${escapeHtml(carta.nome)}">` : `<div class="card-img-fallback">💎</div>`;
+                const preco = parseInt(carta.preco) || 0;
+
+                let btnComprar;
+                if (jaPossui) {
+                    btnComprar = `<button class="buy-sticker-btn" style="background:#4CAF50; color:#fff;" disabled>✅ Já Possui</button>`;
+                } else if (modoAdminVisualizacao) {
+                    btnComprar = `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>`;
+                } else {
+                    btnComprar = `<button class="buy-sticker-btn" onclick="comprarItemDaLojinha('${carta.id}', 'carta')">Comprar por ${iconeMoeda} ${preco}</button>`;
+                }
 
                 const el = document.createElement('div');
                 el.style.maxWidth = "220px";
@@ -1521,29 +1826,37 @@
                     <div class="card exclusiva" style="margin-bottom: 10px;">
                         <span class="card-raridade">EXCLUSIVA</span>
                         <div class="card-img-container">${tagImagem}</div>
-                        <div class="card-name">${carta.nome}</div>
+                        <div class="card-name">${escapeHtml(carta.nome)}</div>
                         <div class="card-points">${carta.pontos} Pts</div>
-                        <div class="card-habilidade" style="font-size:0.65rem;">Destino: ${nomeAlbum}</div>
+                        <div class="card-habilidade" style="font-size:0.65rem;">Destino: ${escapeHtml(nomeAlbum)}</div>
                     </div>
                     ${btnComprar}
                 `;
                 gridCartas.appendChild(el);
             });
 
-            if(bancoLoja.length === 0) gridItens.innerHTML = '<p style="color:#7c7c8a; font-size:0.9rem;">Nenhum item ou experiência cadastrada.</p>';
-            
-            bancoLoja.forEach(item => {
-                const tagImg = (item.imagem && item.imagem.startsWith("http")) ? `<img class="store-item-img" src="${item.imagem}">` : `<div class="store-item-icon">${item.imagem || '🎁'}</div>`;
+            if(bancoLoja.length === 0) {
+                gridItens.innerHTML = '<p style="color:#7c7c8a; font-size:0.9rem;">Nenhum item ou experiência cadastrada.</p>';
+            }
+
+            const sortedLoja = [...bancoLoja].sort((a, b) => a.nome.localeCompare(b.nome));
+            sortedLoja.forEach(item => {
+                const tagImg = (item.imagem && item.imagem.startsWith("http")) ? `<img class="store-item-img" src="${escapeHtml(item.imagem)}" alt="${escapeHtml(item.nome)}">` : `<div class="store-item-icon">${item.imagem || '🎁'}</div>`;
                 const preco = parseInt(item.preco) || 0;
-                
-                let btnComprar = modoAdminVisualizacao ? `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>` : `<button class="buy-sticker-btn btn-store" onclick="comprarItemDaLojinha('${item.id}', 'item')">Comprar por ${iconeMoeda} ${preco}</button>`;
+
+                let btnComprar;
+                if (modoAdminVisualizacao) {
+                    btnComprar = `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>`;
+                } else {
+                    btnComprar = `<button class="buy-sticker-btn btn-store" onclick="comprarItemDaLojinha('${item.id}', 'item')">Comprar por ${iconeMoeda} ${preco}</button>`;
+                }
 
                 const el = document.createElement('div');
                 el.className = 'store-item-box';
                 el.innerHTML = `
                     ${tagImg}
-                    <div class="store-item-name">${item.nome}</div>
-                    <div class="store-item-desc">${item.desc || ''}</div>
+                    <div class="store-item-name">${escapeHtml(item.nome)}</div>
+                    <div class="store-item-desc">${escapeHtml(item.desc || '')}</div>
                     ${btnComprar}
                 `;
                 gridItens.appendChild(el);
@@ -1551,7 +1864,7 @@
         }
 
         async function comprarItemDaLojinha(itemId, tipo) {
-            const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno"); 
+            const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno");
             if(!alunoObj) return;
 
             let objCompra, nomeLog, albumLog, raridadeLog;
@@ -1570,7 +1883,7 @@
                 raridadeLog = "Especial";
             }
 
-            const preco = parseInt(objCompra.preço || objCompra.preco) || 0; 
+            const preco = parseInt(objCompra.preco || objCompra.preço || 0);
             const saldoAtual = alunoObj.moedas || 0;
             if(saldoAtual < preco) { alert(`Moedas insuficientes! Requer ${preco} Moedas.`); return; }
 
@@ -1579,7 +1892,7 @@
                     const alunoRef = doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoObj.id);
                     await updateDoc(alunoRef, { moedas: saldoAtual - preco });
 
-                    await addDoc(getPublicCollection('historico'), {
+                    await addDoc(getPublicRef('historico'), {
                         alunoNome: alunoObj.nome,
                         alunoSerie: alunoObj.grade || "-",
                         alunoLetter: alunoObj.letter || "-",
@@ -1596,24 +1909,32 @@
         }
 
         function renderizarEstanteDeLivros() {
-            const grid = document.getElementById('shelf-books-grid'); 
-            if (!grid) return; grid.innerHTML = '';
-            
-            bancoAlbuns.forEach(album => {
+            const grid = document.getElementById('shelf-books-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const sortedAlbums = [...bancoAlbuns].sort((a, b) => a.titulo.localeCompare(b.titulo));
+
+            sortedAlbums.forEach(album => {
                 const totalFigurinhasDoAlbum = bancoDeCartas.filter(c => c.albumId === album.id).length;
-                const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome.toLowerCase() === usuarioLogado.toLowerCase() && h.albumId === album.id);
+                const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase() && h.albumId === album.id);
                 const coladas = bancoDeCartas.filter(c => c.albumId === album.id && enviosDoAluno.some(e => e.cartaNome === c.nome)).length;
 
                 let tagDesenho = `<span style="font-size: 2.5rem;">📘</span>`;
                 if (album.imagem && album.imagem.trim() !== "") {
-                    if (album.imagem.startsWith("http")) tagDesenho = `<img class="book-cover-img" src="${album.imagem}" alt="Capa">`;
-                    else tagDesenho = `<span style="font-size: 2.5rem;">${album.imagem}</span>`;
+                    if (album.imagem.startsWith("http")) {
+                        tagDesenho = `<img class="book-cover-img" src="${escapeHtml(album.imagem)}" alt="Capa">`;
+                    } else {
+                        tagDesenho = `<span style="font-size: 2.5rem;">${escapeHtml(album.imagem)}</span>`;
+                    }
                 }
 
-                const capa = document.createElement('div'); capa.className = 'book-cover-item'; capa.style.backgroundColor = album.cor || '#8b0000';
+                const capa = document.createElement('div');
+                capa.className = 'book-cover-item';
+                capa.style.backgroundColor = album.cor || '#8b0000';
                 capa.onclick = () => abrirAlbumEspecifico(album.id);
                 capa.innerHTML = `
-                    <div class="book-cover-title">${album.titulo}</div>
+                    <div class="book-cover-title">${escapeHtml(album.titulo)}</div>
                     <div class="book-cover-thumb">${tagDesenho}</div>
                     <div class="book-cover-badge">${coladas}/${totalFigurinhasDoAlbum} Fig.</div>
                 `;
@@ -1624,31 +1945,36 @@
         function abrirAlbumEspecifico(albumId) {
             idAlbumAtivoAtualmente = albumId;
             const albumObj = bancoAlbuns.find(a => a.id === albumId);
-            document.getElementById('active-album-title').innerText = albumObj ? albumObj.titulo : "Álbum Ativo";
-            document.getElementById('user-display').innerText = usuarioLogado;
+            document.getElementById('active-album-title').textContent = albumObj ? albumObj.titulo : "Álbum Ativo";
+            document.getElementById('user-display').textContent = usuarioLogado;
             if(!modoAdminVisualizacao) atualizarIndicadoresMoeda();
-            paginaAtualLivro = 1; renderizarLivroAberto(); mudarTela('screen-album');
+            paginaAtualLivro = 1;
+            renderizarLivroAberto();
+            mudarTela('screen-album');
         }
 
         function renderizarLivroAberto() {
-            const leftGrid = document.getElementById('page-left-grid'); const rightGrid = document.getElementById('page-right-grid');
-            if(!leftGrid || !rightGrid) return; leftGrid.innerHTML = ''; rightGrid.innerHTML = '';
+            const leftGrid = document.getElementById('page-left-grid');
+            const rightGrid = document.getElementById('page-right-grid');
+            if(!leftGrid || !rightGrid) return;
+            leftGrid.innerHTML = '';
+            rightGrid.innerHTML = '';
 
             const cartasFiltradasDesteAlbum = bancoDeCartas.filter(c => c.albumId === idAlbumAtivoAtualmente);
             const totalCartas = cartasFiltradasDesteAlbum.length;
-            const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome.toLowerCase() === usuarioLogado.toLowerCase() && h.albumId === idAlbumAtivoAtualmente);
+            const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase() && h.albumId === idAlbumAtivoAtualmente);
             const coladas = cartasFiltradasDesteAlbum.filter(c => enviosDoAluno.some(e => e.cartaNome === c.nome)).length;
             const porcentagem = totalCartas > 0 ? Math.round((coladas / totalCartas) * 100) : 0;
 
-            document.getElementById('album-progress-text').innerText = `Figurinhas: ${coladas} / ${totalCartas}`;
+            document.getElementById('album-progress-text').textContent = `Figurinhas: ${coladas} / ${totalCartas}`;
             document.getElementById('album-progress-bar').style.width = `${porcentagem}%`;
-            document.getElementById('album-percentage-text').innerText = `${porcentagem}%`;
+            document.getElementById('album-percentage-text').textContent = `${porcentagem}%`;
 
-            const totalFigurinhasPorAbertura = FIGURINHAS_POR_PAGINA * 2; 
+            const totalFigurinhasPorAbertura = FIGURINHAS_POR_PAGINA * 2;
             const baseIndex = (paginaAtualLivro - 1) * totalFigurinhasPorAbertura;
 
-            document.getElementById('page-left-num').innerText = `Pág. ${paginaAtualLivro * 2 - 1}`;
-            document.getElementById('page-right-num').innerText = `Pág. ${paginaAtualLivro * 2}`;
+            document.getElementById('page-left-num').textContent = `Pág. ${paginaAtualLivro * 2 - 1}`;
+            document.getElementById('page-right-num').textContent = `Pág. ${paginaAtualLivro * 2}`;
 
             for (let i = 0; i < 4; i++) renderizarSlotFigurinha(cartasFiltradasDesteAlbum[baseIndex + i], baseIndex + i + 1, leftGrid, enviosDoAluno);
             for (let i = 4; i < 8; i++) renderizarSlotFigurinha(cartasFiltradasDesteAlbum[baseIndex + i], baseIndex + i + 1, rightGrid, enviosDoAluno);
@@ -1658,202 +1984,283 @@
         }
 
         function renderizarSlotFigurinha(carta, numeroPosicao, containerAlvo, enviosDoAluno) {
-            const wrapperSlot = document.createElement('div'); wrapperSlot.style.width = "100%"; wrapperSlot.style.height = "100%";
-            if (!carta) { wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span></div>`; containerAlvo.appendChild(wrapperSlot); return; }
-            
+            const wrapperSlot = document.createElement('div');
+            wrapperSlot.style.width = "100%";
+            wrapperSlot.style.height = "100%";
+            if (!carta) {
+                wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span></div>`;
+                containerAlvo.appendChild(wrapperSlot);
+                return;
+            }
+
             const jaPossui = enviosDoAluno.some(e => e.cartaNome === carta.nome) || modoAdminVisualizacao;
             if (jaPossui) {
                 const ehNova = !figurinhasVistas[carta.id] && !modoAdminVisualizacao;
                 const tagNova = ehNova ? `<div class="badge-nova">NOVA!</div>` : '';
-                const tagImagem = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${carta.imagem}">` : `<div class="card-img-fallback">🛠️</div>`;
+                const tagImagem = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${escapeHtml(carta.imagem)}" alt="${escapeHtml(carta.nome)}">` : `<div class="card-img-fallback">🛠️</div>`;
 
-                const cardElement = document.createElement('div'); cardElement.className = `card ${carta.raridade}`;
+                const cardElement = document.createElement('div');
+                cardElement.className = `card ${carta.raridade}`;
                 cardElement.onclick = () => marcarComoVistaEAmpliar(carta);
-                cardElement.innerHTML = `${tagNova} <span class="card-slot-number">${numeroPosicao}</span><span class="card-raridade">${carta.raridade}</span><div class="card-img-container">${tagImagem}</div><div class="card-name">${carta.nome}</div><div class="card-points">${carta.pontos} Pts</div><div class="card-habilidade">${carta.habilidade || ''}</div>`;
+                cardElement.innerHTML = `${tagNova} <span class="card-slot-number">${numeroPosicao}</span><span class="card-raridade">${carta.raridade}</span><div class="card-img-container">${tagImagem}</div><div class="card-name">${escapeHtml(carta.nome)}</div><div class="card-points">${carta.pontos} Pts</div><div class="card-habilidade">${escapeHtml(carta.habilidade || '')}</div>`;
                 wrapperSlot.appendChild(cardElement);
             } else {
                 let txtDica = "Vá na Lojinha! 🛒";
                 let botaoCompraHtml = "";
-                
+
                 if (carta.raridade !== 'exclusiva') {
                     txtDica = carta.nome.substring(0, 12) + "...";
-                    const preco = parseInt(carta.preço) || 0;
-                    if(preco > 0 && !modoAdminVisualizacao) botaoCompraHtml = `<button class="buy-sticker-btn" onclick="comprarFigurinhaAlbumDireto('${carta.id}')">${iconeMoeda} ${preco}</button>`;
+                    const preco = parseInt(carta.preco) || 0;
+                    if(preco > 0 && !modoAdminVisualizacao) {
+                        botaoCompraHtml = `<button class="buy-sticker-btn" onclick="comprarFigurinhaAlbumDireto('${carta.id}')">${iconeMoeda} ${preco}</button>`;
+                    }
                 }
 
-                wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span><div style="font-size:0.7rem; color:#626268; margin-top:20px; text-align:center; font-weight:bold;">${txtDica}</div>${botaoCompraHtml}</div>`;
+                wrapperSlot.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${numeroPosicao}</span><div style="font-size:0.7rem; color:#626268; margin-top:20px; text-align:center; font-weight:bold;">${escapeHtml(txtDica)}</div>${botaoCompraHtml}</div>`;
             }
             containerAlvo.appendChild(wrapperSlot);
         }
 
         async function marcarComoVistaEAmpliar(carta) {
             if (!modoAdminVisualizacao && !figurinhasVistas[carta.id]) {
-                try { await setDoc(doc(db, 'artifacts', appId, 'users', currentUserId, 'seen_stickers', carta.id), { vista: true }); } 
-                catch (err) { console.error(err); }
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'users', currentUserId, 'seen_stickers', carta.id), { vista: true });
+                } catch (err) { console.error(err); }
             }
             ampliarCard(carta);
         }
 
-        async function comprarFigurinhaAlbumDireto(cartaId) { comprarItemDaLojinha(cartaId, 'carta'); }
+        async function comprarFigurinhaAlbumDireto(cartaId) {
+            await comprarItemDaLojinha(cartaId, 'carta');
+        }
 
-        function folhearPagina(direcao) { paginaAtualLivro += direcao; renderizarLivroAberto(); }
-        
+        function folhearPagina(direcao) {
+            paginaAtualLivro += direcao;
+            renderizarLivroAberto();
+        }
+
         function ampliarCard(carta) {
             const modal = document.getElementById('zoom-modal');
-            const tagImagemZoom = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${carta.imagem}" style="height:100%; object-fit:contain;">` : `<div class="card-img-fallback" style="font-size:3.5rem;">🛠️</div>`;
+            const tagImagemZoom = (carta.imagem && carta.imagem.trim() !== "") ? `<img class="card-img" src="${escapeHtml(carta.imagem)}" style="height:100%; object-fit:contain;" alt="${escapeHtml(carta.nome)}">` : `<div class="card-img-fallback" style="font-size:3.5rem;">🛠️</div>`;
             document.getElementById('zoom-card-content').innerHTML = `
                 <div class="card ${carta.raridade}">
                     <span class="card-raridade">${carta.raridade}</span>
                     <div class="card-img-container">${tagImagemZoom}</div>
-                    <h2 class="card-name">${carta.nome}</h2>
+                    <h2 class="card-name">${escapeHtml(carta.nome)}</h2>
                     <div class="card-points">${carta.pontos} Pontos</div>
-                    <div class="card-habilidade">${carta.habilidade || 'Nenhuma habilidade especial descrita.'}</div>
+                    <div class="card-habilidade">${escapeHtml(carta.habilidade || 'Nenhuma habilidade especial descrita.')}</div>
                 </div>
             `;
             modal.classList.add('active');
         }
-        function fecharAmpliacao(event) { if (event.target.id === "zoom-modal") document.getElementById('zoom-modal').classList.remove('active'); }
-        function fecharAmpliacaoObg() { document.getElementById('zoom-modal').classList.remove('active'); }
+
+        function fecharAmpliacao(event) {
+            if (event.target === event.currentTarget) {
+                document.getElementById('zoom-modal').classList.remove('active');
+            }
+        }
+
+        function fecharAmpliacaoObg() {
+            document.getElementById('zoom-modal').classList.remove('active');
+        }
 
         async function alterarMinhaSenhaAdmin() {
-            const novaSenha = document.getElementById('admin-fast-pin').value.trim();
-            if(!novaSenha) { alert("Digite a nova senha!"); return; }
-            
-            const adminAtual = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === 'administrador');
-            if(adminAtual) {
-                try {
-                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', adminAtual.id), { pin: novaSenha });
-                    alert("✅ Sua senha de Administrador foi atualizada com sucesso!");
-                    document.getElementById('admin-fast-pin').value = '';
-                } catch (err) { console.error("Erro ao atualizar senha", err); }
-            } else {
-                alert("Erro: Apenas Administradores podem usar este campo.");
-            }
+            await executarComLoading('btn-fast-pin-update', async () => {
+                const novaSenha = document.getElementById('admin-fast-pin').value.trim();
+                if(!novaSenha) { alert("Digite a nova senha!"); return; }
+
+                const adminAtual = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === 'administrador');
+                if(adminAtual) {
+                    try {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', adminAtual.id), { pin: novaSenha });
+                        alert("✅ Sua senha de Administrador foi atualizada com sucesso!");
+                        document.getElementById('admin-fast-pin').value = '';
+                    } catch (err) { console.error("Erro ao atualizar senha", err); alert("Erro ao atualizar senha."); }
+                } else {
+                    alert("Erro: Apenas Administradores podem usar este campo.");
+                }
+            });
         }
 
         async function adicionarAluno() {
             if (cargoLogado === "auxiliar") return;
-            const nome = document.getElementById('student-name').value.trim();
-            const grade = document.getElementById('student-grade').value;
-            const letter = document.getElementById('student-letter').value;
-            const role = document.getElementById('student-role').value;
-            const pin = document.getElementById('student-pin').value.trim();
-            if (!nome || !pin) { alert("Preencha todos os dados (incluindo senha)!"); return; }
-
-            const novoId = "st_" + Date.now();
-            try {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), {
-                    id: novoId, nome, grade, letter, role, pin, moedas: 0, moedasExclusivas: 0
-                });
-                alert(`✅ Integrante "${nome}" cadastrado com sucesso!`);
-                limparFormularioUsuario();
-                atualizarSelectFiltroAlunoRelatorio();
-            } catch (err) { console.error(err); }
-        }
-
-        function carregarUsuarioParaEdicao(id) {
-            const u = bancoDeAlunos.find(a => a.id === id); if(!u) return;
-            document.getElementById('student-edit-id').value = u.id;
-            document.getElementById('student-name').value = u.nome;
-            document.getElementById('student-grade').value = u.grade || "-";
-            document.getElementById('student-letter').value = u.letter || "-";
-            document.getElementById('student-role').value = u.role;
-            document.getElementById('student-pin').value = u.pin;
-            document.getElementById('title-user-form').innerText = "🔄 Modificar Cadastro de Integrante";
-            document.getElementById('wrapper-user-buttons').innerHTML = `<button onclick="salvarAtualizacaoUsuario()">Salvar Alterações</button><button class="btn-secondary" style="margin-top:4px;" onclick="limparFormularioUsuario()">Cancelar</button>`;
-        }
-
-        async function salvarAtualizacaoUsuario() {
-            const id = document.getElementById('student-edit-id').value;
-            const index = bancoDeAlunos.findIndex(a => a.id === id);
-            if(index !== -1) {
+            await executarComLoading('btn-user-submit', async () => {
                 const nome = document.getElementById('student-name').value.trim();
                 const grade = document.getElementById('student-grade').value;
                 const letter = document.getElementById('student-letter').value;
                 const role = document.getElementById('student-role').value;
                 const pin = document.getElementById('student-pin').value.trim();
-                const moedas = bancoDeAlunos[index].moedas || 0;
-                const moedasExclusivas = bancoDeAlunos[index].moedasExclusivas || 0;
+                if (!nome || !pin) { alert("Preencha todos os dados (incluindo senha)!"); return; }
+
+                const jaExiste = bancoDeAlunos.some(a =>
+                    a.nome.toLowerCase() === nome.toLowerCase() &&
+                    a.role === role &&
+                    a.grade === grade &&
+                    a.letter === letter
+                );
+                if (jaExiste) {
+                    alert("⚠️ Já existe um integrante com esses dados (mesmo nome, cargo, série/setor e sala). O cadastro não foi realizado.");
+                    return;
+                }
+
+                const novoId = "st_" + Date.now();
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), {
+                        id: novoId, nome, grade, letter, role, pin, moedas: 0, moedasExclusivas: 0
+                    });
+                    alert(`✅ Integrante "${nome}" cadastrado com sucesso!`);
+                    limparFormularioUsuario();
+                    atualizarSelectFiltroAlunoRelatorio();
+                } catch (err) { console.error(err); alert("Erro ao cadastrar."); }
+            });
+        }
+
+        function carregarUsuarioParaEdicao(id) {
+            const u = bancoDeAlunos.find(a => a.id === id);
+            if(!u) return;
+            document.getElementById('student-edit-id').value = u.id;
+            document.getElementById('student-name').value = u.nome;
+            document.getElementById('student-grade').value = u.grade || "1º Ano";
+            document.getElementById('student-letter').value = u.letter || "-";
+            document.getElementById('student-role').value = u.role;
+            document.getElementById('student-pin').value = u.pin;
+            document.getElementById('title-user-form').textContent = "🔄 Modificar Cadastro de Integrante";
+            document.getElementById('wrapper-user-buttons').innerHTML = `<button id="btn-user-submit" onclick="salvarAtualizacaoUsuario()">Salvar Alterações</button><button class="btn-secondary" style="margin-top:4px;" onclick="limparFormularioUsuario()">Cancelar</button>`;
+        }
+
+        async function salvarAtualizacaoUsuario() {
+            const id = document.getElementById('student-edit-id').value;
+            if (!id) return;
+            await executarComLoading('btn-user-submit', async () => {
+                const nome = document.getElementById('student-name').value.trim();
+                const grade = document.getElementById('student-grade').value;
+                const letter = document.getElementById('student-letter').value;
+                const role = document.getElementById('student-role').value;
+                const pin = document.getElementById('student-pin').value.trim();
 
                 try {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id), { id, nome, grade, letter, role, pin, moedas, moedasExclusivas });
-                    alert("✅ Cadastro atualizado com sucesso!"); limparFormularioUsuario();
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id), {
+                        nome, grade, letter, role, pin
+                    });
+                    alert("✅ Cadastro atualizado com sucesso!");
+                    limparFormularioUsuario();
                     atualizarSelectFiltroAlunoRelatorio();
-                } catch (err) { console.error(err); }
-            }
+                } catch (err) {
+                    console.error(err);
+                    alert("Erro ao atualizar.");
+                }
+            });
         }
 
         function limparFormularioUsuario() {
-            document.getElementById('student-edit-id').value = ""; document.getElementById('student-name').value = "";
-            document.getElementById('student-grade').value = "-"; document.getElementById('student-letter').value = "-"; document.getElementById('student-role').value = "aluno";
-            document.getElementById('student-pin').value = ""; document.getElementById('title-user-form').innerText = "👥 Gerenciador de Usuários";
-            document.getElementById('wrapper-user-buttons').innerHTML = `<button onclick="adicionarAluno()">Cadastrar Integrante</button>`;
+            document.getElementById('student-edit-id').value = "";
+            document.getElementById('student-name').value = "";
+            document.getElementById('student-grade').value = "MAKER";
+            document.getElementById('student-letter').value = "-";
+            document.getElementById('student-role').value = "aluno";
+            document.getElementById('student-pin').value = "";
+            document.getElementById('title-user-form').textContent = "👥 Gerenciador de Usuários";
+            document.getElementById('wrapper-user-buttons').innerHTML = `<button id="btn-user-submit" onclick="adicionarAluno()">Cadastrar Integrante</button>`;
         }
 
         async function deletarAluno(id) {
-            if (cargoLogado === "auxiliar" || !confirm("Remover usuário permanentemente?")) return;
-            try { 
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id)); 
+            if (cargoLogado === "auxiliar") {
+                alert("Você não tem permissão para excluir usuários.");
+                return;
+            }
+            if (!confirm("Remover usuário permanentemente?")) return;
+            try {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id));
                 atualizarSelectFiltroAlunoRelatorio();
-            } catch (err) { console.error(err); }
+            } catch (err) {
+                console.error(err);
+                alert("Erro ao remover usuário.");
+            }
         }
 
         async function modificarMoedasAluno(alunoId, operacao, tipoMoeda = 'normal') {
-            const usuario = bancoDeAlunos.find(a => a.id === alunoId); if(!usuario) return;
+            const usuario = bancoDeAlunos.find(a => a.id === alunoId);
+            if(!usuario) return;
             const textoTipo = tipoMoeda === 'normal' ? 'Moedas Normais' : 'Diamantes';
-            const quantia = parseInt(prompt(`Quantas moedas (${textoTipo}) deseja alterar para ${usuario.nome}?`)) || 0; if(quantia <= 0) return;
-            
+            const quantia = parseInt(prompt(`Quantas moedas (${textoTipo}) deseja alterar para ${usuario.nome}?`)) || 0;
+            if(quantia <= 0) return;
+
             const saldoAtual = tipoMoeda === 'normal' ? (usuario.moedas || 0) : (usuario.moedasExclusivas || 0);
             if(operacao === 'subtrair' && saldoAtual < quantia) { alert("Saldo insuficiente!"); return; }
             const novoSaldo = operacao === 'somar' ? (saldoAtual + quantia) : (saldoAtual - quantia);
-            
+
             try {
                 const updateData = tipoMoeda === 'normal' ? { moedas: novoSaldo } : { moedasExclusivas: novoSaldo };
                 await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoId), updateData);
-            } catch (err) { console.error(err); }
+            } catch (err) { console.error(err); alert("Erro ao modificar saldo."); }
         }
 
         function filtrarAlunosDistribuicao() {
-            const fGrade = document.getElementById('select-filter-grade').value; const fLetter = document.getElementById('select-filter-letter').value;
-            const select = document.getElementById('select-dist-student'); if(!select) return;
-            const bkp = select.value; select.innerHTML = '<option value="">-- Selecione o Aluno --</option>';
-            bancoDeAlunos.filter(u => u.role === "aluno").forEach(a => {
-                const matchGrade = (fGrade === "todos" || a.grade === fGrade); const matchLetter = (fLetter === "todos" || a.letter === fLetter);
-                if(matchGrade && matchLetter) select.add(new Option(`${a.nome} (${a.grade || ''} ${a.letter || ''})`, a.nome));
-            });
+            const fGrade = document.getElementById('select-filter-grade').value;
+            const fLetter = document.getElementById('select-filter-letter').value;
+            const select = document.getElementById('select-dist-student');
+            if(!select) return;
+            const bkp = select.value;
+            select.innerHTML = '<option value="">-- Selecione o Aluno --</option>';
+            const filtered = bancoDeAlunos.filter(u => u.role === "aluno").filter(a => {
+                const matchGrade = (fGrade === "todos" || a.grade === fGrade);
+                const matchLetter = (fLetter === "todos" || a.letter === fLetter);
+                return matchGrade && matchLetter;
+            }).sort((a, b) => a.nome.localeCompare(b.nome));
+            filtered.forEach(a => select.add(new Option(`${a.nome} (${a.grade || ''} ${a.letter || ''})`, a.nome)));
             if (bkp && Array.from(select.options).some(o => o.value === bkp)) select.value = bkp;
         }
 
         function atualizarSelectFigurinhasDistribuicao() {
             const albId = document.getElementById('select-dist-album-filter').value;
-            const select = document.getElementById('select-dist-card'); if(!select) return;
-            const bkp = select.value; select.innerHTML = '<option value="">-- Selecione a Figurinha --</option>';
-            bancoDeCartas.filter(c => c.albumId === albId).forEach(c => select.add(new Option(c.nome, c.nome)));
+            const select = document.getElementById('select-dist-card');
+            if(!select) return;
+            const bkp = select.value;
+            select.innerHTML = '<option value="">-- Selecione a Figurinha --</option>';
+            const filtered = bancoDeCartas.filter(c => c.albumId === albId).sort((a, b) => a.nome.localeCompare(b.nome));
+            filtered.forEach(c => select.add(new Option(c.nome, c.nome)));
             if (bkp && Array.from(select.options).some(o => o.value === bkp)) select.value = bkp;
         }
 
         async function distribuirCarta() {
-            const nomeAluno = document.getElementById('select-dist-student').value;
-            const idAlbum = document.getElementById('select-dist-album-filter').value;
-            const nomeCarta = document.getElementById('select-dist-card').value;
-            if (!nomeAluno || !idAlbum || !nomeCarta) { alert("⚠️ Erro: Escolha o Aluno, Álbum e Figurinha!"); return; }
+            await executarComLoading('btn-distribuir-carta', async () => {
+                const nomeAluno = document.getElementById('select-dist-student').value;
+                const idAlbum = document.getElementById('select-dist-album-filter').value;
+                const nomeCarta = document.getElementById('select-dist-card').value;
+                if (!nomeAluno || !idAlbum || !nomeCarta) { alert("⚠️ Erro: Escolha o Aluno, Álbum e Figurinha!"); return; }
 
-            const alunoObj = bancoDeAlunos.find(a => a.nome === nomeAluno);
-            const cartaObj = bancoDeCartas.find(c => c.albumId === idAlbum && c.nome === nomeCarta);
-            const albumObj = bancoAlbuns.find(a => a.id === idAlbum);
-            if (!alunoObj || !cartaObj) return;
+                const alunoObj = bancoDeAlunos.find(a => a.nome === nomeAluno);
+                const cartaObj = bancoDeCartas.find(c => c.albumId === idAlbum && c.nome === nomeCarta);
+                const albumObj = bancoAlbuns.find(a => a.id === idAlbum);
+                if (!alunoObj || !cartaObj) return;
 
-            try {
-                await addDoc(getPublicCollection('historico'), {
-                    alunoNome: alunoObj.nome, alunoSerie: alunoObj.grade || "-", alunoLetter: alunoObj.letter || "-",
-                    albumId: idAlbum, albumTitulo: albumObj ? albumObj.titulo : "Direto", cartaNome: cartaObj.nome,
-                    raridade: cartaObj.raridade, data: new Date().toLocaleDateString('pt-BR') + ' 🚀 Staff', timestamp: Date.now()
-                });
-                alert(`✅ Sucesso! Figurinha colada para ${alunoObj.nome}!`);
-            } catch (err) { console.error(err); }
+                const jaPossui = historicoEnvios.some(h =>
+                    h.alunoNome?.toLowerCase() === nomeAluno.toLowerCase() &&
+                    h.albumId === idAlbum &&
+                    h.cartaNome === nomeCarta
+                );
+                if (jaPossui) {
+                    if (!confirm(`O aluno ${nomeAluno} já possui a figurinha "${nomeCarta}" neste álbum. Deseja colar novamente?`)) return;
+                }
+
+                try {
+                    await addDoc(getPublicRef('historico'), {
+                        alunoNome: alunoObj.nome,
+                        alunoSerie: alunoObj.grade || "-",
+                        alunoLetter: alunoObj.letter || "-",
+                        albumId: idAlbum,
+                        albumTitulo: albumObj ? albumObj.titulo : "Direto",
+                        cartaNome: cartaObj.nome,
+                        raridade: cartaObj.raridade,
+                        data: new Date().toLocaleDateString('pt-BR') + ' 🚀 Staff',
+                        timestamp: Date.now()
+                    });
+                    alert(`✅ Sucesso! Figurinha colada para ${alunoObj.nome}!`);
+                } catch (err) { console.error(err); alert("Erro ao distribuir figurinha."); }
+            });
         }
 
-        // EXPORTANDO AS FUNÇÕES PARA O ESCOPO GLOBAL DO WINDOW PARA O HTML ACESSAR:
+        // --- EXPORTANDO FUNÇÕES PARA O ESCOPO GLOBAL ---
         window.mudarTela = mudarTela;
         window.alternarAbaChamada = alternarAbaChamada;
         window.fazerLogin = fazerLogin;
@@ -1893,7 +2300,10 @@
         window.carregarUsuarioParaEdicao = carregarUsuarioParaEdicao;
         window.atualizarTabelaHistorico = atualizarTabelaHistorico;
         window.limparHistoricoGeral = limparHistoricoGeral;
-
+        window.editarAlunoChamada = editarAlunoChamada;
+        window.excluirAlunoChamada = excluirAlunoChamada;
+        window.confirmarTrocaSenha = confirmarTrocaSenha;
+        window.cancelarTrocaSenha = cancelarTrocaSenha;
     </script>
 </body>
 </html>
