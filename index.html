@@ -232,7 +232,16 @@
             td { border-bottom: 1px solid #ccc !important; color: #000 !important; }
             .filter-group-inline { display: none !important; }
         }
-    </style>
+
+        /* --- ESTILOS DA TELA AULA --- */
+        .aula-container { max-width: 1300px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 380px 1fr; gap: 20px; }
+        @media (max-width: 900px) { .aula-container { grid-template-columns: 1fr; } }
+        .aula-sidebar { display: flex; flex-direction: column; gap: 10px; }
+        .aula-preview { background: #0f0f11; border-radius: 16px; border: 1px solid var(--border-color); padding: 15px; height: 70vh; overflow: hidden; display: flex; flex-direction: column; }
+        .aula-preview h3 { color: #ffb703; margin-bottom: 10px; }
+        .aula-preview iframe { flex: 1; width: 100%; border: none; background: white; border-radius: 8px; }
+		.btn-fullscreen { background: #2a9d8f; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+	</style>
 </head>
 <body>
 
@@ -542,6 +551,73 @@
         </div>
     </div>
 
+    <!-- TELA: AULAS -->
+    <div id="screen-aula" class="screen">
+        <header>
+            <div>
+                <h1>📚 Aulas</h1>
+                <p>Gerencie e exiba slides de conteúdo por série</p>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-secondary" style="background:#0077b6" onclick="mudarTela('screen-admin')">Voltar ao Painel Admin</button>
+                <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
+            </div>
+        </header>
+
+        <div class="aula-container">
+            <div class="aula-sidebar admin-box">
+                <h2>📝 Gerenciar Slides</h2>
+				<!-- Filtro rápido de aula existente -->
+<label>Filtrar Aula por Série:</label>
+<select id="aula-filter-serie" onchange="atualizarFiltroAulas()">
+    <option value="1º Ano">1º Ano</option>
+    <option value="2º Ano">2º Ano</option>
+    <option value="3º Ano">3º Ano</option>
+    <option value="4º Ano">4º Ano</option>
+    <option value="5º Ano">5º Ano</option>
+</select>
+
+<label>Selecionar Aula:</label>
+<select id="aula-filter-select" onchange="carregarAulaDoFiltro()">
+    <option value="">-- Escolha uma aula --</option>
+</select>
+<button class="btn-secondary" onclick="carregarAulaDoFiltro()">Carregar Aula Selecionada</button>
+
+<hr style="border-color: #2e2e34; margin: 10px 0;">
+                <label>Série:</label>
+                <select id="aula-serie-select" onchange="selecionarSerieAula()">
+                    <option value="1º Ano">1º Ano</option>
+                    <option value="2º Ano">2º Ano</option>
+                    <option value="3º Ano">3º Ano</option>
+                    <option value="4º Ano">4º Ano</option>
+                    <option value="5º Ano">5º Ano</option>
+                </select>
+
+                <label>Título da Aula:</label>
+                <input type="text" id="aula-titulo" placeholder="Ex: Aula 5 - Robótica">
+
+                <label>Conteúdo HTML do Slide:</label>
+                <textarea id="aula-html-content" rows="8" placeholder="Cole o HTML ou carregue um arquivo .html" oninput="atualizarPreviewAulaFromTextarea()"></textarea>
+
+                <label>Carregar arquivo HTML:</label>
+                <input type="file" id="aula-file-input" accept=".html,.htm" onchange="carregarArquivoHTML(this)">
+
+                <button id="btn-salvar-aula" onclick="salvarAula()">💾 Salvar Aula</button>
+                <button class="btn-secondary" onclick="novaAula()">Limpar Formulário</button>
+
+                <h3 style="margin-top: 15px;">Slides Cadastrados</h3>
+                <div class="manage-list" id="list-aulas" style="max-height: 200px;"></div>
+            </div>
+
+            <div class="aula-preview">
+                <h3>👁️ Preview do Slide 
+    <button class="btn-fullscreen" onclick="alternarTelaCheiaAula()">⛶ Tela Cheia</button>
+</h3>
+                <iframe id="aula-preview-iframe" sandbox="allow-scripts"></iframe>
+            </div>
+        </div>
+    </div>
+
     <!-- TELA ADMINISTRATIVA GERAL -->
     <div id="screen-admin" class="screen">
         <header>
@@ -553,6 +629,7 @@
                 <button class="btn-success" onclick="mudarTela('screen-attendance')">📋 Chamada Interativa</button>
                 <button class="btn-store" onclick="mudarTela('screen-store')">Ver Lojinha 🛒</button>
                 <button style="background:#0077b6" onclick="verEstanteComoAdmin()">Ver Estante de Álbuns</button>
+                <button class="btn-secondary" style="background:#9d4edd;" onclick="mudarTela('screen-aula')">Aula 📖</button>
                 <button class="btn-secondary" onclick="fazerLogout()">Sair 🚪</button>
             </div>
         </header>
@@ -864,6 +941,8 @@
         let bancoChamadaRegistros = [];
         let figurinhasVistas = {};
         let presencaAlunosModoLocal = {};
+        let bancoAulas = [];
+        let currentEditAulaId = "";
 
         let usuarioLogado = "";
         let cargoLogado = "";
@@ -976,6 +1055,17 @@
                 if (idAlbumAtivoAtualmente) renderizarLivroAberto();
             }, (err) => console.error(err));
             addUnsubscribe(unsub7);
+
+            // Listener para Aulas
+            const unsub8 = onSnapshot(getPublicRef('aulas'), (snap) => {
+                let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+                bancoAulas = list;
+                if (document.getElementById('screen-aula').classList.contains('active')) {
+                    renderizarListaAulas();
+                    atualizarPreviewAula();
+                }
+            }, (err) => console.error(err));
+            addUnsubscribe(unsub8);
         }
 
         async function popularSementesAlbuns() { for (const item of albunsIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'albuns', item.id), item); }
@@ -1024,6 +1114,13 @@
                 atualizarSelectFiltroAlunoRelatorio();
                 renderizarTabelaRelatorio();
             }
+            if (idTela === 'screen-aula') {
+				const select = document.getElementById('aula-serie-select');
+				if (!select.value) select.value = "1º Ano";
+					renderizarListaAulas();
+					atualizarPreviewAula();
+					atualizarFiltroAulas();  // <-- ADICIONE AQUI
+}
         }
 
         function alternarAbaChamada(numAba) {
@@ -1479,7 +1576,162 @@
             });
         }
 
-        // ----------- CADASTRO DE CHAMADA DIÁRIA E RELATÓRIO ----------- //
+        // ---------- FUNÇÕES DA TELA AULA ---------- //
+        function renderizarListaAulas() {
+            const list = document.getElementById('list-aulas');
+            const serie = document.getElementById('aula-serie-select').value;
+            if (!list) return;
+            const filtered = bancoAulas.filter(a => a.serie === serie).sort((a, b) => a.titulo.localeCompare(b.titulo));
+            list.innerHTML = filtered.map(a => `
+                <div class="list-item">
+                    <div><b>${escapeHtml(a.titulo)}</b><br><small>Atualizada: ${a.updatedAt ? new Date(a.updatedAt).toLocaleString('pt-BR') : 'Nunca'}</small></div>
+                    <div class="box-acoes-botoes">
+                        <button class="btn-edit" onclick="editarAula('${a.id}')">Editar</button>
+                        <button class="btn-danger" onclick="excluirAula('${a.id}')">Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function atualizarPreviewAula() {
+            const iframe = document.getElementById('aula-preview-iframe');
+            const serie = document.getElementById('aula-serie-select').value;
+            const aula = bancoAulas.find(a => a.serie === serie && a.id === currentEditAulaId) || bancoAulas.find(a => a.serie === serie);
+            if (iframe) {
+                if (aula && aula.htmlContent) {
+                    iframe.srcdoc = aula.htmlContent;
+                } else {
+                    iframe.srcdoc = '<html><body style="background:white; color:black; display:flex; align-items:center; justify-content:center; height:100%;"><h2>Nenhum slide cadastrado para esta série</h2></body></html>';
+                }
+            }
+        }
+
+        function atualizarPreviewAulaFromTextarea() {
+            const html = document.getElementById('aula-html-content').value;
+            const iframe = document.getElementById('aula-preview-iframe');
+            if (iframe) {
+                iframe.srcdoc = html || '<html><body style="background:white; color:black; display:flex; align-items:center; justify-content:center; height:100%;"><p>Conteúdo vazio</p></body></html>';
+            }
+        }
+
+        function selecionarSerieAula() {
+            renderizarListaAulas();
+            atualizarPreviewAula();
+        }
+
+        function carregarArquivoHTML(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('aula-html-content').value = e.target.result;
+                atualizarPreviewAulaFromTextarea();
+            };
+            reader.readAsText(file);
+        }
+
+        function editarAula(id) {
+            const a = bancoAulas.find(x => x.id === id);
+            if (!a) return;
+            currentEditAulaId = id;
+            document.getElementById('aula-titulo').value = a.titulo || '';
+            document.getElementById('aula-html-content').value = a.htmlContent || '';
+            document.getElementById('aula-serie-select').value = a.serie;
+            renderizarListaAulas();
+            atualizarPreviewAulaFromTextarea();
+        }
+
+        function novaAula() {
+            currentEditAulaId = "";
+            document.getElementById('aula-titulo').value = "";
+            document.getElementById('aula-html-content').value = "";
+            document.getElementById('aula-file-input').value = "";
+            atualizarPreviewAulaFromTextarea();
+        }
+
+        async function salvarAula() {
+            await executarComLoading('btn-salvar-aula', async () => {
+                const serie = document.getElementById('aula-serie-select').value;
+                const titulo = document.getElementById('aula-titulo').value.trim();
+                const htmlContent = document.getElementById('aula-html-content').value;
+                if (!serie || !titulo || !htmlContent) {
+                    alert("Preencha série, título e conteúdo HTML.");
+                    return;
+                }
+                const id = currentEditAulaId || "aula_" + Date.now();
+                try {
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'aulas', id), {
+                        id, serie, titulo, htmlContent, updatedAt: Date.now()
+                    }, { merge: true });
+                    alert("Aula salva com sucesso!");
+                    novaAula();
+                    renderizarListaAulas();
+                    atualizarPreviewAula();
+					atualizarFiltroAulas();
+                } catch (err) {
+                    console.error(err);
+                    alert("Erro ao salvar aula.");
+                }
+            });
+        }
+
+        async function excluirAula(id) {
+            if (!confirm("Excluir esta aula? Esta ação não pode ser desfeita.")) return;
+            try {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'aulas', id));
+                if (currentEditAulaId === id) novaAula();
+                renderizarListaAulas();
+                atualizarPreviewAula();
+				atualizarFiltroAulas();
+            } catch (err) {
+                console.error(err);
+                alert("Erro ao excluir aula.");
+            }
+        }
+		function atualizarFiltroAulas() {
+    const serieFiltro = document.getElementById('aula-filter-serie').value;
+    const selectAula = document.getElementById('aula-filter-select');
+    if (!selectAula) return;
+    const aulasFiltradas = bancoAulas.filter(a => a.serie === serieFiltro).sort((a, b) => a.titulo.localeCompare(b.titulo));
+    selectAula.innerHTML = '<option value="">-- Escolha uma aula --</option>';
+    aulasFiltradas.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a.id;
+        opt.textContent = a.titulo;
+        selectAula.appendChild(opt);
+    });
+}
+
+function carregarAulaDoFiltro() {
+    const aulaId = document.getElementById('aula-filter-select').value;
+    if (!aulaId) {
+        alert("Selecione uma aula para carregar.");
+        return;
+    }
+    const aula = bancoAulas.find(a => a.id === aulaId);
+    if (aula) {
+        editarAula(aulaId);
+        document.getElementById('aula-preview-iframe').srcdoc = aula.htmlContent;
+    }
+}
+
+function alternarTelaCheiaAula() {
+    const iframe = document.getElementById('aula-preview-iframe');
+    if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+    } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen();
+    } else if (iframe.msRequestFullscreen) {
+        iframe.msRequestFullscreen();
+    } else {
+        alert("Seu navegador não suporta tela cheia.");
+    }
+}
+		
+
+        // ---------- DEMAIS FUNÇÕES ORIGINAIS (CHAMADA, LOJA, ÁLBUM, ETC.) ---------- //
+        // Todas as funções a seguir permanecem exatamente iguais à versão anterior, sem alterações.
+
         async function cadastrarAlunosEmLote() {
             await executarComLoading('btn-cadastrar-lote', async () => {
                 const grade = document.getElementById('attendance-grade-select').value;
@@ -1787,7 +2039,6 @@
             });
         }
 
-        // --- FUNÇÕES DA LOJA, ESTANTE E EXIBIÇÃO DE FIGURINHAS --- //
         function renderizarLojinha() {
             const gridCartas = document.getElementById('store-cards-grid');
             const gridItens = document.getElementById('store-items-grid');
@@ -2304,6 +2555,16 @@
         window.excluirAlunoChamada = excluirAlunoChamada;
         window.confirmarTrocaSenha = confirmarTrocaSenha;
         window.cancelarTrocaSenha = cancelarTrocaSenha;
+        window.selecionarSerieAula = selecionarSerieAula;
+        window.carregarArquivoHTML = carregarArquivoHTML;
+        window.salvarAula = salvarAula;
+        window.editarAula = editarAula;
+        window.excluirAula = excluirAula;
+        window.novaAula = novaAula;
+        window.atualizarPreviewAulaFromTextarea = atualizarPreviewAulaFromTextarea;
+		window.atualizarFiltroAulas = atualizarFiltroAulas;
+		window.carregarAulaDoFiltro = carregarAulaDoFiltro;
+		window.alternarTelaCheiaAula = alternarTelaCheiaAula;
     </script>
 </body>
 </html>
