@@ -88,7 +88,25 @@
         .book-cover-img { width: 100%; height: 100%; object-fit: cover; }
 
         /* --- CARDS / FIGURINHAS --- */
-        .card { background: var(--bg-box); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; border: 4px solid var(--border-color); box-shadow: 0 6px 12px var(--card-shadow); transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s; position: relative; cursor: pointer; overflow: hidden; width: 100%; height: 100%; max-height: 235px; margin: 0 auto; }
+        .card { 
+            background: var(--bg-box); 
+            border-radius: 12px; 
+            padding: 8px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start; 
+            text-align: center; 
+            border: 3px solid var(--border-color); 
+            box-shadow: 0 4px 8px var(--card-shadow); 
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.3s; 
+            position: relative; 
+            cursor: pointer; 
+            overflow: hidden; 
+            width: 100%; 
+            height: 100%; 
+            margin: 0 auto; 
+        }
         .card:hover { transform: scale(1.03); z-index: 60; }
         .card::after { content: ''; position: absolute; top: -50%; left: -60%; width: 30%; height: 200%; transform: rotate(25deg); transition: none; pointer-events: none; animation: passing-shine 8s infinite ease-in-out; }
 
@@ -108,7 +126,23 @@
         .badge-nova { position: absolute; top: 8px; right: 8px; background: #e63946; color: #fff; font-size: 0.65rem; font-weight: bold; padding: 3px 8px; border-radius: 8px; box-shadow: 0 0 10px rgba(230,57,70,0.8); z-index: 80; text-transform: uppercase; animation: pulse-badge 1.2s infinite alternate; pointer-events: none; }
         @keyframes pulse-badge { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 14px rgba(230,57,70,1); } }
 
-        .card-slot-empty { background: rgba(31, 31, 35, 0.4); border-radius: 14px; height: 100%; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(255,255,255,0.1); color: rgba(255,255,255,0.15); position: relative; font-weight: bold; width: 100%; max-height: 235px; margin: 0 auto; }
+        .card-slot-empty { 
+            background: rgba(31, 31, 35, 0.4); 
+            border-radius: 12px; 
+            height: 100%; 
+            min-height: 140px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            border: 2px dashed rgba(255,255,255,0.1); 
+            color: rgba(255,255,255,0.15); 
+            position: relative; 
+            font-weight: bold; 
+            width: 100%; 
+            margin: 0 auto; 
+            padding: 8px; 
+        }
         .card-slot-number { position: absolute; top: 12px; left: 12px; background: var(--bg-body); color: var(--text-color); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid var(--border-color); opacity: 0.5; }
 
         .buy-sticker-btn { margin-top: 10px; background: #ffb703; color: #121214; font-size: 0.75rem; font-weight: bold; border: none; padding: 4px 10px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: transform 0.2s; z-index: 70; justify-content: center; width: auto; }
@@ -121,13 +155,48 @@
         .lendaria .card-raridade { color: #ffb703; }
         .exclusiva .card-raridade { color: #f72585; text-shadow: 0 0 5px rgba(247,37,133,0.5); }
 
-        .card-img-container { width: 100%; height: 80px; background-color: var(--bg-body); border-radius: 8px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .card-img-container { 
+            width: 100%; 
+            height: 60px; 
+            background-color: var(--bg-body); 
+            border-radius: 6px; 
+            margin-bottom: 2px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            flex-shrink: 0; 
+        }
         .card-img { width: 100%; height: 100%; object-fit: cover; }
         .card-img-fallback { font-size: 2rem; }
 
-        .card-name { font-size: 0.85rem; font-weight: bold; color: #ffffff; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
-        .card-points { font-size: 0.7rem; color: var(--accent-color); font-weight: bold; margin-bottom: 4px; background: var(--bg-body); padding: 1px 8px; border-radius: 20px; }
-        .card-habilidade { font-size: 0.7rem; color: #a8a8b3; background: var(--bg-body); padding: 4px; border-radius: 6px; width: 100%; flex-grow: 1; line-height: 1.2; display: flex; align-items: center; justify-content: center; }
+        .card-name { 
+            font-size: 0.75rem; 
+            font-weight: bold; 
+            color: #ffffff; 
+            margin-bottom: 1px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            width: 100%; 
+            flex-shrink: 0; 
+        }
+        .card-habilidade { 
+            font-size: 0.6rem; 
+            color: #a8a8b3; 
+            background: var(--bg-body); 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+            width: 100%; 
+            line-height: 1.2; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex: 1 1 auto; 
+            min-height: 24px; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
 
         /* --- DESIGN DO LIVRO ABERTO --- */
         .album-stats { background: var(--bg-box); padding: 15px 25px; border-radius: 15px; margin-bottom: 25px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 10px; max-width: 1050px; margin: 0 auto 25px auto; }
@@ -140,15 +209,50 @@
         .book-wrapper { display: grid; grid-template-columns: 1fr 1fr; background: var(--page-bg); border-radius: 12px; position: relative; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid #3c3c42; }
         .book-wrapper::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 100%; background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%); z-index: 50; pointer-events: none; }
 
-        .book-page { padding: 30px 25px 40px 25px; height: 560px; display: flex; flex-direction: column; position: relative; justify-content: center; }
-        @media (max-height: 800px) { .book-page { height: calc(100vh - 350px); min-height: 400px; } }
+        .book-page { 
+            padding: 20px 15px 35px 15px; 
+            min-height: 480px;
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+            justify-content: center; 
+        }
+        @media (max-height: 800px) { 
+            .book-page { 
+                min-height: 380px; 
+            } 
+        }
         .book-page.left-page { border-right: 1px solid rgba(0,0,0,0.3); }
         .book-page.right-page { border-left: 1px solid rgba(0,0,0,0.3); }
         .page-num { position: absolute; bottom: 12px; font-size: 0.85rem; color: #7c7c8a; font-weight: bold; }
         .left-page .page-num { left: 20px; }
         .right-page .page-num { right: 20px; }
 
-        .page-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 20px; width: 100%; height: 100%; max-width: 440px; margin: 0 auto; align-items: center; justify-content: center; }
+        .page-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            grid-template-rows: repeat(2, 1fr); 
+            gap: 12px; 
+            width: 100%; 
+            max-width: 440px; 
+            margin: 0 auto; 
+            align-items: stretch; 
+            justify-content: center; 
+            flex: 1;
+        }
+        .page-grid > div { 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: stretch; 
+            justify-content: center; 
+            min-height: 0;
+        }
+        .page-grid > div > * { 
+            width: 100%; 
+            height: 100%; 
+            min-height: 0;
+        }
         .book-controls { display: flex; justify-content: space-between; max-width: 1050px; margin: 0 auto; gap: 20px; }
         .book-controls button { width: auto; flex: 1; padding: 15px; }
 
@@ -221,16 +325,84 @@
 
         /* --- ESTILOS DE IMPRESSÃO --- */
         @media print {
-            body { background: #fff !important; color: #000 !important; padding: 0 !important; }
-            header, .nav-buttons, .attendance-tabs, .admin-box:not(#box-relatorio-impressao), .admin-layout-container > div:not(.print-section), footer, .screen:not(#screen-attendance) { display: none !important; }
-            #screen-attendance { display: block !important; padding: 0 !important; }
-            .admin-box { background: #fff !important; border: none !important; box-shadow: none !important; padding: 0 !important; color: #000 !important; }
-            .admin-box h2 { color: #000 !important; border-bottom: 2px solid #000 !important; }
-            .table-wrapper { max-height: none !important; overflow: visible !important; border: 1px solid #000 !important; background: #fff !important; }
-            table { width: 100% !important; color: #000 !important; }
-            th { background: #eee !important; color: #000 !important; border-bottom: 2px solid #000 !important; }
-            td { border-bottom: 1px solid #ccc !important; color: #000 !important; }
-            .filter-group-inline { display: none !important; }
+            body.printing-report #print-header-institucional {
+                display: block !important;
+                position: relative;
+                width: 100%;
+                margin-bottom: 30px;
+                background: #fff !important;
+                color: #000 !important;
+            }
+            
+            body.printing-report #screen-attendance .admin-box:not(.print-section) {
+                display: none !important;
+            }
+            
+            body.printing-report .attendance-tabs,
+            body.printing-report .attendance-container > div:not(#att-tab-content-2) {
+                display: none !important;
+            }
+            
+            body.printing-report #att-tab-content-2 {
+                display: block !important;
+                padding: 0 !important;
+            }
+            
+            body.printing-report #att-tab-content-2 .admin-box {
+                background: #fff !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 20px !important;
+                color: #000 !important;
+            }
+            
+            body.printing-report #att-tab-content-2 .filter-group-inline {
+                display: none !important;
+            }
+            
+            body.printing-report #att-tab-content-2 h2 {
+                color: #000 !important;
+                border-bottom: 2px solid #000 !important;
+                font-size: 24px !important;
+                text-align: center !important;
+            }
+            
+            body.printing-report #att-tab-content-2 .table-wrapper {
+                max-height: none !important;
+                overflow: visible !important;
+                border: 1px solid #000 !important;
+                background: #fff !important;
+            }
+            
+            body.printing-report #att-tab-content-2 table {
+                width: 100% !important;
+                color: #000 !important;
+            }
+            
+            body.printing-report #att-tab-content-2 th {
+                background: #f0f0f0 !important;
+                color: #000 !important;
+                border-bottom: 2px solid #000 !important;
+                font-weight: bold !important;
+            }
+            
+            body.printing-report #att-tab-content-2 td {
+                border-bottom: 1px solid #ccc !important;
+                color: #000 !important;
+            }
+            
+            body.printing-report header,
+            body.printing-report footer,
+            body.printing-report .nav-buttons,
+            body.printing-report #global-footer {
+                display: none !important;
+            }
+            
+            body.printing-report {
+                background: #fff !important;
+                color: #000 !important;
+                padding: 20px !important;
+            }
         }
 
         /* --- ESTILOS DA TELA AULA --- */
@@ -240,8 +412,8 @@
         .aula-preview { background: #0f0f11; border-radius: 16px; border: 1px solid var(--border-color); padding: 15px; height: 70vh; overflow: hidden; display: flex; flex-direction: column; }
         .aula-preview h3 { color: #ffb703; margin-bottom: 10px; }
         .aula-preview iframe { flex: 1; width: 100%; border: none; background: white; border-radius: 8px; }
-		.btn-fullscreen { background: #2a9d8f; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
-	</style>
+        .btn-fullscreen { background: #2a9d8f; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+    </style>
 </head>
 <body>
 
@@ -412,7 +584,7 @@
                     <h2>📥 Adicionar Alunos à Turma</h2>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                         <div>
-                            <label>Série (1º ao 5º Ano):</label>
+                            <label for="attendance-grade-select">Série (1º ao 5º Ano):</label>
                             <select id="attendance-grade-select" onchange="renderizarGridChamada()">
                                 <option value="1º Ano">1º Ano</option>
                                 <option value="2º Ano">2º Ano</option>
@@ -422,7 +594,7 @@
                             </select>
                         </div>
                         <div>
-                            <label>Sala / Turma:</label>
+                            <label for="attendance-letter-select">Sala / Turma:</label>
                             <select id="attendance-letter-select" onchange="renderizarGridChamada()">
                                 <option value="A">A</option>
                                 <option value="B">B</option>
@@ -483,10 +655,15 @@
                             <input type="month" id="report-month-input" onchange="renderizarTabelaRelatorio()">
                         </div>
                         <div class="filter-field">
-                            <label style="font-size:0.7rem; margin-bottom:2px;">Série:</label>
+                            <label style="font-size:0.7rem; margin-bottom:2px;">Série/Curso:</label>
                             <select id="report-grade-filter" onchange="renderizarTabelaRelatorio()">
                                 <option value="todos">Todas as Séries</option>
                                 <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option><option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
+                                <option value="MUNDO VIRTUAL">Mundo Virtual</option>
+                                <option value="COMUNICAÇÃO DIGITAL">Comunicação Digital</option>
+                                <option value="INTERNET DAS COISAS">Internet das Coisas</option>
+                                <option value="INTELIGENCIA ARTIFICIAL">Inteligência Artificial</option>
+                                <option value="OFICINA DE GAMES">Oficina de Games</option>
                             </select>
                         </div>
                         <div class="filter-field">
@@ -496,7 +673,7 @@
                             </select>
                         </div>
                         <div class="filter-field" style="display: flex; align-items: flex-end;">
-                            <button class="btn-coin" onclick="window.print()" style="height: 36px; font-size: 0.85rem;">🖨️ Imprimir Tabela</button>
+                            <button class="btn-coin" onclick="imprimirRelatorio()" style="height: 36px; font-size: 0.85rem;">🖨️ Imprimir Tabela</button>
                         </div>
                     </div>
 
@@ -567,23 +744,22 @@
         <div class="aula-container">
             <div class="aula-sidebar admin-box">
                 <h2>📝 Gerenciar Slides</h2>
-				<!-- Filtro rápido de aula existente -->
-<label>Filtrar Aula por Série:</label>
-<select id="aula-filter-serie" onchange="atualizarFiltroAulas()">
-    <option value="1º Ano">1º Ano</option>
-    <option value="2º Ano">2º Ano</option>
-    <option value="3º Ano">3º Ano</option>
-    <option value="4º Ano">4º Ano</option>
-    <option value="5º Ano">5º Ano</option>
-</select>
+                <label>Filtrar Aula por Série:</label>
+                <select id="aula-filter-serie" onchange="atualizarFiltroAulas()">
+                    <option value="1º Ano">1º Ano</option>
+                    <option value="2º Ano">2º Ano</option>
+                    <option value="3º Ano">3º Ano</option>
+                    <option value="4º Ano">4º Ano</option>
+                    <option value="5º Ano">5º Ano</option>
+                </select>
 
-<label>Selecionar Aula:</label>
-<select id="aula-filter-select" onchange="carregarAulaDoFiltro()">
-    <option value="">-- Escolha uma aula --</option>
-</select>
-<button class="btn-secondary" onclick="carregarAulaDoFiltro()">Carregar Aula Selecionada</button>
+                <label>Selecionar Aula:</label>
+                <select id="aula-filter-select" onchange="carregarAulaDoFiltro()">
+                    <option value="">-- Escolha uma aula --</option>
+                </select>
+                <button class="btn-secondary" onclick="carregarAulaDoFiltro()">Carregar Aula Selecionada</button>
 
-<hr style="border-color: #2e2e34; margin: 10px 0;">
+                <hr style="border-color: #2e2e34; margin: 10px 0;">
                 <label>Série:</label>
                 <select id="aula-serie-select" onchange="selecionarSerieAula()">
                     <option value="1º Ano">1º Ano</option>
@@ -611,8 +787,8 @@
 
             <div class="aula-preview">
                 <h3>👁️ Preview do Slide 
-    <button class="btn-fullscreen" onclick="alternarTelaCheiaAula()">⛶ Tela Cheia</button>
-</h3>
+                    <button class="btn-fullscreen" onclick="alternarTelaCheiaAula()">⛶ Tela Cheia</button>
+                </h3>
                 <iframe id="aula-preview-iframe" sandbox="allow-scripts"></iframe>
             </div>
         </div>
@@ -635,8 +811,6 @@
         </header>
 
         <div class="admin-layout-container">
-
-            <!-- CAIXA RÁPIDA: ALTERAR MINHA SENHA -->
             <div class="admin-box" style="padding: 15px 24px; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h2 style="margin-bottom: 5px; color:#fff; border:none; font-size:1rem;">🔑 Alterar Minha Senha de Acesso (Admin)</h2>
@@ -649,23 +823,18 @@
             </div>
 
             <div class="admin-grid">
-
                 <!-- BLOCO 1: GERENCIAR ÁLBUM -->
                 <div class="admin-box" id="box-gerenciar-albuns">
                     <h2 id="title-album-form">📁 Gerenciar / Criar Álbuns</h2>
                     <input type="hidden" id="album-edit-id" value="">
                     <input type="text" id="album-new-title" placeholder="Nome do Álbum (Ex: Anual 2026)">
-
                     <label>Desenho / Ilustração da Capa (Link URL ou Emoji):</label>
                     <input type="text" id="album-new-image" placeholder="Ex: https://link-da-imagem.png ou 🤖">
-
                     <label>Cor da Capa do Livro:</label>
                     <input type="color" id="album-new-color" value="#8b0000" style="height: 40px; padding: 2px; cursor: pointer;">
-
                     <div id="wrapper-album-buttons" style="margin-bottom: 20px;">
                         <button id="btn-salvar-album" onclick="salvarNovoAlbum()">Criar Álbum</button>
                     </div>
-
                     <h2 style="font-size:1rem; color:#a8a8b3;">Álbuns Ativos</h2>
                     <div class="manage-list" id="list-albuns-ativos"></div>
                 </div>
@@ -740,9 +909,7 @@
                 <div class="admin-box" id="box-gerenciar-lojinha">
                     <h2 id="title-store-form" style="color:#f72585;">🛍️ Gerenciar Itens da Lojinha</h2>
                     <input type="hidden" id="store-edit-id" value="">
-
                     <input type="text" id="store-name" placeholder="Nome do Item (Ex: Piloto de Drone 10min)">
-
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                         <div>
                             <label>Preço Sugerido (Moedas):</label>
@@ -754,11 +921,9 @@
                         </div>
                     </div>
                     <textarea id="store-desc" rows="2" placeholder="Descrição do que o item faz..." style="resize: none;"></textarea>
-
                     <div id="wrapper-store-buttons" style="margin-bottom: 20px;">
                         <button class="btn-store" id="btn-salvar-loja" onclick="salvarItemLoja()">Cadastrar Item na Loja</button>
                     </div>
-
                     <h2 style="font-size:1rem; color:#a8a8b3;">Itens Cadastrados</h2>
                     <div class="manage-list" id="list-store-items"></div>
                 </div>
@@ -768,7 +933,6 @@
                     <h2 id="title-user-form">👥 Gerenciador de Usuários</h2>
                     <input type="hidden" id="student-edit-id" value="">
                     <input type="text" id="student-name" placeholder="Nome Completo">
-
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px;">
                         <div>
                             <label>Série Escolar / Setor:</label>
@@ -780,10 +944,15 @@
                                 <option value="3º Ano">3º Ano</option>
                                 <option value="4º Ano">4º Ano</option>
                                 <option value="5º Ano">5º Ano</option>
+                                <option value="MUNDO VIRTUAL">Mundo Virtual</option>
+                                <option value="COMUNICAÇÃO DIGITAL">Comunicação Digital</option>
+                                <option value="INTERNET DAS COISAS">Internet das Coisas</option>
+                                <option value="INTELIGENCIA ARTIFICIAL">Inteligência Artificial</option>
+                                <option value="OFICINA DE GAMES">Oficina de Games</option>
                             </select>
                         </div>
                         <div>
-                            <label>Sala:</label>
+                            <label>Sala/Período:</label>
                             <select id="student-letter">
                                 <option value="-">-</option>
                                 <option value="A">A</option>
@@ -791,6 +960,10 @@
                                 <option value="C">C</option>
                                 <option value="D">D</option>
                                 <option value="E">E</option>
+                                <option value="MANHA PRIMEIRO">Manhã Primeiro</option>
+                                <option value="MANHA SEGUNDO">Manhã Segundo</option>
+                                <option value="TARDE PRIMEIRO">Tarde Primeiro</option>
+                                <option value="TARDE SEGUNDO">Tarde Segundo</option>
                             </select>
                         </div>
                         <div>
@@ -804,15 +977,11 @@
                         </div>
                     </div>
                     <input type="text" id="student-pin" placeholder="Código / Senha de Acesso" style="margin-top:12px;">
-
                     <div id="wrapper-user-buttons" style="margin-bottom: 25px;">
                         <button id="btn-user-submit" onclick="adicionarAluno()">Cadastrar Integrante</button>
                     </div>
-
-                    <!-- LISTAS SEPARADAS DE ALUNOS E STAFF -->
                     <h2 style="font-size:1rem; color:#ffb703; margin-top: 10px;">👦👧 Alunos</h2>
                     <div class="manage-list" id="list-alunos" style="max-height: 160px;"></div>
-
                     <h2 style="font-size:1rem; color:#00b4d8; margin-top: 10px;">⚙️ Equipe MAKER / WIT</h2>
                     <div class="manage-list" id="list-staff" style="max-height: 160px;"></div>
                 </div>
@@ -829,18 +998,26 @@
                                 <option value="todos">Série (Todas)</option>
                                 <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
                                 <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
+                                <option value="MUNDO VIRTUAL">Mundo Virtual</option>
+                                <option value="COMUNICAÇÃO DIGITAL">Comunicação Digital</option>
+                                <option value="INTERNET DAS COISAS">Internet das Coisas</option>
+                                <option value="INTELIGENCIA ARTIFICIAL">Inteligência Artificial</option>
+                                <option value="OFICINA DE GAMES">Oficina de Games</option>
                             </select>
                         </div>
                         <div class="filter-field">
                             <select id="filter-user-letter" onchange="atualizarListasAdmin()">
                                 <option value="todos">Sala (Todas)</option>
                                 <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                                <option value="MANHA PRIMEIRO">Manhã Primeiro</option>
+                                <option value="MANHA SEGUNDO">Manhã Segundo</option>
+                                <option value="TARDE PRIMEIRO">Tarde Primeiro</option>
+                                <option value="TARDE SEGUNDO">Tarde Segundo</option>
                             </select>
                         </div>
                     </div>
                     <div class="manage-list" id="list-only-students-wallets" style="max-height: 380px; flex-grow: 1;"></div>
                 </div>
-
             </div>
 
             <!-- HISTÓRICO GERAL -->
@@ -855,12 +1032,21 @@
                             <option value="todos">-- Todas as Séries --</option>
                             <option value="1º Ano">1º Ano</option><option value="2º Ano">2º Ano</option><option value="3º Ano">3º Ano</option>
                             <option value="4º Ano">4º Ano</option><option value="5º Ano">5º Ano</option>
+                            <option value="MUNDO VIRTUAL">Mundo Virtual</option>
+                            <option value="COMUNICAÇÃO DIGITAL">Comunicação Digital</option>
+                            <option value="INTERNET DAS COISAS">Internet das Coisas</option>
+                            <option value="INTELIGENCIA ARTIFICIAL">Inteligência Artificial</option>
+                            <option value="OFICINA DE GAMES">Oficina de Games</option>
                         </select>
                     </div>
                     <div class="filter-field">
                         <select id="filter-history-letter" onchange="atualizarTabelaHistorico()">
                             <option value="todos">-- Todas as Salas --</option>
                             <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                            <option value="MANHA PRIMEIRO">Manhã Primeiro</option>
+                            <option value="MANHA SEGUNDO">Manhã Segundo</option>
+                            <option value="TARDE PRIMEIRO">Tarde Primeiro</option>
+                            <option value="TARDE SEGUNDO">Tarde Segundo</option>
                         </select>
                     </div>
                     <button class="btn-danger" id="btn-limpar-historico" onclick="limparHistoricoGeral()" style="width: auto; height: 36px; padding: 0 15px;">🗑️ Limpar Histórico</button>
@@ -881,7 +1067,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -906,7 +1091,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'album-27bb2';
 
         const iconeMoeda = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: text-bottom; margin-right: 2px;"><circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#DAA520" stroke-width="2"/><circle cx="12" cy="12" r="7" fill="#FFC000" stroke="#B8860B" stroke-width="1"/><text x="12" y="16" font-size="11" font-family="Arial" font-weight="bold" fill="#B8860B" text-anchor="middle">$</text></svg>`;
@@ -932,6 +1116,11 @@
             { id: "lj_1", nome: "Piloto de Drone (10min)", preco: 150, imagem: "🚁", desc: "Ganhe 10 minutos de pilotagem com o drone principal." },
             { id: "lj_2", nome: "Sessão Óculos 3D/VR", preco: 80, imagem: "🥽", desc: "Explore mundos virtuais por 15 minutos." }
         ];
+
+        const CURSOS_WIT = ["MUNDO VIRTUAL", "COMUNICAÇÃO DIGITAL", "INTERNET DAS COISAS", "INTELIGENCIA ARTIFICIAL", "OFICINA DE GAMES"];
+        const PERIODOS_WIT = ["MANHA PRIMEIRO", "MANHA SEGUNDO", "TARDE PRIMEIRO", "TARDE SEGUNDO"];
+        const SERIES_MAKER = ["1º Ano", "2º Ano", "3º Ano", "4º Ano", "5º Ano"];
+        const SALAS_MAKER = ["A", "B", "C", "D", "E"];
 
         let bancoAlbuns = [];
         let bancoDeCartas = [];
@@ -1056,7 +1245,6 @@
             }, (err) => console.error(err));
             addUnsubscribe(unsub7);
 
-            // Listener para Aulas
             const unsub8 = onSnapshot(getPublicRef('aulas'), (snap) => {
                 let list = []; snap.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
                 bancoAulas = list;
@@ -1074,7 +1262,6 @@
         async function popularSementesLoja() { for (const item of lojaIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', item.id), item); }
 
         window.addEventListener('load', () => inicializarAutenticacao());
-
         onAuthStateChanged(auth, (user) => { if (user && !currentUserId) iniciarListeners(user.uid); });
 
         document.addEventListener('keydown', (e) => {
@@ -1103,24 +1290,81 @@
             }
         }
 
+        function getTipoUsuarioLogado() {
+            const usuario = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase());
+            if (!usuario) return 'MAKER';
+            return usuario.grade === 'WIT' ? 'WIT' : 'MAKER';
+        }
+
+        function adaptarSelectsChamada() {
+            const tipoUsuario = getTipoUsuarioLogado();
+            const selectGrade = document.getElementById('attendance-grade-select');
+            const selectLetter = document.getElementById('attendance-letter-select');
+            const selectFilterGrade = document.getElementById('select-filter-grade');
+            const selectFilterLetter = document.getElementById('select-filter-letter');
+            const labelGrade = document.querySelector('label[for="attendance-grade-select"]');
+            const labelLetter = document.querySelector('label[for="attendance-letter-select"]');
+            
+            if (tipoUsuario === 'WIT') {
+                if (selectGrade) {
+                    selectGrade.innerHTML = CURSOS_WIT.map(curso => `<option value="${curso}">${curso}</option>`).join('');
+                }
+                if (selectLetter) {
+                    selectLetter.innerHTML = PERIODOS_WIT.map(periodo => `<option value="${periodo}">${periodo}</option>`).join('');
+                }
+                if (selectFilterGrade) {
+                    selectFilterGrade.innerHTML = '<option value="todos">-- Todos os Cursos --</option>' + 
+                        CURSOS_WIT.map(curso => `<option value="${curso}">${curso}</option>`).join('');
+                }
+                if (selectFilterLetter) {
+                    selectFilterLetter.innerHTML = '<option value="todos">-- Todos os Períodos --</option>' + 
+                        PERIODOS_WIT.map(periodo => `<option value="${periodo}">${periodo}</option>`).join('');
+                }
+                if (labelGrade) labelGrade.textContent = 'Curso:';
+                if (labelLetter) labelLetter.textContent = 'Período:';
+            } else {
+                if (selectGrade) {
+                    selectGrade.innerHTML = SERIES_MAKER.map(serie => `<option value="${serie}">${serie}</option>`).join('');
+                }
+                if (selectLetter) {
+                    selectLetter.innerHTML = SALAS_MAKER.map(sala => `<option value="${sala}">${sala}</option>`).join('');
+                }
+                if (selectFilterGrade) {
+                    selectFilterGrade.innerHTML = '<option value="todos">-- Todas as Séries --</option>' + 
+                        SERIES_MAKER.map(serie => `<option value="${serie}">${serie}</option>`).join('');
+                }
+                if (selectFilterLetter) {
+                    selectFilterLetter.innerHTML = '<option value="todos">-- Todas as Salas --</option>' + 
+                        SALAS_MAKER.map(sala => `<option value="${sala}">${sala}</option>`).join('');
+                }
+                if (labelGrade) labelGrade.textContent = 'Série:';
+                if (labelLetter) labelLetter.textContent = 'Sala:';
+            }
+        }
+
+        function prepararTelaChamada() {
+            adaptarSelectsChamada();
+            carregarPresencaDoSessionStorage();
+            renderizarGridChamada();
+            atualizarSelectFiltroAlunoRelatorio();
+            renderizarTabelaRelatorio();
+        }
+
         function mudarTela(idTela) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const tela = document.getElementById(idTela);
             if (tela) tela.classList.add('active');
             if (idTela === 'screen-store') renderizarLojinha();
             if (idTela === 'screen-attendance') {
-                carregarPresencaDoSessionStorage();
-                renderizarGridChamada();
-                atualizarSelectFiltroAlunoRelatorio();
-                renderizarTabelaRelatorio();
+                prepararTelaChamada();
             }
             if (idTela === 'screen-aula') {
-				const select = document.getElementById('aula-serie-select');
-				if (!select.value) select.value = "1º Ano";
-					renderizarListaAulas();
-					atualizarPreviewAula();
-					atualizarFiltroAulas();  // <-- ADICIONE AQUI
-}
+                const select = document.getElementById('aula-serie-select');
+                if (!select.value) select.value = "1º Ano";
+                renderizarListaAulas();
+                atualizarPreviewAula();
+                atualizarFiltroAulas();
+            }
         }
 
         function alternarAbaChamada(numAba) {
@@ -1154,7 +1398,6 @@
             if(storeWrapper) storeWrapper.innerHTML = tags;
         }
 
-        // ---------- TROCA DE SENHA NO PRIMEIRO LOGIN ----------
         function iniciarTrocaSenha(alunoObj) {
             alunoForcadoTrocarSenha = alunoObj;
             document.getElementById('change-pwd-name').textContent = alunoObj.nome;
@@ -1281,7 +1524,6 @@
             mudarTela('screen-login');
         }
 
-        // ---------- FUNÇÕES ADMINISTRATIVAS ---------- //
         function atualizarListasAdmin() {
             if (!modoAdminVisualizacao && cargoLogado === "aluno") return;
 
@@ -1576,7 +1818,6 @@
             });
         }
 
-        // ---------- FUNÇÕES DA TELA AULA ---------- //
         function renderizarListaAulas() {
             const list = document.getElementById('list-aulas');
             const serie = document.getElementById('aula-serie-select').value;
@@ -1667,7 +1908,7 @@
                     novaAula();
                     renderizarListaAulas();
                     atualizarPreviewAula();
-					atualizarFiltroAulas();
+                    atualizarFiltroAulas();
                 } catch (err) {
                     console.error(err);
                     alert("Erro ao salvar aula.");
@@ -1682,58 +1923,56 @@
                 if (currentEditAulaId === id) novaAula();
                 renderizarListaAulas();
                 atualizarPreviewAula();
-				atualizarFiltroAulas();
+                atualizarFiltroAulas();
             } catch (err) {
                 console.error(err);
                 alert("Erro ao excluir aula.");
             }
         }
-		function atualizarFiltroAulas() {
-    const serieFiltro = document.getElementById('aula-filter-serie').value;
-    const selectAula = document.getElementById('aula-filter-select');
-    if (!selectAula) return;
-    const aulasFiltradas = bancoAulas.filter(a => a.serie === serieFiltro).sort((a, b) => a.titulo.localeCompare(b.titulo));
-    selectAula.innerHTML = '<option value="">-- Escolha uma aula --</option>';
-    aulasFiltradas.forEach(a => {
-        const opt = document.createElement('option');
-        opt.value = a.id;
-        opt.textContent = a.titulo;
-        selectAula.appendChild(opt);
-    });
-}
 
-function carregarAulaDoFiltro() {
-    const aulaId = document.getElementById('aula-filter-select').value;
-    if (!aulaId) {
-        alert("Selecione uma aula para carregar.");
-        return;
-    }
-    const aula = bancoAulas.find(a => a.id === aulaId);
-    if (aula) {
-        editarAula(aulaId);
-        document.getElementById('aula-preview-iframe').srcdoc = aula.htmlContent;
-    }
-}
+        function atualizarFiltroAulas() {
+            const serieFiltro = document.getElementById('aula-filter-serie').value;
+            const selectAula = document.getElementById('aula-filter-select');
+            if (!selectAula) return;
+            const aulasFiltradas = bancoAulas.filter(a => a.serie === serieFiltro).sort((a, b) => a.titulo.localeCompare(b.titulo));
+            selectAula.innerHTML = '<option value="">-- Escolha uma aula --</option>';
+            aulasFiltradas.forEach(a => {
+                const opt = document.createElement('option');
+                opt.value = a.id;
+                opt.textContent = a.titulo;
+                selectAula.appendChild(opt);
+            });
+        }
 
-function alternarTelaCheiaAula() {
-    const iframe = document.getElementById('aula-preview-iframe');
-    if (iframe.requestFullscreen) {
-        iframe.requestFullscreen();
-    } else if (iframe.webkitRequestFullscreen) {
-        iframe.webkitRequestFullscreen();
-    } else if (iframe.msRequestFullscreen) {
-        iframe.msRequestFullscreen();
-    } else {
-        alert("Seu navegador não suporta tela cheia.");
-    }
-}
-		
+        function carregarAulaDoFiltro() {
+            const aulaId = document.getElementById('aula-filter-select').value;
+            if (!aulaId) {
+                alert("Selecione uma aula para carregar.");
+                return;
+            }
+            const aula = bancoAulas.find(a => a.id === aulaId);
+            if (aula) {
+                editarAula(aulaId);
+                document.getElementById('aula-preview-iframe').srcdoc = aula.htmlContent;
+            }
+        }
 
-        // ---------- DEMAIS FUNÇÕES ORIGINAIS (CHAMADA, LOJA, ÁLBUM, ETC.) ---------- //
-        // Todas as funções a seguir permanecem exatamente iguais à versão anterior, sem alterações.
+        function alternarTelaCheiaAula() {
+            const iframe = document.getElementById('aula-preview-iframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+            } else {
+                alert("Seu navegador não suporta tela cheia.");
+            }
+        }
 
         async function cadastrarAlunosEmLote() {
             await executarComLoading('btn-cadastrar-lote', async () => {
+                const tipoUsuario = getTipoUsuarioLogado();
                 const grade = document.getElementById('attendance-grade-select').value;
                 const letter = document.getElementById('attendance-letter-select').value;
                 const rawText = document.getElementById('bulk-students-input').value;
@@ -1752,12 +1991,23 @@ function alternarTelaCheiaAula() {
 
                     for (const nome of nomesUnicosNoLote) {
                         const nomeNormalizado = nome.toLowerCase().replace(/\s+/g, ' ');
-                        const jaExiste = bancoDeAlunos.some(aluno =>
-                            aluno.role === "aluno" &&
-                            aluno.grade === grade &&
-                            aluno.letter === letter &&
-                            aluno.nome.trim().toLowerCase().replace(/\s+/g, ' ') === nomeNormalizado
-                        );
+                        
+                        let jaExiste;
+                        if (tipoUsuario === 'WIT') {
+                            jaExiste = bancoDeAlunos.some(aluno =>
+                                aluno.role === "aluno" &&
+                                aluno.grade === 'WIT' &&
+                                aluno.letter === grade &&
+                                aluno.nome.trim().toLowerCase().replace(/\s+/g, ' ') === nomeNormalizado
+                            );
+                        } else {
+                            jaExiste = bancoDeAlunos.some(aluno =>
+                                aluno.role === "aluno" &&
+                                aluno.grade === grade &&
+                                aluno.letter === letter &&
+                                aluno.nome.trim().toLowerCase().replace(/\s+/g, ' ') === nomeNormalizado
+                            );
+                        }
 
                         if (jaExiste) {
                             duplicados.push(nome);
@@ -1765,15 +2015,32 @@ function alternarTelaCheiaAula() {
                         }
 
                         const novoId = "st_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
-                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), {
-                            id: novoId, nome: nome, grade: grade, letter: letter, role: "aluno", pin: "1234", moedas: 0, moedasExclusivas: 0
-                        });
+                        
+                        let dadosAluno;
+                        if (tipoUsuario === 'WIT') {
+                            dadosAluno = {
+                                id: novoId, nome: nome, grade: 'WIT', letter: grade,
+                                role: "aluno", pin: "1234", moedas: 0, moedasExclusivas: 0,
+                                curso: grade, periodo: letter
+                            };
+                        } else {
+                            dadosAluno = {
+                                id: novoId, nome: nome, grade: grade, letter: letter,
+                                role: "aluno", pin: "1234", moedas: 0, moedasExclusivas: 0
+                            };
+                        }
+                        
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), dadosAluno);
                         inseridos++;
                     }
 
                     let mensagem = "";
-                    if (inseridos > 0) { mensagem += `✅ ${inseridos} aluno(s) cadastrado(s) com sucesso na turma ${grade} ${letter}!\n`; }
-                    if (duplicados.length > 0) { mensagem += `\n⚠️ Os seguintes alunos já estavam cadastrados nesta turma:\n- ${duplicados.join('\n- ')}`; }
+                    if (inseridos > 0) {
+                        mensagem += `✅ ${inseridos} aluno(s) cadastrado(s) com sucesso na turma ${grade} ${letter}!\n`;
+                    }
+                    if (duplicados.length > 0) {
+                        mensagem += `\n⚠️ Os seguintes alunos já estavam cadastrados nesta turma:\n- ${duplicados.join('\n- ')}`;
+                    }
 
                     alert(mensagem);
                     document.getElementById('bulk-students-input').value = "";
@@ -1791,14 +2058,28 @@ function alternarTelaCheiaAula() {
             if(!grid) return;
             grid.innerHTML = '';
 
+            const tipoUsuario = getTipoUsuarioLogado();
             const selectedGrade = document.getElementById('attendance-grade-select').value;
             const selectedLetter = document.getElementById('attendance-letter-select').value;
-            document.getElementById('attendance-title').textContent = `Turma: ${selectedGrade} - Sala ${selectedLetter}`;
+            
+            if (tipoUsuario === 'WIT') {
+                document.getElementById('attendance-title').textContent = `Curso: ${selectedGrade} - ${selectedLetter}`;
+            } else {
+                document.getElementById('attendance-title').textContent = `Turma: ${selectedGrade} - Sala ${selectedLetter}`;
+            }
 
-            const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+            const alunosDaTurma = bancoDeAlunos.filter(a => {
+                if (tipoUsuario === 'WIT') {
+                    return a.role === "aluno" && a.grade === 'WIT' && a.letter === selectedGrade;
+                } else {
+                    return a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter;
+                }
+            });
 
             if (alunosDaTurma.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; color:#a8a8b3; text-align:center; padding:30px;">Nenhum aluno cadastrado para esta turma. Cole os nomes acima para adicionar!</div>`;
+                grid.innerHTML = `<div style="grid-column: 1/-1; color:#a8a8b3; text-align:center; padding:30px;">
+                    ${tipoUsuario === 'WIT' ? 'Nenhum aluno cadastrado para este curso. Cole os nomes acima para adicionar!' : 'Nenhum aluno cadastrado para esta turma. Cole os nomes acima para adicionar!'}
+                </div>`;
                 return;
             }
 
@@ -1810,10 +2091,15 @@ function alternarTelaCheiaAula() {
 
                 const card = document.createElement('div');
                 card.className = `student-card ${estado.status ? 'present' : 'absent'}`;
+                
+                const infoDisplay = tipoUsuario === 'WIT' ? 
+                    `Curso: ${aluno.letter} | Período: ${aluno.periodo || 'N/A'} | PIN: ${aluno.pin} | Saldo: ${iconeMoeda} ${aluno.moedas || 0}` :
+                    `Série: ${aluno.grade} | Sala: ${aluno.letter} | PIN: ${aluno.pin} | Saldo: ${iconeMoeda} ${aluno.moedas || 0}`;
+                
                 card.innerHTML = `
                     <div>
                         <div class="student-card-name">${escapeHtml(aluno.nome)}</div>
-                        <div class="student-card-info">Série: ${aluno.grade} | Sala: ${aluno.letter} | PIN: ${aluno.pin} | Saldo: ${iconeMoeda} ${aluno.moedas || 0}</div>
+                        <div class="student-card-info">${infoDisplay}</div>
                     </div>
                     <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                         <button class="btn-status ${estado.status ? 'present' : 'absent'}" onclick="alternarPresencaLocal('${aluno.id}')" style="flex: 2;">
@@ -1856,36 +2142,68 @@ function alternarTelaCheiaAula() {
             const aluno = bancoDeAlunos.find(a => a.id === alunoId);
             if (!aluno) return;
 
-            const novaGrade = prompt(`Alterar série de "${aluno.nome}"?\nSérie atual: ${aluno.grade}\n\nOpções: 1º Ano, 2º Ano, 3º Ano, 4º Ano, 5º Ano`, aluno.grade);
-            if (novaGrade === null) return;
-            const seriesValidas = ["1º Ano", "2º Ano", "3º Ano", "4º Ano", "5º Ano"];
-            if (!seriesValidas.includes(novaGrade)) {
-                alert("Série inválida! Use: 1º Ano, 2º Ano, 3º Ano, 4º Ano ou 5º Ano.");
-                return;
-            }
+            const tipoUsuario = getTipoUsuarioLogado();
+            
+            if (tipoUsuario === 'WIT') {
+                const novoCurso = prompt(`Alterar curso de "${aluno.nome}"?\nCurso atual: ${aluno.letter}\n\nOpções: ${CURSOS_WIT.join(', ')}`, aluno.letter);
+                if (novoCurso === null) return;
+                if (!CURSOS_WIT.includes(novoCurso.toUpperCase())) {
+                    alert("Curso inválido! Use: " + CURSOS_WIT.join(', '));
+                    return;
+                }
 
-            const novaSala = prompt(`Alterar sala de "${aluno.nome}"?\nSala atual: ${aluno.letter}\n\nOpções: A, B, C, D, E`, aluno.letter);
-            if (novaSala === null) return;
-            const salasValidas = ["A", "B", "C", "D", "E"];
-            if (!salasValidas.includes(novaSala.toUpperCase())) {
-                alert("Sala inválida! Use A, B, C, D ou E.");
-                return;
-            }
+                const novoPeriodo = prompt(`Alterar período de "${aluno.nome}"?\nPeríodo atual: ${aluno.periodo || 'N/A'}\n\nOpções: ${PERIODOS_WIT.join(', ')}`, aluno.periodo);
+                if (novoPeriodo === null) return;
+                if (!PERIODOS_WIT.includes(novoPeriodo.toUpperCase())) {
+                    alert("Período inválido! Use: " + PERIODOS_WIT.join(', '));
+                    return;
+                }
 
-            if (novaGrade === aluno.grade && novaSala.toUpperCase() === aluno.letter) {
-                alert("Nenhuma alteração realizada.");
-                return;
-            }
+                if (novoCurso.toUpperCase() === aluno.letter && novoPeriodo.toUpperCase() === aluno.periodo) {
+                    alert("Nenhuma alteração realizada.");
+                    return;
+                }
 
-            try {
-                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoId), {
-                    grade: novaGrade,
-                    letter: novaSala.toUpperCase()
-                });
-                alert(`✅ Dados de "${aluno.nome}" atualizados para ${novaGrade} - Sala ${novaSala.toUpperCase()}.`);
-            } catch (err) {
-                console.error(err);
-                alert("Erro ao atualizar aluno.");
+                try {
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoId), {
+                        letter: novoCurso.toUpperCase(),
+                        periodo: novoPeriodo.toUpperCase()
+                    });
+                    alert(`✅ Dados de "${aluno.nome}" atualizados para ${novoCurso} - ${novoPeriodo}.`);
+                } catch (err) {
+                    console.error(err);
+                    alert("Erro ao atualizar aluno.");
+                }
+            } else {
+                const novaGrade = prompt(`Alterar série de "${aluno.nome}"?\nSérie atual: ${aluno.grade}\n\nOpções: ${SERIES_MAKER.join(', ')}`, aluno.grade);
+                if (novaGrade === null) return;
+                if (!SERIES_MAKER.includes(novaGrade)) {
+                    alert("Série inválida! Use: " + SERIES_MAKER.join(', '));
+                    return;
+                }
+
+                const novaSala = prompt(`Alterar sala de "${aluno.nome}"?\nSala atual: ${aluno.letter}\n\nOpções: ${SALAS_MAKER.join(', ')}`, aluno.letter);
+                if (novaSala === null) return;
+                if (!SALAS_MAKER.includes(novaSala.toUpperCase())) {
+                    alert("Sala inválida! Use: " + SALAS_MAKER.join(', '));
+                    return;
+                }
+
+                if (novaGrade === aluno.grade && novaSala.toUpperCase() === aluno.letter) {
+                    alert("Nenhuma alteração realizada.");
+                    return;
+                }
+
+                try {
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', alunoId), {
+                        grade: novaGrade,
+                        letter: novaSala.toUpperCase()
+                    });
+                    alert(`✅ Dados de "${aluno.nome}" atualizados para ${novaGrade} - Sala ${novaSala.toUpperCase()}.`);
+                } catch (err) {
+                    console.error(err);
+                    alert("Erro ao atualizar aluno.");
+                }
             }
         }
 
@@ -1906,13 +2224,23 @@ function alternarTelaCheiaAula() {
         async function salvarChamadaDiaria() {
             await executarComLoading('btn-salvar-chamada', async () => {
                 const dataAula = document.getElementById('attendance-date-picker').value;
+                const tipoUsuario = getTipoUsuarioLogado();
                 const selectedGrade = document.getElementById('attendance-grade-select').value;
                 const selectedLetter = document.getElementById('attendance-letter-select').value;
 
                 if(!dataAula) { alert("⚠️ Selecione a data da aula!"); return; }
 
-                const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
-                if(alunosDaTurma.length === 0) { alert("Nenhum aluno nesta turma para salvar."); return; }
+                let alunosDaTurma;
+                if (tipoUsuario === 'WIT') {
+                    alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === 'WIT' && a.letter === selectedGrade);
+                } else {
+                    alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+                }
+                
+                if(alunosDaTurma.length === 0) { 
+                    alert(tipoUsuario === 'WIT' ? "Nenhum aluno neste curso para salvar." : "Nenhum aluno nesta turma para salvar."); 
+                    return; 
+                }
 
                 try {
                     for (const aluno of alunosDaTurma) {
@@ -1921,11 +2249,15 @@ function alternarTelaCheiaAula() {
                         const [ano, mes, dia] = dataAula.split('-');
                         const dataFormatada = `${dia}/${mes}/${ano}`;
 
+                        const gradeDisplay = tipoUsuario === 'WIT' ? 
+                            `WIT - ${aluno.letter}` : 
+                            `${aluno.grade} ${aluno.letter}`;
+
                         await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'chamada_registros', registroId), {
                             id: registroId,
                             alunoId: aluno.id,
                             alunoNome: aluno.nome,
-                            grade: `${aluno.grade} ${aluno.letter}`,
+                            grade: gradeDisplay,
                             data: dataFormatada,
                             rawDate: dataAula,
                             dia: dia,
@@ -2016,9 +2348,16 @@ function alternarTelaCheiaAula() {
 
         async function darMoedaPresencaEmMassa() {
             await executarComLoading('btn-premiar-presenca', async () => {
+                const tipoUsuario = getTipoUsuarioLogado();
                 const selectedGrade = document.getElementById('attendance-grade-select').value;
                 const selectedLetter = document.getElementById('attendance-letter-select').value;
-                const alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+                
+                let alunosDaTurma;
+                if (tipoUsuario === 'WIT') {
+                    alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === 'WIT' && a.letter === selectedGrade);
+                } else {
+                    alunosDaTurma = bancoDeAlunos.filter(a => a.role === "aluno" && a.grade === selectedGrade && a.letter === selectedLetter);
+                }
 
                 const presentes = alunosDaTurma.filter(a => {
                     const info = presencaAlunosModoLocal[a.id];
@@ -2027,14 +2366,19 @@ function alternarTelaCheiaAula() {
 
                 if (presentes.length === 0) { alert("Nenhum aluno marcado como presente!"); return; }
 
-                if(confirm(`Adicionar 10 Moedas para os ${presentes.length} alunos presentes da turma ${selectedGrade} ${selectedLetter}?`)) {
+                const turmaDisplay = `${selectedGrade} ${selectedLetter}`;
+                
+                if(confirm(`Adicionar 10 Moedas para os ${presentes.length} alunos presentes da turma ${turmaDisplay}?`)) {
                     try {
                         for(const aluno of presentes) {
                             const novoSaldo = (aluno.moedas || 0) + 10;
                             await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', aluno.id), { moedas: novoSaldo });
                         }
                         alert("✅ Moedas de presença distribuídas com sucesso!");
-                    } catch(err) { console.error("Erro ao aplicar recompensas:", err); alert("Erro ao distribuir moedas."); }
+                    } catch(err) { 
+                        console.error("Erro ao aplicar recompensas:", err); 
+                        alert("Erro ao distribuir moedas."); 
+                    }
                 }
             });
         }
@@ -2356,9 +2700,16 @@ function alternarTelaCheiaAula() {
 
                 const novoId = "st_" + Date.now();
                 try {
-                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), {
+                    const dadosAluno = {
                         id: novoId, nome, grade, letter, role, pin, moedas: 0, moedasExclusivas: 0
-                    });
+                    };
+                    
+                    if (CURSOS_WIT.includes(grade)) {
+                        dadosAluno.curso = grade;
+                        dadosAluno.periodo = letter;
+                    }
+                    
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', novoId), dadosAluno);
                     alert(`✅ Integrante "${nome}" cadastrado com sucesso!`);
                     limparFormularioUsuario();
                     atualizarSelectFiltroAlunoRelatorio();
@@ -2390,9 +2741,16 @@ function alternarTelaCheiaAula() {
                 const pin = document.getElementById('student-pin').value.trim();
 
                 try {
-                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id), {
+                    const dadosAtualizados = {
                         nome, grade, letter, role, pin
-                    });
+                    };
+                    
+                    if (CURSOS_WIT.includes(grade)) {
+                        dadosAtualizados.curso = grade;
+                        dadosAtualizados.periodo = letter;
+                    }
+                    
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', id), dadosAtualizados);
                     alert("✅ Cadastro atualizado com sucesso!");
                     limparFormularioUsuario();
                     atualizarSelectFiltroAlunoRelatorio();
@@ -2511,6 +2869,67 @@ function alternarTelaCheiaAula() {
             });
         }
 
+        function prepararImpressaoRelatorio() {
+            const headerImpressao = document.createElement('div');
+            headerImpressao.id = 'print-header-institucional';
+            headerImpressao.style.display = 'none';
+            
+            const dataAtual = new Date().toLocaleDateString('pt-BR');
+            const horaAtual = new Date().toLocaleTimeString('pt-BR');
+            const tipoUsuario = getTipoUsuarioLogado();
+            
+            headerImpressao.innerHTML = `
+                <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px double #000; padding-bottom: 20px;">
+                    <h1 style="margin: 0; font-size: 28px; font-weight: bold; color: #000;">
+                        ${tipoUsuario === 'WIT' ? 'WIT - Workshops de Inovação e Tecnologia' : 'MAKER LABS'}
+                    </h1>
+                    <h2 style="margin: 5px 0; font-size: 20px; color: #333;">
+                        ${tipoUsuario === 'WIT' ? 'Unidade São Roque - WIT' : 'Unidade São Roque'}
+                    </h2>
+                    <p style="margin: 10px 0; font-size: 16px; color: #000;">
+                        <strong>Relatório de Frequência e Presença</strong>
+                    </p>
+                    <div style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 14px;">
+                        <span><strong>Responsável:</strong> ${escapeHtml(usuarioLogado)}</span>
+                        <span><strong>Data de Emissão:</strong> ${dataAtual} às ${horaAtual}</span>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 14px;">
+                        <span><strong>Cargo:</strong> ${escapeHtml(cargoLogado.charAt(0).toUpperCase() + cargoLogado.slice(1))}</span>
+                        <span style="margin-left: 30px;"><strong>Departamento:</strong> ${tipoUsuario === 'WIT' ? 'WIT - Tecnologia e Inovação' : 'Maker Labs - Educação Tecnológica'}</span>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 12px; color: #666;">
+                    <p style="margin: 5px 0;">Documento gerado automaticamente pelo Sistema de Gestão ${tipoUsuario === 'WIT' ? 'WIT' : 'Maker Labs'}</p>
+                    <p style="margin: 5px 0;">São Roque - SP | ${dataAtual}</p>
+                    <p style="margin: 5px 0;">Este documento é válido como registro oficial de frequência das atividades</p>
+                </div>
+            `;
+            
+            const headerAntigo = document.getElementById('print-header-institucional');
+            if (headerAntigo) {
+                headerAntigo.remove();
+            }
+            
+            document.body.appendChild(headerImpressao);
+        }
+
+        function imprimirRelatorio() {
+            prepararImpressaoRelatorio();
+            document.body.classList.add('printing-report');
+            
+            setTimeout(() => {
+                window.print();
+                
+                setTimeout(() => {
+                    document.body.classList.remove('printing-report');
+                    const headerImpressao = document.getElementById('print-header-institucional');
+                    if (headerImpressao) {
+                        headerImpressao.remove();
+                    }
+                }, 100);
+            }, 100);
+        }
+
         // --- EXPORTANDO FUNÇÕES PARA O ESCOPO GLOBAL ---
         window.mudarTela = mudarTela;
         window.alternarAbaChamada = alternarAbaChamada;
@@ -2562,9 +2981,10 @@ function alternarTelaCheiaAula() {
         window.excluirAula = excluirAula;
         window.novaAula = novaAula;
         window.atualizarPreviewAulaFromTextarea = atualizarPreviewAulaFromTextarea;
-		window.atualizarFiltroAulas = atualizarFiltroAulas;
-		window.carregarAulaDoFiltro = carregarAulaDoFiltro;
-		window.alternarTelaCheiaAula = alternarTelaCheiaAula;
+        window.atualizarFiltroAulas = atualizarFiltroAulas;
+        window.carregarAulaDoFiltro = carregarAulaDoFiltro;
+        window.alternarTelaCheiaAula = alternarTelaCheiaAula;
+        window.imprimirRelatorio = imprimirRelatorio;
     </script>
 </body>
 </html>
