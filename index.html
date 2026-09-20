@@ -2068,10 +2068,21 @@ function gerarHTMLFaceCarta(carta) {
   const isLegacy = carta.legacy === true;
   const tagTipo = (carta.tipo && TIPO_ICONS[carta.tipo])
     ? `<div class="card-type-icon ${carta.tipo}">${TIPO_ICONS[carta.tipo]}</div>` : '';
+
+  // Detecta se é URL válida ou apenas emoji/texto
+  const rawImg = (carta.imagem || '').trim();
+  const isUrl = rawImg.startsWith('http') || rawImg.startsWith('data:') || rawImg.startsWith('blob:');
+  const isEmoji = rawImg && !isUrl;
+
   if (isLegacy) {
-    const tagImg = (carta.imagem && carta.imagem.trim() !== '')
-      ? `<img class="card-img card-img-full" src="${escapeHtml(carta.imagem)}" alt="">`
-      : `<div class="card-img-fallback card-img-full" style="font-size:3rem; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:1;">🛠️</div>`;
+    let tagImg;
+    if (isUrl) {
+      tagImg = `<img class="card-img card-img-full" src="${escapeHtml(rawImg)}" alt="">`;
+    } else if (isEmoji) {
+      tagImg = `<div class="card-img-fallback card-img-full" style="font-size:5rem; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:1;">${escapeHtml(rawImg)}</div>`;
+    } else {
+      tagImg = `<div class="card-img-fallback card-img-full" style="font-size:3rem; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:1;">🛠️</div>`;
+    }
     return `<div class="card ${carta.raridade} legacy">
       ${tagImg}
       <div class="legacy-overlay"></div>
@@ -2092,9 +2103,17 @@ function gerarHTMLFaceCarta(carta) {
       </div>
     </div>`;
   }
-  const tagImg = (carta.imagem && carta.imagem.trim() !== '')
-    ? `<img class="card-img" src="${escapeHtml(carta.imagem)}" alt="">`
-    : `<div class="card-img-fallback">🛠️</div>`;
+
+  // Carta normal — checa antes de criar <img>
+  let tagImg;
+  if (isUrl) {
+    tagImg = `<img class="card-img" src="${escapeHtml(rawImg)}" alt="">`;
+  } else if (isEmoji) {
+    tagImg = `<div class="card-img-fallback" style="font-size:2.5rem;">${escapeHtml(rawImg)}</div>`;
+  } else {
+    tagImg = `<div class="card-img-fallback">🛠️</div>`;
+  }
+
   return `<div class="card ${carta.raridade}">
     <div class="card-header">${tagTipo}<div class="card-name">${escapeHtml(carta.nome)}</div></div>
     <div class="card-art-frame"><div class="card-img-container">${tagImg}</div></div>
@@ -3864,7 +3883,9 @@ function renderizarLojinha() {
   ex.forEach(c => {
     const alb = bancoAlbuns.find(a => a.id === c.albumId);
     const ja = env.some(e => e.cartaId === c.id || e.cartaNome === c.nome);
-    const tag = (c.imagem && c.imagem.trim() !== "") ? `<img class="card-img" src="${escapeHtml(c.imagem)}">` : `<div class="card-img-fallback">💎</div>`;
+const rawImg = (c.imagem || '').trim();
+const isUrl = rawImg.startsWith('http') || rawImg.startsWith('data:') || rawImg.startsWith('blob:');
+const tag = isUrl ? `<img class="card-img" src="${escapeHtml(rawImg)}">` : (rawImg ? `<div class="card-img-fallback" style="font-size:2.5rem;">${escapeHtml(rawImg)}</div>` : `<div class="card-img-fallback">💎</div>`);
     const preco = parseInt(c.preco) || 0;
     let btn;
     if (ja) btn = `<button class="buy-sticker-btn" style="background:#4CAF50; color:#fff;" disabled>✅ Já Possui</button>`;
@@ -3878,7 +3899,7 @@ function renderizarLojinha() {
   gi.innerHTML = '';
   if(bancoLoja.length === 0) gi.innerHTML = '<p style="color:#7c7c8a;">Nenhum.</p>';
   [...bancoLoja].sort((a, b) => a.nome.localeCompare(b.nome)).forEach(it => {
-    const tag = (it.imagem && it.imagem.startsWith("http")) ? `<img class="store-item-img" src="${escapeHtml(it.imagem)}">` : `<div class="store-item-icon">${it.imagem || '🎁'}</div>`;
+const tag = (it.imagem && it.imagem.startsWith("http")) ? `<img class="store-item-img" src="${escapeHtml(it.imagem)}">` : `<div class="store-item-icon">${it.imagem || '🎁'}</div>`;
     const preco = parseInt(it.preco) || 0;
     let btn;
     if (modoAdminVisualizacao) btn = `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>`;
