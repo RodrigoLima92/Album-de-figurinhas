@@ -18,7 +18,7 @@
   --shadow-md: 0 6px 18px rgba(0,0,0,0.5);
   --shadow-lg: 0 12px 32px rgba(0,0,0,0.6);
   --shadow-xl: 0 20px 50px rgba(0,0,0,0.7);
-  --card-shadow: rgba(0,0,0,0.5); --page-bg: #1a1a1e;
+  --page-bg: #1a1a1e;
   --font-serif: 'Georgia', 'Times New Roman', serif;
   --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -189,7 +189,7 @@ button:disabled { background: #23232e !important; color: var(--text-dim) !import
   display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer;
   position: relative; overflow: hidden; text-align: center;
   background: var(--album-color, #8b0000); border-left: 10px solid rgba(0,0,0,0.6);
-  isolation: isolate; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
   box-shadow: 4px 8px 16px rgba(0,0,0,0.65), 10px 15px 35px rgba(0,0,0,0.4),
     inset -12px 0 22px rgba(0,0,0,0.5), inset 5px 0 12px rgba(255,255,255,0.15), inset 0 -20px 30px rgba(0,0,0,0.3); }
 .book-cover-item::before { content: ''; position: absolute; inset: 0;
@@ -372,22 +372,15 @@ button:disabled { background: #23232e !important; color: var(--text-dim) !import
   box-shadow: inset 0 0 60px rgba(0,0,0,0.5); transition: all 0.6s; }
 .book-page { padding: 20px 12px 35px 12px; min-height: 480px; display: flex; flex-direction: column;
   position: relative; justify-content: center; overflow: hidden; }
-.book-page.left-page { border-right: 1px solid rgba(0,0,0,0.4); }
-.book-page.right-page { border-left: 1px solid rgba(0,0,0,0.4); }
-.book-page.left-page  { box-shadow: inset -32px 0 28px -22px rgba(0,0,0,0.55); }
-.book-page.right-page { box-shadow: inset  32px 0 28px -22px rgba(0,0,0,0.55); }
+.book-page.left-page { border-right: 1px solid rgba(0,0,0,0.4); box-shadow: inset -32px 0 28px -22px rgba(0,0,0,0.55); }
+.book-page.right-page { border-left: 1px solid rgba(0,0,0,0.4); box-shadow: inset 32px 0 28px -22px rgba(0,0,0,0.55); }
 .page-num { position: absolute; bottom: 12px; font-family: var(--font-serif); font-size: 0.8rem;
   color: var(--gold); font-weight: bold; letter-spacing: 2px; opacity: 0.7; transition: all 0.5s; }
 .left-page .page-num { left: 20px; }
 .right-page .page-num { right: 20px; }
-.page-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr);
-  gap: 12px; width: calc(100% - 8px); max-width: 452px; margin: 0 auto; flex: 1; aspect-ratio: 1 / 1.15;
-  position: relative;
-  z-index: 2;
-  padding: 4px;
-  box-sizing: border-box;
-}
+.page-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr);
+  gap: 12px; width: calc(100% - 8px); max-width: 452px; margin: 0 auto; flex: 1;
+  aspect-ratio: 1 / 1.15; position: relative; z-index: 2; padding: 4px; box-sizing: border-box; }
 .page-grid > div { width: 100%; height: 100%; display: flex; align-items: stretch;
   justify-content: center; min-height: 0; min-width: 0; }
 .book-controls { display: flex; justify-content: space-between; max-width: 1050px; margin: 0 auto; gap: 20px; }
@@ -436,8 +429,8 @@ button:disabled { background: #23232e !important; color: var(--text-dim) !import
 .book-container.tema-cosmos .page-num { color: #c77dff;
   text-shadow: 0 0 12px rgba(157,78,221,0.9), 0 0 20px rgba(199,125,255,0.6);
   letter-spacing: 4px; font-size: 0.85rem; }
-.book-container.tema-cosmos .book-page.left-page  { box-shadow: inset -32px 0 28px -22px rgba(157,78,221,0.35); border-right-color: rgba(157,78,221,0.3); }
-.book-container.tema-cosmos .book-page.right-page { box-shadow: inset  32px 0 28px -22px rgba(157,78,221,0.35); border-left-color: rgba(157,78,221,0.3); }
+.book-container.tema-cosmos .book-page.left-page { box-shadow: inset -32px 0 28px -22px rgba(157,78,221,0.35); border-right-color: rgba(157,78,221,0.3); }
+.book-container.tema-cosmos .book-page.right-page { box-shadow: inset 32px 0 28px -22px rgba(157,78,221,0.35); border-left-color: rgba(157,78,221,0.3); }
 .album-stats.tema-cosmos { background:
     radial-gradient(ellipse at 30% 50%, rgba(123,44,191,0.25) 0%, transparent 60%),
     radial-gradient(ellipse at 70% 50%, rgba(0,119,182,0.2) 0%, transparent 60%),
@@ -1247,7 +1240,6 @@ tbody tr:hover { background: rgba(212,175,55,0.04); }
 .img-preview-box { display: none; text-align: center; margin-bottom: 12px; padding: 10px; background: var(--bg-input); border-radius: 10px; border: 1px dashed var(--border-gold); }
 .img-preview-box img { max-width: 120px; max-height: 150px; border-radius: 8px; border: 2px solid var(--border-gold); display: block; margin: 0 auto; }
 .img-preview-box .preview-label { font-size: 0.65rem; color: var(--gold-light); margin-top: 6px; text-transform: uppercase; letter-spacing: 1.2px; font-weight: bold; }
-
 .pack-celebration-flash { position: fixed; inset: 0; pointer-events: none; z-index: 5000; opacity: 0; }
 .pack-celebration-flash.play-small { background: radial-gradient(circle at center, rgba(0,180,216,0.45) 0%, transparent 60%); animation: celebration-flash-small 0.6s ease-out; }
 .pack-celebration-flash.play-medium { background: radial-gradient(circle at center, rgba(255,214,10,0.65) 0%, transparent 65%); animation: celebration-flash-medium 1s ease-out; }
@@ -1292,35 +1284,12 @@ tbody tr:hover { background: rgba(212,175,55,0.04); }
   position: relative;
   cursor: pointer;
   display: block;
-  pointer-events: auto;
-  z-index: 1;
 }
-.card-click-wrapper > *,
-.card-click-wrapper .card,
-.card-click-wrapper .card * { pointer-events: auto; }
-.card-click-wrapper .badge-nova,
-.card-click-wrapper .badge-duplicada { pointer-events: none !important; }
-
 .slot-carta {
   width: 100%; height: 100%;
   position: relative;
-  display: block;
-  pointer-events: auto;
   cursor: pointer;
   z-index: 10;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-}
-.slot-carta .click-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 9999;
-  cursor: pointer;
-  background: transparent;
-  border-radius: inherit;
-  -webkit-tap-highlight-color: transparent;
-  pointer-events: auto;
 }
 
 .zoom-card-3d { cursor: pointer; }
@@ -1624,8 +1593,10 @@ tbody tr:hover { background: rgba(212,175,55,0.04); }
     <div class="attendance-tabs">
       <button id="att-tab-btn-1" class="active-att-tab" onclick="alternarAbaChamada(1)">📝 1. Lançamento</button>
       <button id="att-tab-btn-2" onclick="alternarAbaChamada(2)">📊 2. Relatório</button>
-      <button id="att-tab-btn-3" onclick="alternarAbaChamada(3)">📜 3. Contrato</button>
+      <button id="att-tab-btn-3" onclick="alternarAbaChamada(3)">📚 3. Slides da Turma</button>
+      <button id="att-tab-btn-4" onclick="alternarAbaChamada(4)">📜 4. Contrato</button>
     </div>
+
     <div id="att-tab-content-1">
       <div class="admin-box" style="margin-bottom: 25px;">
         <h2>📥 Adicionar Alunos</h2>
@@ -1658,6 +1629,7 @@ tbody tr:hover { background: rgba(212,175,55,0.04); }
         <div class="attendance-grid" id="attendance-students-grid"></div>
       </div>
     </div>
+
     <div id="att-tab-content-2" style="display: none;">
       <div class="admin-box print-section">
         <h2>📊 Relatório</h2>
@@ -1690,7 +1662,41 @@ tbody tr:hover { background: rgba(212,175,55,0.04); }
         </div>
       </div>
     </div>
+
     <div id="att-tab-content-3" style="display: none;">
+      <div class="admin-box">
+        <h2>📚 Slides da Turma</h2>
+        <p style="font-size: 0.85rem; color: #a8a8b3; margin-bottom: 15px;">
+          Selecione a série para ver os slides cadastrados. Cada série mostra apenas os seus próprios slides.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 15px;">
+          <div>
+            <label>Série:</label>
+            <select id="att-slides-serie" onchange="renderizarSlidesChamada()">
+              <option value="1º Ano">1º Ano</option>
+              <option value="2º Ano">2º Ano</option>
+              <option value="3º Ano">3º Ano</option>
+              <option value="4º Ano">4º Ano</option>
+              <option value="5º Ano">5º Ano</option>
+            </select>
+          </div>
+          <div>
+            <label>Aula:</label>
+            <select id="att-slides-aula" onchange="carregarSlideChamada()">
+              <option value="">-- Selecione uma aula --</option>
+            </select>
+          </div>
+          <div>
+            <button class="btn-secondary" onclick="irParaGerenciarSlides()" style="height: 42px; width: auto; padding: 0 20px;">✏️ Gerenciar Slides</button>
+          </div>
+        </div>
+        <div id="att-slides-container" style="background: #fff; border-radius: 12px; overflow: hidden; height: 70vh; border: 2px solid var(--border-gold); position: relative;">
+          <iframe id="att-slides-iframe" sandbox="allow-scripts" style="width: 100%; height: 100%; border: none; background: white; display: block;"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div id="att-tab-content-4" style="display: none;">
       <div class="admin-box">
         <h2>📜 Contrato Didático</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
@@ -2064,21 +2070,30 @@ const iconeMoeda = `<svg width="16" height="16" viewBox="0 0 24 24" style="verti
 function getPublicRef(colName) { return collection(db, 'artifacts', appId, 'public', 'data', colName); }
 const TIPO_ICONS = { raio: '⚡', agua: '💧', fogo: '🔥', grama: '🌿' };
 
+/* ============================================================
+   Detecção URL vs Emoji — evita ERR_FILE_NOT_FOUND
+   ============================================================ */
+function isImagemUrl(str) {
+  if (!str) return false;
+  const s = str.trim();
+  return s.startsWith('http://') || s.startsWith('https://') || s.startsWith('data:') || s.startsWith('blob:') || s.startsWith('./') || s.startsWith('/');
+}
+
 function gerarHTMLFaceCarta(carta) {
   const isLegacy = carta.legacy === true;
   const tagTipo = (carta.tipo && TIPO_ICONS[carta.tipo])
     ? `<div class="card-type-icon ${carta.tipo}">${TIPO_ICONS[carta.tipo]}</div>` : '';
 
-  // Detecta se é URL válida ou apenas emoji/texto
   const rawImg = (carta.imagem || '').trim();
-  const isUrl = rawImg.startsWith('http') || rawImg.startsWith('data:') || rawImg.startsWith('blob:');
-  const isEmoji = rawImg && !isUrl;
+  const temImagem = rawImg !== '';
+  const ehUrl = isImagemUrl(rawImg);
+  const ehEmoji = temImagem && !ehUrl;
 
   if (isLegacy) {
     let tagImg;
-    if (isUrl) {
+    if (ehUrl) {
       tagImg = `<img class="card-img card-img-full" src="${escapeHtml(rawImg)}" alt="">`;
-    } else if (isEmoji) {
+    } else if (ehEmoji) {
       tagImg = `<div class="card-img-fallback card-img-full" style="font-size:5rem; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:1;">${escapeHtml(rawImg)}</div>`;
     } else {
       tagImg = `<div class="card-img-fallback card-img-full" style="font-size:3rem; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:1;">🛠️</div>`;
@@ -2104,11 +2119,10 @@ function gerarHTMLFaceCarta(carta) {
     </div>`;
   }
 
-  // Carta normal — checa antes de criar <img>
   let tagImg;
-  if (isUrl) {
+  if (ehUrl) {
     tagImg = `<img class="card-img" src="${escapeHtml(rawImg)}" alt="">`;
-  } else if (isEmoji) {
+  } else if (ehEmoji) {
     tagImg = `<div class="card-img-fallback" style="font-size:2.5rem;">${escapeHtml(rawImg)}</div>`;
   } else {
     tagImg = `<div class="card-img-fallback">🛠️</div>`;
@@ -2218,7 +2232,6 @@ let alunoForcadoTrocarSenha = null;
 let inventarioAluno = {};
 let intervaloPresenca = null;
 let listenersIniciados = false;
-let cliquesProcessando = {};
 
 const unsubscribeFns = [];
 function addUnsubscribe(fn) { if (typeof fn === 'function') unsubscribeFns.push(fn); }
@@ -2310,6 +2323,9 @@ function iniciarListeners(uid) {
     let list = []; snap.forEach(d => list.push({ id: d.id, ...d.data() }));
     bancoAulas = list;
     if (document.getElementById('screen-aula').classList.contains('active')) { renderizarListaAulas(); atualizarPreviewAula(); }
+    if (document.getElementById('screen-attendance').classList.contains('active') && document.getElementById('att-tab-content-3').style.display !== 'none') {
+      renderizarSlidesChamada();
+    }
   }, (err) => console.error("❌ Erro aulas:", err)));
 
   addUnsubscribe(onSnapshot(getPublicRef('amizades'), (snap) => {
@@ -2325,7 +2341,7 @@ function iniciarListeners(uid) {
   if (intervaloPresenca) clearInterval(intervaloPresenca);
   intervaloPresenca = setInterval(atualizarPresencaUsuario, 30000);
 
-  configurarDelegacaoCliqueAlbum();
+  instalarCliquePorCoordenadas();
 }
 
 async function atualizarPresencaUsuario() {
@@ -2337,26 +2353,57 @@ async function popularSementesCartas() { for (const item of cartasIniciais) awai
 async function popularSementesAlunos() { for (const item of alunosIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', item.id), item); }
 async function popularSementesLoja() { for (const item of lojaIniciais) await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'lojinha_itens', item.id), item); }
 
-/* ===== DELEGAÇÃO DE CLIQUE NO ÁLBUM — FALLBACK ===== */
-function configurarDelegacaoCliqueAlbum() {
-  const albumScreen = document.getElementById('screen-album');
-  if (!albumScreen || albumScreen.dataset.delegacaoOk === '1') return;
-  albumScreen.dataset.delegacaoOk = '1';
+/* ============================================================
+   ★★★ SOLUÇÃO DEFINITIVA — CLIQUE POR COORDENADAS ★★★
+   Ignora z-index, overflow, pseudo-elementos, stacking contexts.
+   Calcula qual carta está sob o clique usando getBoundingClientRect.
+   ============================================================ */
+function instalarCliquePorCoordenadas() {
+  if (window.__cliqueCoordenadasInstalado) return;
+  window.__cliqueCoordenadasInstalado = true;
 
-  const handle = function(ev) {
-    const target = ev.target.closest ? ev.target.closest('[data-carta-id]') : null;
-    if (!target) return;
-    const id = target.getAttribute('data-carta-id');
-    if (!id) return;
+  let ultimoClique = 0;
+
+  function encontrarCartaSob(x, y) {
+    const slots = document.querySelectorAll('.slot-carta[data-carta-id]');
+    for (const slot of slots) {
+      const r = slot.getBoundingClientRect();
+      if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) {
+        return slot.dataset.cartaId;
+      }
+    }
+    return null;
+  }
+
+  function processarClique(ev) {
     const agora = Date.now();
-    if (cliquesProcessando[id] && agora - cliquesProcessando[id] < 400) return;
-    cliquesProcessando[id] = agora;
-    if (ev.cancelable) { try { ev.preventDefault(); } catch(e){} }
-    ampliarCartaPorId(null, id);
-  };
+    if (agora - ultimoClique < 200) return;
+    ultimoClique = agora;
 
-  albumScreen.addEventListener('click', handle, false);
-  albumScreen.addEventListener('touchend', handle, { passive: false, capture: false });
+    let x = null, y = null;
+    if (ev.changedTouches && ev.changedTouches[0]) {
+      x = ev.changedTouches[0].clientX;
+      y = ev.changedTouches[0].clientY;
+    } else {
+      x = ev.clientX;
+      y = ev.clientY;
+    }
+    if (x === null || y === null) return;
+
+    const id = encontrarCartaSob(x, y);
+    if (!id) return;
+
+    const modal = document.getElementById('zoom-modal');
+    if (modal && modal.classList.contains('active')) return;
+
+    try { ev.preventDefault(); } catch(e){}
+    try { ev.stopPropagation(); } catch(e){}
+
+    ampliarCartaPorId(null, id);
+  }
+
+  document.addEventListener('click', processarClique, true);
+  document.addEventListener('touchend', processarClique, { passive: false, capture: true });
 }
 
 window.addEventListener('load', () => { inicializarAutenticacao(); });
@@ -2452,7 +2499,7 @@ function iniciarAnimacaoPack(pack) {
   const album = bancoAlbuns.find(a => a.id === pack.albumId);
   const img = album?.imagem || '';
   const cor = album?.cor || '#1a1a2e';
-  const isUrlImage = img.startsWith('http') || img.startsWith('data:');
+  const isUrlImage = isImagemUrl(img);
   const isEmoji = img && !isUrlImage;
   const coverEl = document.getElementById('sealed-cover');
   const emojiEl = document.getElementById('sealed-cover-emoji');
@@ -2539,9 +2586,9 @@ function criarCardWrapper(carta) {
   const img = album?.imagem || '';
   const backImg = album?.imagemTraseira || '';
   const cor = album?.cor || '#1a1a2e';
-  const isUrlImage = img.startsWith('http') || img.startsWith('data:');
+  const isUrlImage = isImagemUrl(img);
   const isEmoji = img && !isUrlImage;
-  const hasBackImg = backImg.startsWith('http') || backImg.startsWith('data:');
+  const hasBackImg = isImagemUrl(backImg);
   let backStyle = '', emblemHtml = '', backClasse = '';
   if (hasBackImg) {
     backStyle = `background: url('${escapeHtml(backImg)}') center/cover no-repeat;`;
@@ -3178,11 +3225,70 @@ function alternarAbaChamada(numAba) {
   document.getElementById('att-tab-content-1').style.display = numAba === 1 ? 'block' : 'none';
   document.getElementById('att-tab-content-2').style.display = numAba === 2 ? 'block' : 'none';
   document.getElementById('att-tab-content-3').style.display = numAba === 3 ? 'block' : 'none';
+  document.getElementById('att-tab-content-4').style.display = numAba === 4 ? 'block' : 'none';
   document.getElementById('att-tab-btn-1').className = numAba === 1 ? 'active-att-tab' : '';
   document.getElementById('att-tab-btn-2').className = numAba === 2 ? 'active-att-tab' : '';
   document.getElementById('att-tab-btn-3').className = numAba === 3 ? 'active-att-tab' : '';
+  document.getElementById('att-tab-btn-4').className = numAba === 4 ? 'active-att-tab' : '';
   if(numAba === 2) { atualizarSelectFiltroAlunoRelatorio(); renderizarTabelaRelatorio(); }
+  if(numAba === 3) { renderizarSlidesChamada(); }
 }
+
+/* ============================================================
+   Slides da Turma (aba nova na Chamada)
+   ============================================================ */
+function renderizarSlidesChamada() {
+  const serieEl = document.getElementById('att-slides-serie');
+  const sel = document.getElementById('att-slides-aula');
+  const iframe = document.getElementById('att-slides-iframe');
+  if (!serieEl || !sel || !iframe) return;
+  const serie = serieEl.value;
+
+  const aulas = bancoAulas.filter(a => a.serie === serie).sort((a, b) => a.titulo.localeCompare(b.titulo));
+  sel.innerHTML = '';
+
+  if (aulas.length === 0) {
+    sel.innerHTML = '<option value="">(Nenhuma aula cadastrada para esta série)</option>';
+    iframe.srcdoc = `<html><body style="background:white;color:#444;display:flex;align-items:center;justify-content:center;height:100%;font-family:Arial;margin:0;">
+      <div style="text-align:center;padding:40px;">
+        <div style="font-size:4rem;margin-bottom:20px;">📚</div>
+        <h2 style="margin:0 0 10px;">Nenhum slide cadastrado</h2>
+        <p style="color:#666;">Clique em <b>"✏️ Gerenciar Slides"</b> para adicionar slides para a série <b>${escapeHtml(serie)}</b>.</p>
+      </div>
+    </body></html>`;
+    return;
+  }
+
+  aulas.forEach(a => sel.add(new Option(a.titulo, a.id)));
+  sel.value = aulas[0].id;
+  carregarSlideChamada();
+}
+
+function carregarSlideChamada() {
+  const aulaId = document.getElementById('att-slides-aula').value;
+  const iframe = document.getElementById('att-slides-iframe');
+  if (!iframe) return;
+  if (!aulaId) {
+    iframe.srcdoc = '<html><body style="background:white;margin:0;"></body></html>';
+    return;
+  }
+  const a = bancoAulas.find(x => x.id === aulaId);
+  if (a && a.htmlContent) {
+    iframe.srcdoc = a.htmlContent;
+  } else {
+    iframe.srcdoc = '<html><body style="background:white;color:#444;display:flex;align-items:center;justify-content:center;height:100%;font-family:Arial;margin:0;"><p>Esta aula está vazia.</p></body></html>';
+  }
+}
+
+function irParaGerenciarSlides() {
+  const serieAtual = document.getElementById('att-slides-serie').value;
+  mudarTela('screen-aula');
+  setTimeout(() => {
+    const selSerie = document.getElementById('aula-serie-select');
+    if (selSerie) { selSerie.value = serieAtual; selecionarSerieAula(); }
+  }, 100);
+}
+
 function atualizarIndicadoresMoeda() {
   const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno");
   const saldoN = alunoObj ? (alunoObj.moedas || 0) : 0;
@@ -3326,7 +3432,7 @@ function atualizarListasAdmin() {
   const listAlbuns = document.getElementById('list-albuns-ativos');
   if (listAlbuns) {
     listAlbuns.innerHTML = [...bancoAlbuns].sort((a, b) => a.titulo.localeCompare(b.titulo)).map(a => {
-      const capaPreview = (a.imagem && (a.imagem.startsWith('http') || a.imagem.startsWith('data:')))
+      const capaPreview = (a.imagem && isImagemUrl(a.imagem))
         ? `<img src="${escapeHtml(a.imagem)}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 6px; margin-right: 8px; vertical-align: middle;">`
         : (a.imagem ? `<span style="font-size:1.4rem; margin-right: 8px;">${escapeHtml(a.imagem)}</span>` : '');
       return `<div class="list-item">
@@ -3439,13 +3545,13 @@ function editarAlbum(id) {
 
   const prev = document.getElementById('album-image-preview');
   const img = document.getElementById('album-preview-img');
-  if (a.imagem && (a.imagem.startsWith('http') || a.imagem.startsWith('data:'))) {
+  if (a.imagem && isImagemUrl(a.imagem)) {
     img.src = a.imagem; prev.style.display = 'block';
   } else { prev.style.display = 'none'; }
 
   const prevBack = document.getElementById('album-back-image-preview');
   const imgBack = document.getElementById('album-back-preview-img');
-  if (a.imagemTraseira && (a.imagemTraseira.startsWith('http') || a.imagemTraseira.startsWith('data:'))) {
+  if (a.imagemTraseira && isImagemUrl(a.imagemTraseira)) {
     imgBack.src = a.imagemTraseira; prevBack.style.display = 'block';
   } else { prevBack.style.display = 'none'; }
 
@@ -3487,7 +3593,7 @@ function editarCarta(id) {
 
   const prev = document.getElementById('card-img-preview');
   const img = document.getElementById('card-preview-img');
-  if (c.imagem && (c.imagem.startsWith('http') || c.imagem.startsWith('data:'))) {
+  if (c.imagem && isImagemUrl(c.imagem)) {
     img.src = c.imagem; prev.style.display = 'block';
   } else { prev.style.display = 'none'; }
 
@@ -3841,7 +3947,7 @@ function renderizarLojinha() {
       const grupo = document.createElement('div');
       grupo.className = 'pack-album-group';
       const img = album.imagem || '';
-      const isUrlImage = img.startsWith('http') || img.startsWith('data:');
+      const isUrlImage = isImagemUrl(img);
       const isEmoji = img && !isUrlImage;
       const iconHtml = isUrlImage ? `<img src="${escapeHtml(img)}" alt="">` : (isEmoji ? escapeHtml(img) : '📘');
       grupo.innerHTML = `<div class="pack-album-group-title"><span class="group-icon">${iconHtml}</span> 📦 Packs — ${escapeHtml(album.titulo)}</div>`;
@@ -3883,9 +3989,13 @@ function renderizarLojinha() {
   ex.forEach(c => {
     const alb = bancoAlbuns.find(a => a.id === c.albumId);
     const ja = env.some(e => e.cartaId === c.id || e.cartaNome === c.nome);
-const rawImg = (c.imagem || '').trim();
-const isUrl = rawImg.startsWith('http') || rawImg.startsWith('data:') || rawImg.startsWith('blob:');
-const tag = isUrl ? `<img class="card-img" src="${escapeHtml(rawImg)}">` : (rawImg ? `<div class="card-img-fallback" style="font-size:2.5rem;">${escapeHtml(rawImg)}</div>` : `<div class="card-img-fallback">💎</div>`);
+    const rawImg = (c.imagem || '').trim();
+    const ehUrl = isImagemUrl(rawImg);
+    const ehEmoji = rawImg && !ehUrl;
+    let tag;
+    if (ehUrl) tag = `<img class="card-img" src="${escapeHtml(rawImg)}">`;
+    else if (ehEmoji) tag = `<div class="card-img-fallback" style="font-size:2.5rem;">${escapeHtml(rawImg)}</div>`;
+    else tag = `<div class="card-img-fallback">💎</div>`;
     const preco = parseInt(c.preco) || 0;
     let btn;
     if (ja) btn = `<button class="buy-sticker-btn" style="background:#4CAF50; color:#fff;" disabled>✅ Já Possui</button>`;
@@ -3899,7 +4009,11 @@ const tag = isUrl ? `<img class="card-img" src="${escapeHtml(rawImg)}">` : (rawI
   gi.innerHTML = '';
   if(bancoLoja.length === 0) gi.innerHTML = '<p style="color:#7c7c8a;">Nenhum.</p>';
   [...bancoLoja].sort((a, b) => a.nome.localeCompare(b.nome)).forEach(it => {
-const tag = (it.imagem && it.imagem.startsWith("http")) ? `<img class="store-item-img" src="${escapeHtml(it.imagem)}">` : `<div class="store-item-icon">${it.imagem || '🎁'}</div>`;
+    const rawImg = (it.imagem || '').trim();
+    const ehUrl = isImagemUrl(rawImg);
+    let tag;
+    if (ehUrl) tag = `<img class="store-item-img" src="${escapeHtml(rawImg)}">`;
+    else tag = `<div class="store-item-icon">${rawImg || '🎁'}</div>`;
     const preco = parseInt(it.preco) || 0;
     let btn;
     if (modoAdminVisualizacao) btn = `<div style="font-size:0.8rem; color:#f72585;">Modo Admin</div>`;
@@ -3940,7 +4054,7 @@ function renderizarEstanteDeLivros() {
     const env = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase() && h.albumId === album.id);
     const col = bancoDeCartas.filter(c => c.albumId === album.id && env.some(e => e.cartaId === c.id || e.cartaNome === c.nome)).length;
     const img = album.imagem || '';
-    const isUrlImage = img.startsWith("http") || img.startsWith("data:");
+    const isUrlImage = isImagemUrl(img);
     const isEmoji = img && !isUrlImage;
     let innerThumb = '';
     if (isUrlImage) innerThumb = `<img class="book-cover-img" src="${escapeHtml(img)}" alt="">`;
@@ -4010,10 +4124,7 @@ function renderizarLivroAberto() {
   document.getElementById('btn-book-next').disabled = (base + tpa) >= total;
 }
 
-/* ============================================================
-   Slot de figurinha — clique em QUALQUER área
-   Handlers em AMBOS: overlay + wrapper + slot (com debounce)
-   ============================================================ */
+/* ===== Slot de figurinha — o clique é capturado globalmente por coordenadas ===== */
 function renderizarSlotFigurinha(carta, num, cont, env) {
   const w = document.createElement('div');
   w.className = 'slot-carta';
@@ -4031,36 +4142,7 @@ function renderizarSlotFigurinha(carta, num, cont, env) {
     const tagD = (qtd > 1 && !modoAdminVisualizacao) ? `<div class="badge-duplicada">×${qtd}</div>` : '';
     w.dataset.cartaId = carta.id;
     w.style.cursor = 'pointer';
-
-    // Carta visual + overlay invisível por cima
-    w.innerHTML = `
-      <div class="card-click-wrapper">${tagN}${tagD}${gerarHTMLFaceCarta(carta)}</div>
-      <div class="click-overlay" aria-label="Ampliar carta"></div>
-    `;
-
-    // Debounce: ignora cliques repetidos em menos de 400ms
-    const abrir = function(ev) {
-      if (ev) {
-        try { ev.preventDefault(); } catch(e){}
-        try { ev.stopPropagation(); } catch(e){}
-      }
-      const agora = Date.now();
-      if (cliquesProcessando[carta.id] && agora - cliquesProcessando[carta.id] < 400) return;
-      cliquesProcessando[carta.id] = agora;
-      ampliarCartaPorId(null, carta.id);
-    };
-
-    // Handler aplicado em TODOS os elementos envolvidos (rede de segurança total)
-    const overlay = w.querySelector('.click-overlay');
-    overlay.addEventListener('click', abrir, false);
-    overlay.addEventListener('touchend', abrir, { passive: false });
-    w.addEventListener('click', abrir, false);
-    w.addEventListener('touchend', abrir, { passive: false });
-    const wrapper = w.querySelector('.card-click-wrapper');
-    if (wrapper) {
-      wrapper.addEventListener('click', abrir, false);
-      wrapper.addEventListener('touchend', abrir, { passive: false });
-    }
+    w.innerHTML = `<div class="card-click-wrapper">${tagN}${tagD}${gerarHTMLFaceCarta(carta)}</div>`;
   } else {
     let dica = "Vá na Lojinha! 🛒", botao = "";
     if (carta.raridade !== 'exclusiva') {
@@ -4075,7 +4157,6 @@ function renderizarSlotFigurinha(carta, num, cont, env) {
   cont.appendChild(w);
 }
 
-/* ===== Helper central de abertura de carta ===== */
 function ampliarCartaPorId(ev, id) {
   if (ev) { try { ev.preventDefault(); } catch(e) {} }
   const carta = bancoDeCartas.find(c => c.id === id);
@@ -4090,7 +4171,6 @@ function ampliarCartaPorId(ev, id) {
 async function comprarFigurinhaAlbumDireto(id) { await comprarItemDaLojinha(id, 'carta'); }
 function folhearPagina(d) { paginaAtualLivro += d; renderizarLivroAberto(); }
 
-/* ===== Ampliar carta (frente + verso) ===== */
 function ampliarCard(carta) {
   const modal = document.getElementById('zoom-modal');
   const front = document.getElementById('zoom-card-front');
@@ -4107,10 +4187,9 @@ function ampliarCard(carta) {
   const backImg = (album?.imagemTraseira || '').trim();
   const cor     = album?.cor || '#1a1a2e';
 
-  const isUrl    = (s) => s.startsWith('http') || s.startsWith('data:');
-  const isEmoji  = img && !isUrl(img);
-  const hasBack  = backImg && isUrl(backImg);
-  const hasCover = img && isUrl(img);
+  const isEmoji  = img && !isImagemUrl(img);
+  const hasBack  = isImagemUrl(backImg);
+  const hasCover = isImagemUrl(img);
 
   let backStyle = '', backClasse = '', emblemHtml = '';
   if (hasBack) {
@@ -4440,6 +4519,9 @@ window.editarAlbum = editarAlbum;
 window.limparFormularioAlbum = limparFormularioAlbum;
 window.editarCarta = editarCarta;
 window.limparFormularioCarta = limparFormularioCarta;
+window.renderizarSlidesChamada = renderizarSlidesChamada;
+window.carregarSlideChamada = carregarSlideChamada;
+window.irParaGerenciarSlides = irParaGerenciarSlides;
 </script>
 </body>
 </html>
