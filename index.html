@@ -235,6 +235,9 @@ button:disabled::before, button:disabled::after { display:none; }
 .nav-btn-sair { background:linear-gradient(135deg, #1a1a22 0%, #2e2e3a 100%);
   border:1px solid rgba(230,57,70,.5); }
 .nav-btn-sair .nav-btn-icon { background:linear-gradient(135deg, #ffb0b8 0%, #ff3860 100%); color:#fff; }
+/* 🎮 Jogos */
+.nav-btn-jogos { background:linear-gradient(135deg, #4a148c 0%, #9d4edd 50%, #e0aaff 100%); }
+.nav-btn-jogos .nav-btn-icon { background:linear-gradient(135deg, #f0dfff 0%, #9d4edd 100%); color:#2a0050; }
 .nav-btn .nav-badge { position:absolute; top:-6px; right:-6px;
   min-width:18px; height:18px;
   display:inline-flex; align-items:center; justify-content:center;
@@ -762,7 +765,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .left-page .page-num { left:20px; }
 .right-page .page-num { right:20px; }
 
-/* ★ CORREÇÃO: grid e slots com área total clicável */
 .page-grid {
   display:grid;
   grid-template-columns:repeat(2, minmax(0, 1fr));
@@ -1058,6 +1060,152 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .aula-preview iframe { flex:1; width:100%; border:none; background:white; border-radius:var(--radius-sm); }
 .btn-fullscreen { background:linear-gradient(135deg, #2a9d8f, #1e7169); color:white;
   border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:.75rem; width:auto; }
+
+/* ═══ JOGOS — ARCADE GAMIFICADO ═══ */
+.games-container { width:100%; max-width:var(--container-max); margin:0 auto; padding:0 var(--container-pad); }
+.games-hero {
+  text-align:center; padding:34px 20px 24px; margin-bottom:22px; position:relative; overflow:hidden;
+  background:linear-gradient(180deg, rgba(157,78,221,0.15) 0%, transparent 100%);
+  border-radius:var(--radius-xl); border:1px solid rgba(157,78,221,0.35);
+}
+.games-hero::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, transparent, var(--neon-cyan), var(--gold), var(--neon-pink), var(--neon-cyan), transparent);
+  background-size:200% 100%; animation:header-scan 4s linear infinite;
+}
+.games-hero h2 {
+  font-family:var(--font-serif); font-size:1.85rem; color:var(--gold-light);
+  letter-spacing:4px; text-transform:uppercase; margin-bottom:10px;
+  text-shadow:0 0 20px var(--gold-glow), 0 0 40px rgba(247,37,133,0.3);
+}
+.games-hero p { color:var(--text-muted); font-size:.9rem; letter-spacing:1px; }
+.games-arcade-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+  gap:26px; padding:20px 0 40px;
+}
+.game-cabinet {
+  position:relative; border-radius:16px; overflow:hidden; cursor:pointer;
+  background:linear-gradient(180deg, #1a1a2e 0%, #0a0a14 100%);
+  border:2px solid rgba(0,224,255,0.3);
+  transition:all .35s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow:0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+  display:flex; flex-direction:column;
+}
+.game-cabinet::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px; z-index:5;
+  background:linear-gradient(90deg, transparent, var(--neon-cyan), var(--gold), var(--neon-pink), transparent);
+  background-size:200% 100%; animation:header-scan 4s linear infinite;
+}
+.game-cabinet:hover {
+  transform:translateY(-8px) scale(1.02); border-color:var(--neon-cyan);
+  box-shadow:0 20px 50px rgba(0,224,255,0.5), 0 0 40px rgba(0,224,255,0.3);
+}
+.game-cabinet.tier-facil:hover { border-color:#2a9d8f; box-shadow:0 20px 50px rgba(42,157,143,0.5); }
+.game-cabinet.tier-medio:hover { border-color:#00b4d8; }
+.game-cabinet.tier-dificil:hover { border-color:#c77dff; box-shadow:0 20px 50px rgba(199,125,255,0.5); }
+.game-cabinet.tier-epico:hover { border-color:#ffd60a; box-shadow:0 20px 50px rgba(255,214,10,0.6); }
+.game-cabinet-screen {
+  flex:1; margin:12px; border-radius:10px; aspect-ratio:16/10;
+  background:radial-gradient(circle at 50% 40%, #22222a 0%, #050508 100%);
+  position:relative; overflow:hidden; border:2px solid rgba(0,0,0,0.6);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:inset 0 0 30px rgba(0,0,0,0.8);
+}
+.game-cabinet-screen::before {
+  content:''; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.15) 2px 4px);
+}
+.game-cabinet-screen::after {
+  content:''; position:absolute; top:0; left:-100%; width:50%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform:skewX(-22deg); animation:game-screen-scan 4s ease-in-out infinite;
+  pointer-events:none; z-index:3;
+}
+@keyframes game-screen-scan { 0%,100%{left:-100%;} 50%{left:200%;} }
+.game-screen-img { width:100%; height:100%; object-fit:cover; position:relative; z-index:4; }
+.game-screen-emoji {
+  font-size:4.5rem; filter:drop-shadow(0 0 20px rgba(0,224,255,0.6));
+  animation:game-icon-bounce 2s ease-in-out infinite; position:relative; z-index:4;
+}
+@keyframes game-icon-bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+.game-cabinet-info {
+  padding:12px 16px 16px;
+  background:linear-gradient(180deg, rgba(10,10,20,0.98) 0%, rgba(0,0,0,1) 100%);
+  border-top:1px solid rgba(0,224,255,0.2);
+}
+.game-cabinet-title {
+  font-family:var(--font-serif); font-weight:bold; color:#fff; font-size:.95rem;
+  text-transform:uppercase; letter-spacing:1.5px; text-align:center;
+  margin-bottom:6px; text-shadow:0 0 10px rgba(0,224,255,0.4);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.game-cabinet-desc {
+  font-size:.72rem; color:var(--text-muted); text-align:center; margin-bottom:10px;
+  line-height:1.3; height:2.6em; overflow:hidden;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+}
+.game-cabinet-meta {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:6px; font-size:.62rem; font-weight:900; text-transform:uppercase; letter-spacing:1px;
+  margin-bottom:10px;
+}
+.game-difficulty { padding:3px 10px; border-radius:20px; border:1.5px solid currentColor; background:rgba(0,0,0,0.6); }
+.game-difficulty.facil { color:#2a9d8f; }
+.game-difficulty.medio { color:#00b4d8; }
+.game-difficulty.dificil { color:#c77dff; }
+.game-difficulty.epico { color:#ffd60a; }
+.game-xp { color:#ffd60a; display:inline-flex; align-items:center; gap:3px; }
+.game-xp::before { content:'★'; }
+.game-play-btn {
+  padding:11px; font-size:.78rem; font-weight:900;
+  letter-spacing:1.5px; border-radius:8px; border:none; cursor:pointer;
+  background:linear-gradient(135deg, #00b4d8, #0077b6); color:#fff;
+  width:100%; text-transform:uppercase;
+  box-shadow:0 4px 12px rgba(0,180,216,0.5); transition:all .2s;
+}
+.game-play-btn:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(0,224,255,0.7); }
+
+/* ── Modo Jogo (Fullscreen) ── */
+.game-launcher-overlay {
+  position:fixed; inset:0; background:#000; z-index:3000;
+  display:none; flex-direction:column;
+}
+.game-launcher-overlay.active { display:flex; animation:game-launcher-in .4s ease; }
+@keyframes game-launcher-in { 0%{opacity:0; transform:scale(.95);} 100%{opacity:1; transform:scale(1);} }
+.game-launcher-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 24px; flex-shrink:0;
+  background:linear-gradient(180deg, #14141f 0%, #0a0a14 100%);
+  border-bottom:2px solid var(--neon-cyan);
+  box-shadow:0 4px 20px rgba(0,224,255,0.3);
+}
+.game-launcher-title {
+  font-family:var(--font-serif); color:var(--gold-light);
+  font-size:1.15rem; letter-spacing:2.5px; text-transform:uppercase;
+  display:flex; align-items:center; gap:10px;
+  text-shadow:0 0 15px var(--gold-glow);
+}
+.game-launcher-title::before { content:'🎮'; font-size:1.4rem; }
+.game-launcher-close {
+  width:auto !important; padding:10px 22px !important;
+  background:linear-gradient(135deg, #9d0208, #ff3860) !important;
+  color:#fff; border:none; border-radius:8px; font-weight:900;
+  cursor:pointer; font-size:.78rem; letter-spacing:1.2px;
+  text-transform:uppercase; transition:all .2s;
+  box-shadow:0 4px 12px rgba(255,56,96,0.5);
+}
+.game-launcher-close:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(255,56,96,0.7); }
+.game-launcher-iframe { flex:1; width:100%; border:none; background:white; }
+.game-launcher-loading {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:#000; color:var(--neon-cyan); font-family:var(--font-serif);
+  font-size:1.5rem; letter-spacing:4px; text-transform:uppercase; z-index:10;
+}
+.game-launcher-loading .spin {
+  width:40px; height:40px; border:3px solid rgba(0,224,255,0.2);
+  border-top-color:var(--neon-cyan); border-radius:50%;
+  animation:spin .8s linear infinite; margin-right:16px;
+}
 
 /* ═══ ZOOM ═══ */
 .zoom-overlay { position:fixed; top:0; left:0; width:100%; height:100%;
@@ -1395,7 +1543,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   80%{opacity:1;}
   100%{opacity:0; transform:translate(-50%,-50%) rotate(-15deg) scale(1.4);} }
 
-/* ★ CORREÇÃO: slot e wrapper preenchem toda a célula do grid */
 .card-click-wrapper {
   position:absolute;
   top:0; left:0; right:0; bottom:0;
@@ -1418,6 +1565,20 @@ tr:hover td { background:rgba(0,224,255,.04); }
       <div id="zoom-card-front" class="zoom-card-face zoom-front"></div>
       <div id="zoom-card-back" class="zoom-card-face zoom-back"></div>
     </div>
+  </div>
+</div>
+
+<div id="game-launcher-overlay" class="game-launcher-overlay">
+  <div class="game-launcher-header">
+    <div class="game-launcher-title" id="game-launcher-title">Jogo</div>
+    <button class="game-launcher-close" type="button" onclick="fecharJogo()">✖ Sair do Jogo</button>
+  </div>
+  <div style="flex:1; position:relative; overflow:hidden;">
+    <div class="game-launcher-loading" id="game-launcher-loading">
+      <div class="spin"></div>Carregando Jogo...
+    </div>
+    <iframe id="game-launcher-iframe" class="game-launcher-iframe"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-pointer-lock"></iframe>
   </div>
 </div>
 
@@ -1973,6 +2134,33 @@ tr:hover td { background:rgba(0,224,255,.04); }
   </div>
 </div>
 
+<div id="screen-jogos" class="screen">
+  <header>
+    <div>
+      <h1 style="color:#e0aaff; text-shadow:0 0 14px rgba(224,170,255,.5);">🕹️ Arcade Maker</h1>
+      <p>Escolha um jogo e insira a ficha!</p>
+    </div>
+    <div class="nav-buttons">
+      <button class="nav-btn nav-btn-store" type="button" onclick="mudarTela('screen-store')">
+        <span class="nav-btn-icon">🛒</span><span class="nav-btn-label">Lojinha</span>
+      </button>
+      <button class="nav-btn nav-btn-estante" type="button" onclick="mudarTela('screen-bookcase')">
+        <span class="nav-btn-icon">📚</span><span class="nav-btn-label">Estante</span>
+      </button>
+      <button class="nav-btn nav-btn-sair" type="button" onclick="fazerLogout()">
+        <span class="nav-btn-icon">🚪</span><span class="nav-btn-label">Sair</span>
+      </button>
+    </div>
+  </header>
+  <div class="games-container">
+    <div class="games-hero">
+      <h2>✨ INSIRA A FICHA ✨</h2>
+      <p>Clique em um jogo para começar a jogar</p>
+    </div>
+    <div class="games-arcade-grid" id="games-arcade-grid"></div>
+  </div>
+</div>
+
 <div id="screen-admin" class="screen">
   <header>
     <div><h1>Painel Maker Labs</h1><p>Nível: <span id="admin-role-display" style="color:#ffb703; font-weight:bold; letter-spacing:2px;"></span></p></div>
@@ -2010,6 +2198,7 @@ tr:hover td { background:rgba(0,224,255,.04); }
       <a href="#sec-loja">💰 Loja</a>
       <a href="#sec-usuarios">👥 Usuários</a>
       <a href="#sec-historico">📅 Histórico</a>
+      <a href="#sec-jogos">🎮 Jogos</a>
     </nav>
 
     <section class="admin-section" id="sec-albuns">
@@ -2287,6 +2476,54 @@ tr:hover td { background:rgba(0,224,255,.04); }
       </div>
     </section>
 
+    <section class="admin-section" id="sec-jogos">
+      <header class="admin-section-header">
+        <div class="icon">🎮</div>
+        <div class="titles">
+          <h2><span class="sec-num">05</span>Jogos / Arcade</h2>
+          <p>Cole o HTML do jogo e ele aparece automaticamente na aba Arcade</p>
+        </div>
+      </header>
+      <div class="admin-grid">
+        <div class="admin-box" id="box-gerenciar-jogos">
+          <h2 id="title-game-form">🎮 Novo Jogo</h2>
+          <input type="hidden" id="game-edit-id" value="">
+          <label>Título do Jogo:</label>
+          <input type="text" id="game-titulo" placeholder="Ex: Caça-Palavras Maker">
+          <label>Descrição (opcional):</label>
+          <input type="text" id="game-descricao" placeholder="Ex: Encontre as palavras escondidas">
+          <label>Emoji ou URL de capa:</label>
+          <input type="text" id="game-imagem" placeholder="🎮 ou https://...">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div>
+              <label>Dificuldade:</label>
+              <select id="game-dificuldade">
+                <option value="facil">🟢 Fácil</option>
+                <option value="medio">🔵 Médio</option>
+                <option value="dificil">🟣 Difícil</option>
+                <option value="epico">🟡 Épico</option>
+              </select>
+            </div>
+            <div>
+              <label>XP Recompensa:</label>
+              <input type="number" id="game-xp" value="100" min="0">
+            </div>
+          </div>
+          <label>📄 HTML do Jogo (cole aqui):</label>
+          <textarea id="game-html-content" rows="7" placeholder="Cole o HTML completo do jogo aqui..." style="font-family:monospace; font-size:.78rem; resize:vertical;"></textarea>
+          <label>📁 Ou carregar arquivo HTML:</label>
+          <input type="file" id="game-file-input" accept=".html,.htm" onchange="carregarArquivoJogoHTML(this)">
+          <label>🔗 Ou URL externa (opcional):</label>
+          <input type="text" id="game-url" placeholder="https://exemplo.com/jogo.html">
+          <div id="wrapper-game-buttons" style="margin-top:14px;">
+            <button id="btn-salvar-jogo" type="button" onclick="salvarJogo()">➕ Cadastrar Jogo</button>
+          </div>
+          <h2 style="font-size:1rem; color:#a8a8b3; margin-top:22px;">Jogos Cadastrados</h2>
+          <div class="manage-list" id="list-jogos"></div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -2452,6 +2689,7 @@ let bancoAlbuns = [], bancoDeCartas = [], bancoDeAlunos = [], bancoLoja = [];
 let historicoEnvios = [], bancoChamadaRegistros = [], figurinhasVistas = {};
 let presencaAlunosModoLocal = {}, bancoAulas = [], currentEditAulaId = "";
 let bancoAmizades = [], bancoOfertasTroca = [];
+let bancoJogos = [];
 let usuarioLogado = "", cargoLogado = "", usuarioLogadoId = "";
 let modoAdminVisualizacao = false, idAlbumAtivoAtualmente = "", paginaAtualLivro = 1;
 const FIGURINHAS_POR_PAGINA = 4;
@@ -2566,26 +2804,32 @@ function iniciarListeners(uid) {
     bancoOfertasTroca = list; renderizarOfertas(); atualizarBadgeOfertas();
   }, (err) => console.error("❌ Erro ofertas:", err));
 
+  // ═══ JOGOS ═══
+  onSnapshot(getPublicRef('jogos'), (snap) => {
+    let list = []; snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+    bancoJogos = list;
+    renderizarJogos();
+    renderizarListaJogosAdmin();
+  }, (err) => console.error("❌ Erro jogos:", err));
+
   if (intervaloPresenca) clearInterval(intervaloPresenca);
   intervaloPresenca = setInterval(atualizarPresencaUsuario, 30000);
   instalarCliquePorCoordenadas();
   instalarDelegacaoDelete();
+  setTimeout(injetarBotoesJogos, 50);
 }
 
-/* ★ Clique por coordenadas — só age dentro do .page-grid do álbum. */
 function instalarCliquePorCoordenadas() {
   if (window.__cliqueCoordenadasInstalado) return;
   window.__cliqueCoordenadasInstalado = true;
   let ultimoClique = 0;
 
   function encontrarCartaSob(x, y) {
-    // 1) Tenta pelo elemento real sob o ponto (mais confiável)
     const el = document.elementFromPoint(x, y);
     if (el) {
       const slot = el.closest('.slot-carta[data-carta-id]');
       if (slot) return slot.dataset.cartaId;
     }
-    // 2) Fallback: itera os slots e checa o retângulo
     const slots = document.querySelectorAll('.slot-carta[data-carta-id]');
     for (const slot of slots) {
       const r = slot.getBoundingClientRect();
@@ -2607,9 +2851,7 @@ function instalarCliquePorCoordenadas() {
     const alvo = ev.target;
     if (!alvo) return;
 
-    // ★ Só age dentro do page-grid do álbum
     if (!alvo.closest('.page-grid')) return;
-    // ★ Nunca interfere em botões/links/inputs
     if (alvo.closest('button, a, input, select, textarea, label')) return;
 
     const agora = Date.now();
@@ -2634,7 +2876,6 @@ function instalarCliquePorCoordenadas() {
   document.addEventListener('touchend', processarClique, { passive:false, capture:true });
 }
 
-/* ★ Delegação de eventos para botões de excluir/remover */
 function instalarDelegacaoDelete() {
   if (window.__delegacaoDeleteInstalada) return;
   window.__delegacaoDeleteInstalada = true;
@@ -2719,7 +2960,14 @@ async function popularSementesLoja() { for (const item of lojaIniciais) await se
 
 window.addEventListener('load', () => { inicializarAutenticacao(); });
 onAuthStateChanged(auth, (user) => { if (user && !listenersIniciados) iniciarListeners(user.uid); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { const m = document.getElementById('zoom-modal'); if (m && m.classList.contains('active')) fecharAmpliacaoObg(); } });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const m = document.getElementById('zoom-modal');
+    if (m && m.classList.contains('active')) { fecharAmpliacaoObg(); return; }
+    const gl = document.getElementById('game-launcher-overlay');
+    if (gl && gl.classList.contains('active')) fecharJogo();
+  }
+});
 window.addEventListener('beforeunload', async () => { if (usuarioLogadoId) { try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', usuarioLogadoId), { online: false, ultimaAtividade: Date.now() }); } catch (e) {} } });
 
 function salvarPresencaNoSessionStorage() { try { sessionStorage.setItem('presencaAlunosModoLocal', JSON.stringify(presencaAlunosModoLocal)); } catch (e) {} }
@@ -3486,6 +3734,7 @@ function mudarTela(idTela) {
     'screen-repetidas':  () => renderizarTelaRepetidas(),
     'screen-amigos':     () => renderizarListaAmigos(),
     'screen-troca':      () => { renderizarOfertas(); atualizarBadgeOfertas(); prepararNovaOferta(); },
+    'screen-jogos':      () => renderizarJogos(),
     'screen-aula':       () => {
       const select = document.getElementById('aula-serie-select');
       if (select && !select.value) select.value = "1º Ano";
@@ -3494,6 +3743,8 @@ function mudarTela(idTela) {
   };
   const init = initiators[idTela];
   if (init) { try { init(); } catch (err) { console.error(`Erro ao iniciar ${idTela}:`, err); } }
+
+  setTimeout(injetarBotoesJogos, 20);
 }
 function alternarAbaChamada(numAba) {
   document.getElementById('att-tab-content-1').style.display = numAba === 1 ? 'block' : 'none';
@@ -4381,11 +4632,9 @@ function renderizarLivroAberto() {
   document.getElementById('btn-book-prev').disabled = paginaAtualLivro === 1;
   document.getElementById('btn-book-next').disabled = (base + tpa) >= total;
 }
-/* ★ Slot de figurinha — clique direto em TODA a área do slot */
 function renderizarSlotFigurinha(carta, num, cont, env) {
   const w = document.createElement('div');
   w.className = 'slot-carta';
-  // ★ NÃO definir style inline — o CSS cuida do posicionamento absoluto para preencher a célula
   if (!carta) {
     w.innerHTML = `<div class="card-slot-empty"><span class="card-slot-number">${num}</span></div>`;
     cont.appendChild(w); return;
@@ -4398,7 +4647,6 @@ function renderizarSlotFigurinha(carta, num, cont, env) {
     const tagD = (qtd > 1 && !modoAdminVisualizacao) ? `<div class="badge-duplicada">×${qtd}</div>` : '';
     w.dataset.cartaId = carta.id;
     w.innerHTML = `<div class="card-click-wrapper">${tagN}${tagD}${gerarHTMLFaceCarta(carta)}</div>`;
-    // ★ Listener direto no slot — funciona em QUALQUER área da carta
     const abrirCarta = (ev) => {
       if (ev.target && ev.target.closest('button, a, input, select, textarea, label')) return;
       try { ev.preventDefault(); } catch(e){}
@@ -4422,7 +4670,6 @@ function renderizarSlotFigurinha(carta, num, cont, env) {
 }
 function ampliarCartaPorId(ev, id) {
   if (ev) { try { ev.preventDefault(); } catch(e) {} }
-  // Se o modal já estiver aberto, não re-abre
   const modalEl = document.getElementById('zoom-modal');
   if (modalEl && modalEl.classList.contains('active')) return;
   const carta = bancoDeCartas.find(c => c.id === id);
@@ -4621,6 +4868,190 @@ function imprimirRelatorio() {
   setTimeout(() => { window.print(); setTimeout(() => { document.body.classList.remove('printing-report'); const h = document.getElementById('print-header-institucional'); if (h) h.remove(); }, 100); }, 100);
 }
 
+/* ═══════════════ JOGOS / ARCADE ═══════════════ */
+
+function injetarBotoesJogos() {
+  document.querySelectorAll('.nav-buttons').forEach(nav => {
+    if (nav.querySelector('.nav-btn-jogos')) return;
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn nav-btn-jogos';
+    btn.type = 'button';
+    btn.onclick = () => mudarTela('screen-jogos');
+    btn.innerHTML = '<span class="nav-btn-icon">🎮</span><span class="nav-btn-label">Jogos</span>';
+    const sair = nav.querySelector('.nav-btn-sair');
+    if (sair) nav.insertBefore(btn, sair);
+    else nav.appendChild(btn);
+  });
+}
+
+async function salvarJogo() {
+  await executarComLoading('btn-salvar-jogo', async () => {
+    const idEdit = document.getElementById('game-edit-id').value;
+    const titulo = document.getElementById('game-titulo').value.trim();
+    const descricao = document.getElementById('game-descricao').value.trim();
+    const imagem = document.getElementById('game-imagem').value.trim();
+    const dificuldade = document.getElementById('game-dificuldade').value;
+    const xp = parseInt(document.getElementById('game-xp').value) || 0;
+    const htmlContent = document.getElementById('game-html-content').value;
+    const url = document.getElementById('game-url').value.trim();
+    if (!titulo) { alert('⚠️ Título obrigatório!'); return; }
+    if (!htmlContent && !url) { alert('⚠️ Cole o HTML ou informe uma URL do jogo!'); return; }
+    const dados = { titulo, descricao, imagem, dificuldade, xp, htmlContent, url };
+    try {
+      if (idEdit && idEdit.trim() !== '') {
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'jogos', idEdit), dados);
+        alert('✅ Jogo atualizado!');
+      } else {
+        const novoId = "game_" + Date.now();
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'jogos', novoId), { id: novoId, ...dados, criadoEm: Date.now() });
+        alert('✅ Jogo cadastrado! Já aparece na aba Arcade.');
+      }
+      limparFormularioJogo();
+    } catch (e) { console.error(e); alert('Erro ao salvar.'); }
+  });
+}
+
+function limparFormularioJogo() {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  set('game-edit-id', '');
+  set('game-titulo', '');
+  set('game-descricao', '');
+  set('game-imagem', '');
+  set('game-dificuldade', 'facil');
+  set('game-xp', '100');
+  set('game-html-content', '');
+  set('game-url', '');
+  const fi = document.getElementById('game-file-input'); if (fi) fi.value = '';
+  const t = document.getElementById('title-game-form'); if (t) t.textContent = '🎮 Novo Jogo';
+  const w = document.getElementById('wrapper-game-buttons');
+  if (w) w.innerHTML = `<button id="btn-salvar-jogo" type="button" onclick="salvarJogo()">➕ Cadastrar Jogo</button>`;
+}
+
+function editarJogo(id) {
+  const jogo = bancoJogos.find(j => j.id === id);
+  if (!jogo) return;
+  const set = (id2, v) => { const el = document.getElementById(id2); if (el) el.value = v; };
+  set('game-edit-id', jogo.id);
+  set('game-titulo', jogo.titulo || '');
+  set('game-descricao', jogo.descricao || '');
+  set('game-imagem', jogo.imagem || '');
+  set('game-dificuldade', jogo.dificuldade || 'facil');
+  set('game-xp', jogo.xp || 100);
+  set('game-html-content', jogo.htmlContent || '');
+  set('game-url', jogo.url || '');
+  const t = document.getElementById('title-game-form'); if (t) t.textContent = '✏️ Editar Jogo';
+  const w = document.getElementById('wrapper-game-buttons');
+  if (w) w.innerHTML = `
+    <button id="btn-salvar-jogo" type="button" onclick="salvarJogo()">Salvar Alterações</button>
+    <button class="btn-secondary" type="button" style="margin-top:6px;" onclick="limparFormularioJogo()">Cancelar</button>`;
+  const box = document.getElementById('box-gerenciar-jogos'); if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+async function deletarJogo(id) {
+  if (!confirm('Excluir este jogo?')) return;
+  try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'jogos', id)); }
+  catch (e) { alert('Erro ao excluir.'); }
+}
+
+function carregarArquivoJogoHTML(input) {
+  const file = input.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = (e) => {
+    const ta = document.getElementById('game-html-content');
+    if (ta) ta.value = e.target.result;
+    const t = document.getElementById('game-titulo');
+    if (t && !t.value.trim()) t.value = file.name.replace(/\.html?$/i, '');
+  };
+  r.readAsText(file);
+}
+
+function renderizarListaJogosAdmin() {
+  const list = document.getElementById('list-jogos');
+  if (!list) return;
+  if (bancoJogos.length === 0) {
+    list.innerHTML = '<div style="text-align:center; color:#7c7c8a; padding:20px;">Nenhum jogo cadastrado ainda.</div>';
+    return;
+  }
+  list.innerHTML = [...bancoJogos].sort((a, b) => (a.titulo || '').localeCompare(b.titulo || '')).map(j => {
+    const img = j.imagem || '🎮';
+    const isUrl = isImagemUrl(img);
+    const preview = isUrl
+      ? `<img src="${escapeHtml(img)}" style="width:36px; height:36px; border-radius:8px; object-fit:cover; margin-right:10px;" loading="lazy">`
+      : `<span style="font-size:1.5rem; margin-right:10px;">${escapeHtml(img)}</span>`;
+    return `<div class="list-item">
+      <div style="display:flex; align-items:center;">${preview}<div><b>${escapeHtml(j.titulo)}</b><br><small style="color:#a8a8b3;">${j.dificuldade} · ${j.xp} XP</small></div></div>
+      <div class="box-acoes-botoes">
+        <button class="btn-edit" type="button" onclick="editarJogo('${j.id}')">✏️</button>
+        <button class="btn-danger" type="button" onclick="deletarJogo('${j.id}')">X</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderizarJogos() {
+  const grid = document.getElementById('games-arcade-grid');
+  if (!grid) return;
+  if (bancoJogos.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:60px 20px; color:#7c7c8a;">
+      <div style="font-size:4rem; margin-bottom:20px;">🕹️</div>
+      <h2 style="font-family:var(--font-serif); color:var(--gold-light); margin-bottom:10px;">Nenhum jogo disponível</h2>
+      <p>O professor ainda não cadastrou jogos.</p>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = [...bancoJogos].sort((a, b) => (a.titulo || '').localeCompare(b.titulo || '')).map(j => {
+    const img = j.imagem || '🎮';
+    const isUrl = isImagemUrl(img);
+    const screen = isUrl
+      ? `<img class="game-screen-img" src="${escapeHtml(img)}" alt="" loading="lazy">`
+      : `<div class="game-screen-emoji">${escapeHtml(img)}</div>`;
+    return `<div class="game-cabinet tier-${j.dificuldade}" onclick="jogarJogo('${j.id}')">
+      <div class="game-cabinet-screen">${screen}</div>
+      <div class="game-cabinet-info">
+        <div class="game-cabinet-title">${escapeHtml(j.titulo)}</div>
+        <div class="game-cabinet-desc">${escapeHtml(j.descricao || 'Sem descrição')}</div>
+        <div class="game-cabinet-meta">
+          <span class="game-difficulty ${j.dificuldade}">${j.dificuldade}</span>
+          <span class="game-xp">${j.xp} XP</span>
+        </div>
+        <button class="game-play-btn" type="button" onclick="event.stopPropagation(); jogarJogo('${j.id}')">▶ JOGAR</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function jogarJogo(id) {
+  const jogo = bancoJogos.find(j => j.id === id);
+  if (!jogo) return;
+  const overlay = document.getElementById('game-launcher-overlay');
+  const title = document.getElementById('game-launcher-title');
+  const iframe = document.getElementById('game-launcher-iframe');
+  const loading = document.getElementById('game-launcher-loading');
+  if (!overlay || !iframe) return;
+  if (title) title.textContent = jogo.titulo;
+  if (loading) loading.style.display = 'flex';
+  iframe.removeAttribute('srcdoc');
+  iframe.removeAttribute('src');
+  iframe.onload = () => { if (loading) loading.style.display = 'none'; };
+  if (jogo.url) {
+    iframe.src = jogo.url;
+  } else if (jogo.htmlContent) {
+    iframe.srcdoc = jogo.htmlContent;
+  }
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => { if (loading) loading.style.display = 'none'; }, 3000);
+}
+
+function fecharJogo() {
+  const overlay = document.getElementById('game-launcher-overlay');
+  const iframe = document.getElementById('game-launcher-iframe');
+  if (overlay) overlay.classList.remove('active');
+  if (iframe) { iframe.removeAttribute('srcdoc'); iframe.removeAttribute('src'); }
+  document.body.style.overflow = '';
+}
+
+/* ═══════════════ Uploads de imagem ═══════════════ */
 document.getElementById('album-new-image-file')?.addEventListener('change', async function (e) {
   const file = e.target.files[0]; if (!file) return;
   try {
@@ -4649,6 +5080,7 @@ document.getElementById('card-img-file')?.addEventListener('change', async funct
   } catch (err) { alert('Erro: ' + err); this.value = ''; }
 });
 
+/* ═══════════════ Exports globais ═══════════════ */
 window.mudarTela = mudarTela;
 window.alternarAbaChamada = alternarAbaChamada;
 window.fazerLogin = fazerLogin;
@@ -4733,6 +5165,16 @@ window.limparFormularioCarta = limparFormularioCarta;
 window.renderizarSlidesChamada = renderizarSlidesChamada;
 window.carregarSlideChamada = carregarSlideChamada;
 window.irParaGerenciarSlides = irParaGerenciarSlides;
+/* Jogos */
+window.salvarJogo = salvarJogo;
+window.editarJogo = editarJogo;
+window.deletarJogo = deletarJogo;
+window.limparFormularioJogo = limparFormularioJogo;
+window.carregarArquivoJogoHTML = carregarArquivoJogoHTML;
+window.jogarJogo = jogarJogo;
+window.fecharJogo = fecharJogo;
+window.renderizarJogos = renderizarJogos;
+window.injetarBotoesJogos = injetarBotoesJogos;
 </script>
 </body>
 </html>
