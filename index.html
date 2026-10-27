@@ -36,8 +36,6 @@ img.card-img, img.book-cover-img, img.store-item-img, img.card-img-full {
   image-rendering:auto; image-rendering:smooth; image-rendering:high-quality;
   -webkit-user-drag:none; user-select:none;
 }
-
-/* ═══ HEADER ═══ */
 header {
   display:flex; justify-content:space-between; align-items:center;
   max-width:var(--container-max); margin:0 auto 28px;
@@ -70,7 +68,6 @@ header p { color:var(--text-muted); font-size:0.82rem; line-height:1.4;
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(0,0,0,0.4); }
 .coin-normal { background:linear-gradient(180deg,#ffd700,#d4af37); color:#121214; }
 .coin-exclusive { background:linear-gradient(180deg,#b5179e,#7209b7); color:#fff; }
-
 footer { position:fixed; bottom:0; left:0; width:100%; height:46px; padding:0 25px;
   display:flex; align-items:center; justify-content:center;
   background:linear-gradient(180deg, rgba(10,10,20,0.98), rgba(5,5,12,1));
@@ -79,11 +76,9 @@ footer { position:fixed; bottom:0; left:0; width:100%; height:46px; padding:0 25
   text-transform:uppercase; box-shadow:0 -4px 12px rgba(0,0,0,0.5); }
 footer span::before { content:'✦ '; color:var(--gold); }
 footer span::after { content:' ✦'; color:var(--gold); }
-
 .screen { display:none; position:relative; z-index:10; }
 .screen.active { display:block; animation:screen-fade 0.3s ease-out; padding-top:4px; }
 @keyframes screen-fade { 0%{opacity:0; transform:translateY(6px);} 100%{opacity:1; transform:translateY(0);} }
-
 input, select, textarea {
   width:100%; padding:11px 14px; margin-bottom:12px;
   border:1px solid var(--border-color); background:var(--bg-input); color:#fff;
@@ -109,7 +104,6 @@ select option { background:var(--bg-surface); color:#fff; }
 label { display:block; text-align:left; margin-bottom:6px; font-size:0.72rem;
   color:var(--gold); font-weight:700; text-transform:uppercase; letter-spacing:1.2px; }
 label::before { content:'◆ '; opacity:0.7; font-size:0.6rem; color:var(--neon-cyan); }
-
 button {
   width:100%; padding:13px 18px;
   background:linear-gradient(135deg, #0077b6 0%, #0096c7 45%, #00e0ff 100%);
@@ -153,7 +147,6 @@ button:disabled::before, button:disabled::after { display:none; }
   transform:scale(0); animation:btn-ripple-anim .55s ease-out forwards; z-index:3;
 }
 @keyframes btn-ripple-anim { to { transform:scale(4); opacity:0; } }
-
 .btn-success { background:linear-gradient(135deg, #1e7169 0%, #2a9d8f 50%, #4cc9b8 100%) !important; }
 .btn-store { background:linear-gradient(135deg, #b5179e 0%, #f72585 50%, #ff5fa8 100%) !important; }
 .btn-coin { background:linear-gradient(135deg, #e08e0b 0%, #ffb703 50%, #ffd60a 100%) !important;
@@ -163,7 +156,6 @@ button:disabled::before, button:disabled::after { display:none; }
 .btn-secondary { background:linear-gradient(135deg, #1c1c28 0%, #24243a 50%, #2e2e3a 100%) !important;
   border:1px solid rgba(0,224,255,0.3) !important; color:var(--text-color) !important; }
 .btn-edit { background:linear-gradient(135deg, #e76f51 0%, #f4a261 50%, #ffb27a 100%) !important; }
-
 .nav-buttons {
   display:flex; gap:8px; flex-wrap:nowrap; align-items:center;
   flex-shrink:0; overflow-x:auto; overflow-y:visible;
@@ -246,7 +238,6 @@ button:disabled::before, button:disabled::after { display:none; }
   box-shadow:0 2px 6px rgba(255,56,96,.8);
   animation:badge-pulse 2s ease-in-out infinite; z-index:10; pointer-events:none; }
 @keyframes badge-pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.12);} }
-
 @media (max-width:900px) {
   header { padding:14px 18px; gap:12px; }
   header h1 { font-size:1.1rem; letter-spacing:1.2px; }
@@ -261,8 +252,6 @@ button:disabled::before, button:disabled::after { display:none; }
   header p { flex-wrap:wrap; white-space:normal; }
   .nav-buttons { width:100%; }
 }
-
-/* ═══ LOGIN ═══ */
 .login-container, .change-password-container {
   max-width:440px; margin:60px auto;
   padding:56px 42px 42px;
@@ -293,7 +282,6 @@ button:disabled::before, button:disabled::after { display:none; }
 }
 .login-container label, .change-password-container label { margin-top:4px; }
 .login-container button + button, .change-password-container button + button { margin-top:10px; }
-
 .bookcase-container, .store-container, .repetidas-container,
 .amigos-container, .troca-container, .attendance-container,
 .aula-container, .admin-layout-container {
@@ -302,7 +290,6 @@ button:disabled::before, button:disabled::after { display:none; }
 .bookcase-container > * + *, .store-container > * + *,
 .repetidas-container > * + *, .troca-container > * + *,
 .attendance-container > * + *, .admin-layout-container > * + * { margin-top:var(--section-gap); }
-
 .bookcase-container > h2, .store-section > h2, .troca-section > h2, .admin-box > h2 {
   text-align:center; font-family:var(--font-serif);
   letter-spacing:3px; text-transform:uppercase;
@@ -315,8 +302,6 @@ button:disabled::before, button:disabled::after { display:none; }
   background:var(--bg-body); padding:0 14px;
   color:var(--gold); font-size:0.85rem; line-height:1;
 }
-
-/* ═══ ADMIN — SEÇÕES ORGANIZADAS ═══ */
 .admin-section {
   background:linear-gradient(180deg, rgba(212,175,55,0.03) 0%, transparent 60%);
   border:1px solid var(--border-color);
@@ -434,15 +419,12 @@ tr:hover td { background:rgba(0,224,255,.04); }
   border:2px solid rgba(255,255,255,.3); border-top:2px solid #fff;
   border-radius:50%; animation:spin .6s linear infinite; margin-right:6px; vertical-align:middle; }
 @keyframes spin { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
-
 .filter-group-inline { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap;
   background:var(--bg-input); padding:12px; border-radius:var(--radius-md);
   border:1px solid var(--border-color); align-items:center;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.04); justify-content:center; }
 .filter-field { flex:1; min-width:120px; }
 .filter-field input, .filter-field select { margin-bottom:0; padding:8px 12px; font-size:.85rem; height:36px; }
-
-/* ═══ ADMIN QUICK-NAV ═══ */
 .admin-quicknav {
   display:flex; gap:8px; flex-wrap:wrap;
   padding:10px 12px;
@@ -474,8 +456,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   .admin-quicknav { position:static; }
   .admin-quicknav a { padding:6px 10px; font-size:0.65rem; }
 }
-
-/* ═══ BOOKCASE / SHELF ═══ */
 .bookcase-container h2 {
   font-family:var(--font-serif) !important; text-align:center;
   letter-spacing:4px !important; padding-bottom:14px;
@@ -557,8 +537,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
     rgba(255,255,255,.45) 50%, rgba(255,255,255,.2) 55%, transparent 65%);
   transform:translateX(-120%); transition:transform .8s; pointer-events:none; z-index:6; }
 .book-cover-item:hover .book-shine { transform:translateX(120%); }
-
-/* ═══ CARD ═══ */
 .card { position:relative; display:flex; flex-direction:column;
   background:linear-gradient(180deg, #2a2a32 0%, #15151a 100%);
   border-radius:10px; padding:5px; gap:3px; cursor:pointer; overflow:hidden;
@@ -647,8 +625,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .card-img { width:100%; height:100%; object-fit:cover; object-position:center; display:block;
   image-rendering:auto; pointer-events:none; }
 .card-img-fallback { font-size:2.5rem; line-height:1; pointer-events:none; }
-
-/* ═══ LEGACY ═══ */
 .card.legacy { padding:0; overflow:hidden; position:relative; background:#0a0a12; }
 .card.legacy .card-img-full {
   position:absolute; inset:0; width:100%; height:100%;
@@ -726,8 +702,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .card.legacy.epica .legacy-rarity { color:#d4a5ff; }
 .card.legacy.lendaria .legacy-rarity { color:#ffd60a; }
 .card.legacy.exclusiva .legacy-rarity { color:#ff5fa8; }
-
-/* ═══ ALBUM / BOOK ═══ */
 .album-stats { background:linear-gradient(180deg, #14141f 0%, #0a0a14 100%);
   padding:20px 32px; border-radius:var(--radius-lg);
   border:1px solid var(--border-gold); display:flex; flex-direction:column; gap:12px;
@@ -763,7 +737,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   color:var(--gold); font-weight:bold; letter-spacing:2px; opacity:.7; }
 .left-page .page-num { left:20px; }
 .right-page .page-num { right:20px; }
-
 .page-grid {
   display:grid;
   grid-template-columns:repeat(2, minmax(0, 1fr));
@@ -815,8 +788,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .cosmos-ornament.mr { top:50%; right:10px; color:#06b6d4; animation-delay:3.5s; transform:translateY(-50%); }
 @keyframes cosmos-float { 0%,100%{transform:translateY(0) rotate(0deg); opacity:.7;}
   50%{transform:translateY(-10px) rotate(15deg); opacity:1;} }
-
-/* ═══ STORE ═══ */
 .store-section {
   background:linear-gradient(180deg, #14141f 0%, #0a0a14 100%);
   border:1px solid var(--border-color); border-radius:var(--radius-lg);
@@ -902,8 +873,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .sticker-pack.pack-padrao .sticker-pack-buy { background:linear-gradient(135deg, #ffd60a, #fb8500); color:#121214; }
 .sticker-pack.pack-premium .sticker-pack-tier { color:#b5179e; }
 .sticker-pack.pack-premium .sticker-pack-buy { background:linear-gradient(135deg, #b5179e, #7209b7); color:#fff; }
-
-/* ═══ REPETIDAS ═══ */
 .repetidas-categoria {
   background:linear-gradient(180deg, #14141f 0%, #0a0a14 100%);
   border-radius:var(--radius-lg); padding:26px 28px;
@@ -936,8 +905,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .repetida-item .btn-desmontar { font-size:.78rem; padding:8px 12px; border-radius:6px;
   background:linear-gradient(135deg, #b5179e, #7209b7); color:#fff; border:none;
   cursor:pointer; font-weight:700; }
-
-/* ═══ AMIGOS / TROCA ═══ */
 .amigo-item { background:linear-gradient(180deg, #1a1a24, #12121a);
   border-radius:var(--radius-md); padding:14px 16px; border:1px solid var(--border-color);
   display:flex; align-items:center; gap:14px; margin-bottom:10px; transition:border-color .3s;
@@ -1008,8 +975,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .oferta-acoes { display:flex; flex-direction:column; gap:8px; }
 .oferta-acoes button { width:auto; padding:8px 16px; font-size:.8rem; border-radius:6px; }
 .vazio-troca { text-align:center; padding:44px 20px; color:var(--text-dim); font-size:.95rem; font-style:italic; }
-
-/* ═══ CHAMADA ═══ */
 .attendance-grid {
   display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
   gap:18px; margin-top:20px; justify-content:center;
@@ -1041,8 +1006,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   color:#121214; border-color:transparent;
   box-shadow:0 4px 16px rgba(212,175,55,.5);
 }
-
-/* ═══ AULA ═══ */
 .aula-container {
   display:grid; grid-template-columns:minmax(300px, 380px) minmax(0, 1fr);
   gap:24px; align-items:start;
@@ -1059,8 +1022,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .aula-preview iframe { flex:1; width:100%; border:none; background:white; border-radius:var(--radius-sm); }
 .btn-fullscreen { background:linear-gradient(135deg, #2a9d8f, #1e7169); color:white;
   border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:.75rem; width:auto; }
-
-/* ═══ JOGOS — ARCADE GAMIFICADO ═══ */
 .games-container { width:100%; max-width:var(--container-max); margin:0 auto; padding:0 var(--container-pad); }
 .games-hero {
   text-align:center; padding:34px 20px 24px; margin-bottom:22px; position:relative; overflow:hidden;
@@ -1163,8 +1124,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   box-shadow:0 4px 12px rgba(0,180,216,0.5); transition:all .2s;
 }
 .game-play-btn:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(0,224,255,0.7); }
-
-/* ═══ GAME LAUNCHER — TELA CHEIA REAL ═══ */
 .game-launcher-overlay {
   position:fixed; top:0; left:0; right:0; bottom:0;
   width:100vw; height:100vh;
@@ -1232,8 +1191,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   margin-right:18px;
   box-shadow:0 0 20px rgba(0,224,255,0.5);
 }
-
-/* ═══ ZOOM ═══ */
 .zoom-overlay { position:fixed; top:0; left:0; width:100%; height:100%;
   background:rgba(0,0,0,.94); display:flex; align-items:center; justify-content:center;
   z-index:1000; opacity:0; visibility:hidden; pointer-events:none;
@@ -1309,7 +1266,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
 .zoom-card-face .card.legacy .legacy-ability-text { font-size:0.92rem; line-height:1.4; }
 .zoom-card-face .card.legacy .legacy-points { font-size:0.9rem; }
 .zoom-card-face .card.legacy .legacy-rarity { font-size:0.72rem; padding:5px 14px; }
-
 .img-hint { display:block; font-size:.68rem; color:var(--text-dim); line-height:1.5;
   margin:-6px 0 12px; padding:6px 10px; background:rgba(0,224,255,.06);
   border-left:3px solid var(--neon-cyan); border-radius:4px; }
@@ -1320,8 +1276,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   border:2px solid var(--border-gold); display:block; margin:0 auto; }
 .img-preview-box .preview-label { font-size:.65rem; color:var(--gold-light); margin-top:6px;
   text-transform:uppercase; letter-spacing:1.2px; font-weight:bold; }
-
-/* ═══ PACK OPENING ═══ */
 .pack-opening-overlay { position:fixed; inset:0;
   background:radial-gradient(circle at center, #1a1a2e 0%, #050508 100%);
   display:flex; align-items:center; justify-content:center; z-index:3000;
@@ -1517,7 +1471,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   20%{opacity:1; transform:translate(-50%,-50%) rotate(-15deg) scale(1.3);}
   80%{opacity:1;}
   100%{opacity:0; transform:translate(-50%,-50%) rotate(-15deg) scale(1.4);} }
-
 .card-click-wrapper {
   position:absolute;
   top:0; left:0; right:0; bottom:0;
@@ -1543,7 +1496,6 @@ tr:hover td { background:rgba(0,224,255,.04); }
   </div>
 </div>
 
-<!-- GAME LAUNCHER — TELA CHEIA REAL -->
 <div id="game-launcher-overlay" class="game-launcher-overlay">
   <button class="game-launcher-close" type="button" onclick="fecharJogo()">✖ Sair do Jogo</button>
   <div class="game-launcher-loading" id="game-launcher-loading">
@@ -2505,6 +2457,7 @@ tr:hover td { background:rgba(0,224,255,.04); }
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDocs, collection, onSnapshot, addDoc, updateDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
 const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
   apiKey: "AIzaSyBzlVayf42IU6IExTLiZosRB0O1OHQ4wik",
@@ -2517,6 +2470,7 @@ const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__f
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'album-27bb2';
 
 const iconeMoeda = `<svg width="16" height="16" viewBox="0 0 24 24" style="vertical-align:text-bottom; margin-right:2px;"><circle cx="12" cy="12" r="10" fill="#FFD700" stroke="#DAA520" stroke-width="2"/><circle cx="12" cy="12" r="7" fill="#FFC000" stroke="#B8860B" stroke-width="1"/><text x="12" y="16" font-size="11" font-family="Arial" font-weight="bold" fill="#B8860B" text-anchor="middle">$</text></svg>`;
@@ -2524,7 +2478,7 @@ function getPublicRef(colName) { return collection(db, 'artifacts', appId, 'publ
 const TIPO_ICONS = { raio:'⚡', agua:'💧', fogo:'🔥', grama:'🌿' };
 
 function isImagemUrl(str) {
-  if (!str) return false;
+  if (!str || typeof str !== 'string') return false;
   const s = str.trim();
   return s.startsWith('http://') || s.startsWith('https://') || s.startsWith('data:') || s.startsWith('blob:') || s.startsWith('./') || s.startsWith('/');
 }
@@ -2580,8 +2534,8 @@ function gerarHTMLFaceCarta(carta) {
   </div>`;
 }
 
-async function comprimirImagem(file, maxW, maxH, quality = 0.95) {
-  return new Promise((resolve, reject) => {
+async function comprimirEEnviarImagem(file, maxW, maxH, quality = 0.85, pasta = 'imagens') {
+  const blob = await new Promise((resolve, reject) => {
     if (!file.type.startsWith('image/')) { reject('O arquivo precisa ser uma imagem.'); return; }
     const reader = new FileReader();
     reader.onload = (ev) => {
@@ -2597,11 +2551,11 @@ async function comprimirImagem(file, maxW, maxH, quality = 0.95) {
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
         ctx.drawImage(img, 0, 0, width, height);
-        const isPequena = width * height <= 640000;
-        const dataUrl = isPequena
-          ? canvas.toDataURL('image/png')
-          : canvas.toDataURL('image/jpeg', quality);
-        resolve(dataUrl);
+        canvas.toBlob(
+          (b) => { if (b) resolve(b); else reject('Falha ao gerar imagem.'); },
+          'image/jpeg',
+          quality
+        );
       };
       img.onerror = () => reject('Erro ao carregar a imagem.');
       img.src = ev.target.result;
@@ -2609,6 +2563,14 @@ async function comprimirImagem(file, maxW, maxH, quality = 0.95) {
     reader.onerror = () => reject('Erro ao ler o arquivo.');
     reader.readAsDataURL(file);
   });
+
+  const nomeUnico = `${Date.now()}_${Math.random().toString(36).slice(2,8)}_${(file.name || 'imagem').replace(/[^a-zA-Z0-9.]/g, '_')}`;
+  const caminho = `${pasta}/${nomeUnico}`;
+  const referencia = storageRef(storage, caminho);
+  await uploadBytes(referencia, blob, { contentType: 'image/jpeg' });
+
+  const url = await getDownloadURL(referencia);
+  return url;
 }
 
 function isAlbumCosmico(album) {
@@ -2674,6 +2636,19 @@ let packAtual = null, cartasAtuais = [], animacaoCancelada = false;
 let packOpeningActive = false;
 let cliqueBloqueadoAte = 0;
 
+/* ═══════════════════════════════════════════════════════════════════
+   HELPERS DEFENSIVOS — evitam o erro
+   "Cannot read properties of undefined (reading 'toLowerCase')"
+   quando algum documento no Firestore não tem o campo "nome".
+   ═══════════════════════════════════════════════════════════════════ */
+function safeLower(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).toLowerCase();
+}
+function mesmoNome(a, b) {
+  return safeLower(a) === safeLower(b);
+}
+
 function executarComLoading(botaoId, fn) {
   const btn = document.getElementById(botaoId);
   if (!btn) return fn();
@@ -2708,12 +2683,27 @@ function iniciarListeners(uid) {
   carregarPresencaDoSessionStorage();
 
   onSnapshot(getPublicRef('alunos'), (snap) => {
-    let list = []; snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+    let list = [];
+    let invalidos = 0;
+    snap.forEach(d => {
+      const data = d.data() || {};
+      // Sanitização: ignora documentos sem "nome" string válido.
+      if (typeof data.nome !== 'string' || !data.nome.trim()) {
+        invalidos++;
+        console.warn('[Maker Labs] Documento de aluno inválido ignorado (id:', d.id, ') → corrija/remova no Firebase Console.');
+        return;
+      }
+      list.push({ id: d.id, ...data });
+    });
+    if (invalidos > 0) {
+      console.warn(`[Maker Labs] ${invalidos} documento(s) inválido(s) ignorado(s) na coleção "alunos".`);
+    }
     if (list.length === 0) popularSementesAlunos();
     else {
       bancoDeAlunos = list;
-      if (usuarioLogado) {
-        const meu = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase());
+      const uLogLower = safeLower(usuarioLogado);
+      if (uLogLower) {
+        const meu = bancoDeAlunos.find(a => safeLower(a.nome) === uLogLower);
         if (meu) usuarioLogadoId = meu.id;
       }
       atualizarIndicadoresMoeda(); atualizarListasAdmin(); renderizarGridChamada();
@@ -2935,7 +2925,6 @@ async function popularSementesLoja() { for (const item of lojaIniciais) await se
 window.addEventListener('load', () => { inicializarAutenticacao(); });
 onAuthStateChanged(auth, (user) => { if (user && !listenersIniciados) iniciarListeners(user.uid); });
 
-/* ESC fecha: modal de carta, game, e sai do fullscreen */
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     const m = document.getElementById('zoom-modal');
@@ -2945,13 +2934,11 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-/* Sincroniza o estado do overlay quando sai do fullscreen pela barra do navegador */
 document.addEventListener('fullscreenchange', () => {
   if (!document.fullscreenElement) {
     const gl = document.getElementById('game-launcher-overlay');
     if (gl && gl.classList.contains('active')) {
-      /* Permanece aberto em tela cheia "virtual" (overlay cobre a tela toda).
-         O usuário pode fechar pelo botão ou pressionar ESC novamente. */
+      /* Permanece aberto em tela cheia "virtual". */
     }
   }
 });
@@ -2961,13 +2948,15 @@ window.addEventListener('beforeunload', async () => { if (usuarioLogadoId) { try
 function salvarPresencaNoSessionStorage() { try { sessionStorage.setItem('presencaAlunosModoLocal', JSON.stringify(presencaAlunosModoLocal)); } catch (e) {} }
 function carregarPresencaDoSessionStorage() { try { const s = sessionStorage.getItem('presencaAlunosModoLocal'); if (s) presencaAlunosModoLocal = JSON.parse(s); } catch (e) { presencaAlunosModoLocal = {}; } }
 function getTipoUsuarioLogado() {
-  const usuario = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase());
+  const usuario = bancoDeAlunos.find(a => safeLower(a.nome) === safeLower(usuarioLogado));
   if (!usuario) return 'MAKER';
   return usuario.grade === 'WIT' ? 'WIT' : 'MAKER';
 }
 function calcularInventario() {
   inventarioAluno = {};
-  const enviosDoAluno = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase());
+  const uLogLower = safeLower(usuarioLogado);
+  if (!uLogLower) return;
+  const enviosDoAluno = historicoEnvios.filter(h => safeLower(h.alunoNome) === uLogLower);
   for (const envio of enviosDoAluno) {
     if (!envio.cartaId) continue;
     inventarioAluno[envio.cartaId] = (inventarioAluno[envio.cartaId] || 0) + 1;
@@ -2998,7 +2987,7 @@ function sortearCartaAleatoria(raridadeAlvo, idsEvitando = [], cartasQueJaTem = 
 async function abrirPack(packId) {
   const pack = getTodosOsPacks().find(p => p.id === packId);
   if (!pack) return;
-  const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno");
+  const alunoObj = bancoDeAlunos.find(a => safeLower(a.nome) === safeLower(usuarioLogado) && a.role === "aluno");
   if (!alunoObj) { alert("Erro: aluno não encontrado."); return; }
   const saldo = alunoObj.moedas || 0;
   if (saldo < pack.preco) { alert(`Moedas insuficientes! Você tem ${saldo}, precisa de ${pack.preco}.`); return; }
@@ -3342,10 +3331,10 @@ async function desmontarCarta(cartaId) {
   if (podeDesmontar === 0) { alert(`Precisa de ${regra.necessarias} cópias repetidas. Tem ${qtd}.`); return; }
   const diamantes = (podeDesmontar / regra.necessarias) * regra.diamantes;
   if (!confirm(`Desmontar ${podeDesmontar} cópias de "${carta.nome}" por ${diamantes} 💎?`)) return;
-  const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno");
+  const alunoObj = bancoDeAlunos.find(a => safeLower(a.nome) === safeLower(usuarioLogado) && a.role === "aluno");
   if (!alunoObj) return;
   try {
-    const envios = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase() && h.cartaId === cartaId);
+    const envios = historicoEnvios.filter(h => safeLower(h.alunoNome) === safeLower(usuarioLogado) && h.cartaId === cartaId);
     envios.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
     const paraRemover = envios.slice(1, 1 + podeDesmontar);
     for (const envio of paraRemover) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'historico', envio.id));
@@ -3410,7 +3399,9 @@ function formatarUltimaVez(aluno) {
   return `Há ${Math.floor(min/1440)} dia(s)`;
 }
 function getIdMeuAluno() {
-  const me = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase());
+  const uLogLower = safeLower(usuarioLogado);
+  if (!uLogLower) return null;
+  const me = bancoDeAlunos.find(a => safeLower(a.nome) === uLogLower);
   return me ? me.id : null;
 }
 function obterMeusAmigos() {
@@ -3481,7 +3472,7 @@ async function buscarEAdicionarAmigo() {
   if (!termo) { alert("Digite o apelido!"); return; }
   const meuId = getIdMeuAluno();
   if (!meuId) return;
-  const alvo = bancoDeAlunos.find(a => (a.apelido && a.apelido.toLowerCase() === termo.toLowerCase()) || (a.nome && a.nome.toLowerCase() === termo.toLowerCase()));
+  const alvo = bancoDeAlunos.find(a => (a.apelido && safeLower(a.apelido) === safeLower(termo)) || (a.nome && safeLower(a.nome) === safeLower(termo)));
   if (!alvo) { alert("Nenhum aluno encontrado."); return; }
   if (alvo.id === meuId) { alert("Você não pode adicionar a si mesmo!"); return; }
   const jaExiste = bancoAmizades.find(a => ((a.userA === meuId && a.userB === alvo.id) || (a.userA === alvo.id && a.userB === meuId)) && a.status !== 'recusada');
@@ -3752,7 +3743,7 @@ function renderizarSlidesChamada() {
   const iframe = document.getElementById('att-slides-iframe');
   if (!serieEl || !sel || !iframe) return;
   const serie = serieEl.value;
-  const aulas = bancoAulas.filter(a => a.serie === serie).sort((a, b) => a.titulo.localeCompare(b.titulo));
+  const aulas = bancoAulas.filter(a => a.serie === serie).sort((a, b) => (a.titulo || '').localeCompare(b.titulo || ''));
   sel.innerHTML = '';
   if (aulas.length === 0) {
     sel.innerHTML = '<option value="">(Nenhuma aula cadastrada)</option>';
@@ -3781,7 +3772,7 @@ function irParaGerenciarSlides() {
   }, 100);
 }
 function atualizarIndicadoresMoeda() {
-  const alunoObj = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno");
+  const alunoObj = bancoDeAlunos.find(a => safeLower(a.nome) === safeLower(usuarioLogado) && a.role === "aluno");
   const saldoN = alunoObj ? (alunoObj.moedas || 0) : 0;
   const saldoE = alunoObj ? (alunoObj.moedasExclusivas || 0) : 0;
   const tags = modoAdminVisualizacao ? '' : `<span class="coin-display coin-normal">${iconeMoeda} ${saldoN}</span><span class="coin-display coin-exclusive">💎 ${saldoE}</span>`;
@@ -3802,8 +3793,8 @@ function iniciarTrocaSenha(alunoObj) {
   mudarTela('screen-change-password');
 }
 function validarApelidoUnico(apelido, idIgnorar) {
-  const alvo = apelido.toLowerCase();
-  return !bancoDeAlunos.some(a => a.id !== idIgnorar && a.apelido && a.apelido.toLowerCase() === alvo);
+  const alvo = safeLower(apelido);
+  return !bancoDeAlunos.some(a => a.id !== idIgnorar && a.apelido && safeLower(a.apelido) === alvo);
 }
 async function confirmarTrocaSenha() {
   if (!alunoForcadoTrocarSenha) { alert("Erro."); mudarTela('screen-login'); return; }
@@ -3830,6 +3821,11 @@ async function confirmarTrocaSenha() {
 }
 function cancelarTrocaSenha() { alunoForcadoTrocarSenha = null; mudarTela('screen-login'); }
 function finalizarLoginAluno(contaValida) {
+  if (!contaValida || !contaValida.nome || typeof contaValida.nome !== 'string') {
+    alert("Conta com dados inválidos. Contate o administrador.");
+    mudarTela('screen-login');
+    return;
+  }
   usuarioLogado = contaValida.nome; usuarioLogadoId = contaValida.id; cargoLogado = contaValida.role;
   modoAdminVisualizacao = false;
   const btnBack = document.getElementById('btn-shelf-back-admin'); if (btnBack) btnBack.style.display = "none";
@@ -3844,12 +3840,13 @@ function fazerLogin() {
   const role = document.getElementById('login-role').value;
   if (!userRaw || !pass) { alert("Preencha tudo!"); return; }
   if (bancoDeAlunos.length === 0) { alert("Sistema carregando... aguarde 3 segundos."); return; }
-  const u = userRaw.toLowerCase();
+  const u = safeLower(userRaw);
   const conta = bancoDeAlunos.find(a => {
+    if (!a || !a.nome) return false;
     const ap = (a.apelido || '').trim();
     if (String(a.pin) !== String(pass) || a.role !== role) return false;
-    if (ap) return ap.toLowerCase() === u;
-    return (a.nome || '').trim().toLowerCase().replace(/\s+/g, ' ') === u;
+    if (ap) return safeLower(ap) === u;
+    return safeLower((a.nome || '').trim().replace(/\s+/g, ' ')) === u;
   });
   if (!conta) { alert("Dados incorretos!"); return; }
   if (conta.role === "aluno" && !conta.apelido) { iniciarTrocaSenha(conta); return; }
@@ -3887,13 +3884,13 @@ async function fazerLogout() {
 }
 function filtrarListaAlunos() {
   const listAlunos = document.getElementById('list-alunos'); if (!listAlunos) return;
-  const fNome = (document.getElementById('filter-alunos-nome')?.value || '').toLowerCase().trim();
+  const fNome = safeLower((document.getElementById('filter-alunos-nome')?.value || '').trim());
   const fSerie = document.getElementById('filter-alunos-serie')?.value || '';
   const alunos = bancoDeAlunos.filter(u => u.role === 'aluno').filter(u => {
-    const matchNome = u.nome.toLowerCase().includes(fNome) || (u.apelido && u.apelido.toLowerCase().includes(fNome));
+    const matchNome = safeLower(u.nome).includes(fNome) || (u.apelido && safeLower(u.apelido).includes(fNome));
     const matchSerie = !fSerie || u.grade === fSerie;
     return matchNome && matchSerie;
-  }).sort((a, b) => a.nome.localeCompare(b.nome));
+  }).sort((a, b) => safeLower(a.nome).localeCompare(safeLower(b.nome)));
   if (alunos.length === 0) { listAlunos.innerHTML = '<div style="text-align:center; color:#7c7c8a; padding:20px;">Nenhum aluno.</div>'; return; }
   listAlunos.innerHTML = alunos.map(u => {
     const serie = (u.grade === 'MAKER' || u.grade === 'WIT') ? u.grade : `${u.grade} ${u.letter}`;
@@ -3915,13 +3912,13 @@ function atualizarListasAdmin() {
     if (el) {
       const bkp = el.value;
       el.innerHTML = '<option value="">-- Selecione --</option>';
-      [...bancoAlbuns].sort((a, b) => a.titulo.localeCompare(b.titulo)).forEach(a => el.add(new Option(a.titulo, a.id)));
+      [...bancoAlbuns].sort((a, b) => safeLower(a.titulo).localeCompare(safeLower(b.titulo))).forEach(a => el.add(new Option(a.titulo, a.id)));
       if (bkp && Array.from(el.options).some(o => o.value === bkp)) el.value = bkp;
     }
   });
   const listAlbuns = document.getElementById('list-albuns-ativos');
   if (listAlbuns) {
-    listAlbuns.innerHTML = [...bancoAlbuns].sort((a, b) => a.titulo.localeCompare(b.titulo)).map(a => {
+    listAlbuns.innerHTML = [...bancoAlbuns].sort((a, b) => safeLower(a.titulo).localeCompare(safeLower(b.titulo))).map(a => {
       const capaPreview = (a.imagem && isImagemUrl(a.imagem))
         ? `<img src="${escapeHtml(a.imagem)}" style="width:36px; height:36px; object-fit:cover; border-radius:6px; margin-right:8px; vertical-align:middle;" loading="lazy">`
         : (a.imagem ? `<span style="font-size:1.4rem; margin-right:8px;">${escapeHtml(a.imagem)}</span>` : '');
@@ -3938,7 +3935,7 @@ function atualizarListasAdmin() {
   filtrarListaAlunos();
   const listStaff = document.getElementById('list-staff');
   if (listStaff) {
-    const staffs = bancoDeAlunos.filter(u => u.role !== 'aluno').sort((a, b) => a.nome.localeCompare(b.nome));
+    const staffs = bancoDeAlunos.filter(u => u.role !== 'aluno').sort((a, b) => safeLower(a.nome).localeCompare(safeLower(b.nome)));
     listStaff.innerHTML = staffs.map(u => {
       const serie = (u.grade === 'MAKER' || u.grade === 'WIT') ? u.grade : `${u.grade} ${u.letter}`;
       const ap = u.apelido ? ` • <span style="color:#00e0ff;">@${escapeHtml(u.apelido)}</span>` : '';
@@ -3947,13 +3944,13 @@ function atualizarListasAdmin() {
   }
   const listWallets = document.getElementById('list-only-students-wallets');
   if (listWallets) {
-    const fName = (document.getElementById('filter-user-name')?.value || '').toLowerCase();
+    const fName = safeLower(document.getElementById('filter-user-name')?.value || '');
     const fGrade = document.getElementById('filter-user-grade')?.value || 'todos';
     const fLetter = document.getElementById('filter-user-letter')?.value || 'todos';
     const filtered = bancoDeAlunos.filter(u => u.role === 'aluno').filter(u => {
-      const mN = u.nome.toLowerCase().includes(fName) || (u.apelido && u.apelido.toLowerCase().includes(fName));
+      const mN = safeLower(u.nome).includes(fName) || (u.apelido && safeLower(u.apelido).includes(fName));
       return mN && (fGrade === 'todos' || u.grade === fGrade) && (fLetter === 'todos' || u.letter === fLetter);
-    }).sort((a, b) => a.nome.localeCompare(b.nome));
+    }).sort((a, b) => safeLower(a.nome).localeCompare(safeLower(b.nome)));
     listWallets.innerHTML = filtered.map(u => {
       const ap = u.apelido ? ` • <span style="color:#00e0ff;">@${escapeHtml(u.apelido)}</span>` : '';
       return `<div class="list-item">
@@ -3969,7 +3966,7 @@ function atualizarListasAdmin() {
   }
   const listStore = document.getElementById('list-store-items');
   if (listStore) {
-    listStore.innerHTML = [...bancoLoja].sort((a, b) => a.nome.localeCompare(b.nome)).map(i => `<div class="list-item"><div><b>${escapeHtml(i.nome)}</b> (${i.preco} moedas)</div><div class="box-acoes-botoes"><button class="btn-danger" type="button" data-action="delete-store-item" data-id="${i.id}">Remover</button></div></div>`).join('');
+    listStore.innerHTML = [...bancoLoja].sort((a, b) => safeLower(a.nome).localeCompare(safeLower(b.nome))).map(i => `<div class="list-item"><div><b>${escapeHtml(i.nome)}</b> (${i.preco} moedas)</div><div class="box-acoes-botoes"><button class="btn-danger" type="button" data-action="delete-store-item" data-id="${i.id}">Remover</button></div></div>`).join('');
   }
 }
 async function modificarMoedasAluno(alunoId, operacao, tipoMoeda = 'normal') {
@@ -3997,7 +3994,7 @@ function listarCartasCadastradasAdmin() {
   let filtered = bancoDeCartas;
   if (filterId) filtered = filtered.filter(c => c.albumId === filterId);
   if (filterRarity) filtered = filtered.filter(c => c.raridade === filterRarity);
-  filtered.sort((a, b) => a.nome.localeCompare(b.nome));
+  filtered.sort((a, b) => safeLower(a.nome).localeCompare(safeLower(b.nome)));
   const coresRaridade = { comum:'#b0b0b8', rara:'#00b4d8', epica:'#9d4edd', lendaria:'#ffb703', exclusiva:'#f72585' };
   listCards.innerHTML = filtered.map(c => {
     const alb = bancoAlbuns.find(a => a.id === c.albumId);
@@ -4152,10 +4149,10 @@ async function salvarItemLoja() {
 }
 function atualizarTabelaHistorico() {
   const tbody = document.getElementById('history-table-body'); if(!tbody) return;
-  const fName = (document.getElementById('filter-history-student')?.value || '').toLowerCase();
+  const fName = safeLower(document.getElementById('filter-history-student')?.value || '');
   const fGrade = document.getElementById('filter-history-grade')?.value || 'todos';
   const fLetter = document.getElementById('filter-history-letter')?.value || 'todos';
-  const filtrados = historicoEnvios.filter(h => (h.alunoNome?.toLowerCase().includes(fName)) && (fGrade === 'todos' || h.alunoSerie === fGrade) && (fLetter === 'todos' || h.alunoLetter === fLetter));
+  const filtrados = historicoEnvios.filter(h => safeLower(h.alunoNome).includes(fName) && (fGrade === 'todos' || h.alunoSerie === fGrade) && (fLetter === 'todos' || h.alunoLetter === fLetter));
   if (filtrados.length === 0) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#7c7c8a; padding:30px;">Nenhum registro.</td></tr>`; return; }
   tbody.innerHTML = filtrados.map(h => `<tr><td><b>${escapeHtml(h.alunoNome || '')}</b></td><td>${escapeHtml(h.alunoSerie || '')} ${escapeHtml(h.alunoLetter || '')}</td><td>${escapeHtml(h.albumTitulo || h.albumId || '')}</td><td>${escapeHtml(h.cartaNome || '')}</td><td>${escapeHtml(h.raridade || '')}${h.tipo ? ' ' + TIPO_ICONS[h.tipo] : ''}</td><td>${escapeHtml(h.data || '-')}</td></tr>`).join('');
 }
@@ -4170,7 +4167,7 @@ function renderizarListaAulas() {
   const list = document.getElementById('list-aulas');
   const serie = document.getElementById('aula-serie-select').value;
   if (!list) return;
-  const filtered = bancoAulas.filter(a => a.serie === serie).sort((a, b) => a.titulo.localeCompare(b.titulo));
+  const filtered = bancoAulas.filter(a => a.serie === serie).sort((a, b) => safeLower(a.titulo).localeCompare(safeLower(b.titulo)));
   list.innerHTML = filtered.map(a => `<div class="list-item"><div><b>${escapeHtml(a.titulo)}</b><br><small>${a.updatedAt ? new Date(a.updatedAt).toLocaleString('pt-BR') : 'Nunca'}</small></div><div class="box-acoes-botoes"><button class="btn-edit" type="button" onclick="editarAula('${a.id}')">Editar</button><button class="btn-danger" type="button" data-action="delete-aula" data-id="${a.id}">Excluir</button></div></div>`).join('');
 }
 function atualizarPreviewAula() {
@@ -4225,7 +4222,7 @@ async function excluirAula(id) {
 function atualizarFiltroAulas() {
   const serieFiltro = document.getElementById('aula-filter-serie').value;
   const selectAula = document.getElementById('aula-filter-select'); if (!selectAula) return;
-  const aulas = bancoAulas.filter(a => a.serie === serieFiltro).sort((a, b) => a.titulo.localeCompare(b.titulo));
+  const aulas = bancoAulas.filter(a => a.serie === serieFiltro).sort((a, b) => safeLower(a.titulo).localeCompare(safeLower(b.titulo)));
   selectAula.innerHTML = '<option value="">-- Escolha --</option>';
   aulas.forEach(a => { const o = document.createElement('option'); o.value = a.id; o.textContent = a.titulo; selectAula.appendChild(o); });
 }
@@ -4252,9 +4249,9 @@ async function cadastrarAlunosEmLote() {
     try {
       let ins = 0; let dup = [];
       for (const nome of unicos) {
-        const norm = nome.toLowerCase().replace(/\s+/g, ' ');
-        const ex = bancoDeAlunos.find(a => a.role === "aluno" && a.nome.trim().toLowerCase().replace(/\s+/g, ' ') === norm);
-        if (ex) { dup.push(ex.nome.toUpperCase()); continue; }
+        const norm = safeLower(nome.replace(/\s+/g, ' '));
+        const ex = bancoDeAlunos.find(a => a.role === "aluno" && safeLower((a.nome || '').trim().replace(/\s+/g, ' ')) === norm);
+        if (ex) { dup.push((ex.nome || '').toUpperCase()); continue; }
         const novoId = "st_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
         let d;
         if (tipoU === 'WIT') d = { id: novoId, nome, grade:'WIT', letter: grade, role:"aluno", pin:"1234", moedas:0, moedasExclusivas:0 };
@@ -4383,7 +4380,7 @@ function atualizarSelectFiltroAlunoRelatorio() {
     if (['A','B','C','D','E'].includes(letterFilter)) alunos = alunos.filter(a => a.letter === letterFilter);
     else alunos = alunos.filter(a => a.letter === letterFilter || a.periodo === letterFilter);
   }
-  [...new Set(alunos.map(a => a.nome))].sort().forEach(n => sel.add(new Option(n, n)));
+  [...new Set(alunos.map(a => a.nome).filter(Boolean))].sort((a,b) => safeLower(a).localeCompare(safeLower(b))).forEach(n => sel.add(new Option(n, n)));
   if (v && Array.from(sel.options).some(o => o.value === v)) sel.value = v;
 }
 function aoMudarSerieRelatorio() { atualizarSelectFiltroAlunoRelatorio(); renderizarTabelaRelatorio(); }
@@ -4447,7 +4444,7 @@ function renderizarLojinha() {
   if (gp) {
     gp.innerHTML = '';
     if (bancoAlbuns.length === 0) gp.innerHTML = '<p style="color:#7c7c8a;">Nenhum álbum cadastrado.</p>';
-    [...bancoAlbuns].sort((a,b) => a.titulo.localeCompare(b.titulo)).forEach(album => {
+    [...bancoAlbuns].sort((a,b) => safeLower(a.titulo).localeCompare(safeLower(b.titulo))).forEach(album => {
       const grupo = document.createElement('div');
       grupo.className = 'pack-album-group';
       const img = album.imagem || '';
@@ -4487,7 +4484,7 @@ function renderizarLojinha() {
   }
   gc.innerHTML = '';
   const ex = bancoDeCartas.filter(c => c.raridade === 'exclusiva');
-  const env = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase());
+  const env = historicoEnvios.filter(h => safeLower(h.alunoNome) === safeLower(usuarioLogado));
   if(ex.length === 0) gc.innerHTML = '<p style="color:#7c7c8a;">Nenhuma.</p>';
   ex.forEach(c => {
     const alb = bancoAlbuns.find(a => a.id === c.albumId);
@@ -4511,7 +4508,7 @@ function renderizarLojinha() {
   });
   gi.innerHTML = '';
   if(bancoLoja.length === 0) gi.innerHTML = '<p style="color:#7c7c8a;">Nenhum.</p>';
-  [...bancoLoja].sort((a, b) => a.nome.localeCompare(b.nome)).forEach(it => {
+  [...bancoLoja].sort((a, b) => safeLower(a.nome).localeCompare(safeLower(b.nome))).forEach(it => {
     const rawImg = (it.imagem || '').trim();
     const ehUrl = isImagemUrl(rawImg);
     let tag;
@@ -4528,7 +4525,7 @@ function renderizarLojinha() {
   });
 }
 async function comprarItemDaLojinha(itemId, tipo) {
-  const aluno = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === "aluno");
+  const aluno = bancoDeAlunos.find(a => safeLower(a.nome) === safeLower(usuarioLogado) && a.role === "aluno");
   if(!aluno) return;
   let obj, nome, albId, rar;
   if (tipo === 'carta') { obj = bancoDeCartas.find(c => c.id === itemId); if(!obj) return; nome = obj.nome; albId = obj.albumId; rar = obj.raridade; }
@@ -4552,9 +4549,9 @@ async function comprarItemDaLojinha(itemId, tipo) {
 function renderizarEstanteDeLivros() {
   const grid = document.getElementById('shelf-books-grid'); if (!grid) return;
   grid.innerHTML = '';
-  [...bancoAlbuns].sort((a, b) => a.titulo.localeCompare(b.titulo)).forEach(album => {
+  [...bancoAlbuns].sort((a, b) => safeLower(a.titulo).localeCompare(safeLower(b.titulo))).forEach(album => {
     const total = bancoDeCartas.filter(c => c.albumId === album.id).length;
-    const env = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase() && h.albumId === album.id);
+    const env = historicoEnvios.filter(h => safeLower(h.alunoNome) === safeLower(usuarioLogado) && h.albumId === album.id);
     const col = bancoDeCartas.filter(c => c.albumId === album.id && env.some(e => e.cartaId === c.id || e.cartaNome === c.nome)).length;
     const img = album.imagem || '';
     const isUrlImage = isImagemUrl(img);
@@ -4605,7 +4602,7 @@ function renderizarLivroAberto() {
   lg.innerHTML = ''; rg.innerHTML = '';
   const cartas = bancoDeCartas.filter(c => c.albumId === idAlbumAtivoAtualmente);
   const total = cartas.length;
-  const env = historicoEnvios.filter(h => h.alunoNome?.toLowerCase() === usuarioLogado.toLowerCase() && h.albumId === idAlbumAtivoAtualmente);
+  const env = historicoEnvios.filter(h => safeLower(h.alunoNome) === safeLower(usuarioLogado) && h.albumId === idAlbumAtivoAtualmente);
   const col = cartas.filter(c => env.some(e => e.cartaId === c.id || e.cartaNome === c.nome)).length;
   const porc = total > 0 ? Math.round((col/total)*100) : 0;
   document.getElementById('album-progress-text').textContent = `Figurinhas: ${col} / ${total}`;
@@ -4646,7 +4643,7 @@ function renderizarSlotFigurinha(carta, num, cont, env) {
   } else {
     let dica = "Vá na Lojinha! 🛒", botao = "";
     if (carta.raridade !== 'exclusiva') {
-      dica = carta.nome.substring(0, 12) + "...";
+      dica = (carta.nome || '').substring(0, 12) + "...";
       const p = parseInt(carta.preco) || 0;
       if (p > 0 && !modoAdminVisualizacao) {
         botao = `<button class="buy-sticker-btn" type="button" onclick="event.stopPropagation(); comprarFigurinhaAlbumDireto('${carta.id}')">${iconeMoeda} ${p}</button>`;
@@ -4715,7 +4712,7 @@ async function alterarMinhaSenhaAdmin() {
   await executarComLoading('btn-fast-pin-update', async () => {
     const nova = document.getElementById('admin-fast-pin').value.trim();
     if(!nova) { alert("Digite a senha!"); return; }
-    const adm = bancoDeAlunos.find(a => a.nome.toLowerCase() === usuarioLogado.toLowerCase() && a.role === 'administrador');
+    const adm = bancoDeAlunos.find(a => safeLower(a.nome) === safeLower(usuarioLogado) && a.role === 'administrador');
     if(adm) { try { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'alunos', adm.id), { pin: nova }); alert("✅ Atualizada!"); document.getElementById('admin-fast-pin').value = ''; } catch(e) { alert("Erro."); } }
     else alert("Apenas Admins.");
   });
@@ -4730,9 +4727,9 @@ async function adicionarAluno() {
     const role = document.getElementById('student-role').value;
     const pin = document.getElementById('student-pin').value.trim();
     if (!nome || !pin) { alert("Nome e Senha!"); return; }
-    const norm = nome.trim().toLowerCase().replace(/\s+/g, ' ');
-    const ex = bancoDeAlunos.find(a => a.nome.trim().toLowerCase().replace(/\s+/g, ' ') === norm && a.role === role);
-    if (ex) { if (confirm(`⚠️ ${ex.nome.toUpperCase()} já existe.\n\nDeseja EDITAR?`)) { carregarUsuarioParaEdicao(ex.id); setTimeout(() => { const el = document.getElementById('student-name'); if (el) el.scrollIntoView({ behavior:'smooth', block:'center' }); }, 100); } return; }
+    const norm = safeLower(nome.replace(/\s+/g, ' '));
+    const ex = bancoDeAlunos.find(a => safeLower((a.nome || '').trim().replace(/\s+/g, ' ')) === norm && a.role === role);
+    if (ex) { if (confirm(`⚠️ ${(ex.nome||'').toUpperCase()} já existe.\n\nDeseja EDITAR?`)) { carregarUsuarioParaEdicao(ex.id); setTimeout(() => { const el = document.getElementById('student-name'); if (el) el.scrollIntoView({ behavior:'smooth', block:'center' }); }, 100); } return; }
     if (apelido) {
       if (apelido.length < 3) { alert("Apelido 3+."); return; }
       if (apelido.includes(' ')) { alert("Sem espaços."); return; }
@@ -4772,9 +4769,9 @@ async function salvarAtualizacaoUsuario() {
     const role = document.getElementById('student-role').value;
     const pin = document.getElementById('student-pin').value.trim();
     if (!nome || !pin) { alert("Nome e Senha!"); return; }
-    const norm = nome.trim().toLowerCase().replace(/\s+/g, ' ');
-    const outro = bancoDeAlunos.find(a => a.id !== id && a.nome.trim().toLowerCase().replace(/\s+/g, ' ') === norm && a.role === role);
-    if (outro) { alert(`⚠️ ${outro.nome.toUpperCase()} já existe.`); return; }
+    const norm = safeLower(nome.replace(/\s+/g, ' '));
+    const outro = bancoDeAlunos.find(a => a.id !== id && safeLower((a.nome || '').trim().replace(/\s+/g, ' ')) === norm && a.role === role);
+    if (outro) { alert(`⚠️ ${(outro.nome||'').toUpperCase()} já existe.`); return; }
     if (apelido) {
       if (apelido.length < 3) { alert("Apelido 3+."); return; }
       if (apelido.includes(' ')) { alert("Sem espaços."); return; }
@@ -4810,7 +4807,7 @@ function filtrarAlunosDistribuicao() {
   const sel = document.getElementById('select-dist-student'); if(!sel) return;
   const bkp = sel.value;
   sel.innerHTML = '<option value="">-- Selecione --</option>';
-  bancoDeAlunos.filter(u => u.role === "aluno").filter(a => (fG === "todos" || a.grade === fG) && (fL === "todos" || a.letter === fL)).sort((a,b) => a.nome.localeCompare(b.nome)).forEach(a => sel.add(new Option(`${a.nome}${a.apelido ? ' (@'+a.apelido+')' : ''} (${a.grade} ${a.letter})`, a.nome)));
+  bancoDeAlunos.filter(u => u.role === "aluno").filter(a => (fG === "todos" || a.grade === fG) && (fL === "todos" || a.letter === fL)).sort((a,b) => safeLower(a.nome).localeCompare(safeLower(b.nome))).forEach(a => sel.add(new Option(`${a.nome}${a.apelido ? ' (@'+a.apelido+')' : ''} (${a.grade} ${a.letter})`, a.nome)));
   if (bkp && Array.from(sel.options).some(o => o.value === bkp)) sel.value = bkp;
 }
 function atualizarSelectFigurinhasDistribuicao() {
@@ -4818,7 +4815,7 @@ function atualizarSelectFigurinhasDistribuicao() {
   const sel = document.getElementById('select-dist-card'); if(!sel) return;
   const bkp = sel.value;
   sel.innerHTML = '<option value="">-- Selecione --</option>';
-  bancoDeCartas.filter(c => c.albumId === albId).sort((a,b) => a.nome.localeCompare(b.nome)).forEach(c => sel.add(new Option(c.nome, c.nome)));
+  bancoDeCartas.filter(c => c.albumId === albId).sort((a,b) => safeLower(a.nome).localeCompare(safeLower(b.nome))).forEach(c => sel.add(new Option(c.nome, c.nome)));
   if (bkp && Array.from(sel.options).some(o => o.value === bkp)) sel.value = bkp;
 }
 async function distribuirCarta() {
@@ -4857,7 +4854,6 @@ function imprimirRelatorio() {
 }
 
 /* ═══════════════ JOGOS / ARCADE ═══════════════ */
-
 function injetarBotoesJogos() {
   document.querySelectorAll('.nav-buttons').forEach(nav => {
     if (nav.querySelector('.nav-btn-jogos')) return;
@@ -4871,7 +4867,6 @@ function injetarBotoesJogos() {
     else nav.appendChild(btn);
   });
 }
-
 async function salvarJogo() {
   await executarComLoading('btn-salvar-jogo', async () => {
     const idEdit = document.getElementById('game-edit-id').value;
@@ -4898,7 +4893,6 @@ async function salvarJogo() {
     } catch (e) { console.error(e); alert('Erro ao salvar.'); }
   });
 }
-
 function limparFormularioJogo() {
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
   set('game-edit-id', '');
@@ -4914,7 +4908,6 @@ function limparFormularioJogo() {
   const w = document.getElementById('wrapper-game-buttons');
   if (w) w.innerHTML = `<button id="btn-salvar-jogo" type="button" onclick="salvarJogo()">➕ Cadastrar Jogo</button>`;
 }
-
 function editarJogo(id) {
   const jogo = bancoJogos.find(j => j.id === id);
   if (!jogo) return;
@@ -4934,13 +4927,11 @@ function editarJogo(id) {
     <button class="btn-secondary" type="button" style="margin-top:6px;" onclick="limparFormularioJogo()">Cancelar</button>`;
   const box = document.getElementById('box-gerenciar-jogos'); if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
-
 async function deletarJogo(id) {
   if (!confirm('Excluir este jogo?')) return;
   try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'jogos', id)); }
   catch (e) { alert('Erro ao excluir.'); }
 }
-
 function carregarArquivoJogoHTML(input) {
   const file = input.files[0]; if (!file) return;
   const r = new FileReader();
@@ -4952,7 +4943,6 @@ function carregarArquivoJogoHTML(input) {
   };
   r.readAsText(file);
 }
-
 function renderizarListaJogosAdmin() {
   const list = document.getElementById('list-jogos');
   if (!list) return;
@@ -4960,7 +4950,7 @@ function renderizarListaJogosAdmin() {
     list.innerHTML = '<div style="text-align:center; color:#7c7c8a; padding:20px;">Nenhum jogo cadastrado ainda.</div>';
     return;
   }
-  list.innerHTML = [...bancoJogos].sort((a, b) => (a.titulo || '').localeCompare(b.titulo || '')).map(j => {
+  list.innerHTML = [...bancoJogos].sort((a, b) => safeLower(a.titulo).localeCompare(safeLower(b.titulo))).map(j => {
     const img = j.imagem || '🎮';
     const isUrl = isImagemUrl(img);
     const preview = isUrl
@@ -4975,7 +4965,6 @@ function renderizarListaJogosAdmin() {
     </div>`;
   }).join('');
 }
-
 function renderizarJogos() {
   const grid = document.getElementById('games-arcade-grid');
   if (!grid) return;
@@ -4987,7 +4976,7 @@ function renderizarJogos() {
     </div>`;
     return;
   }
-  grid.innerHTML = [...bancoJogos].sort((a, b) => (a.titulo || '').localeCompare(b.titulo || '')).map(j => {
+  grid.innerHTML = [...bancoJogos].sort((a, b) => safeLower(a.titulo).localeCompare(safeLower(b.titulo))).map(j => {
     const img = j.imagem || '🎮';
     const isUrl = isImagemUrl(img);
     const screen = isUrl
@@ -5007,8 +4996,6 @@ function renderizarJogos() {
     </div>`;
   }).join('');
 }
-
-/* ═══ ABRE O JOGO EM TELA CHEIA (overlay + Fullscreen API) ═══ */
 async function jogarJogo(id) {
   const jogo = bancoJogos.find(j => j.id === id);
   if (!jogo) return;
@@ -5016,33 +5003,25 @@ async function jogarJogo(id) {
   const iframe = document.getElementById('game-launcher-iframe');
   const loading = document.getElementById('game-launcher-loading');
   if (!overlay || !iframe) return;
-
   if (loading) loading.style.display = 'flex';
   iframe.removeAttribute('srcdoc');
   iframe.removeAttribute('src');
   iframe.onload = () => { if (loading) loading.style.display = 'none'; };
-
   if (jogo.url) iframe.src = jogo.url;
   else if (jogo.htmlContent) iframe.srcdoc = jogo.htmlContent;
-
   overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
   cliqueBloqueadoAte = Date.now() + 300;
-
-  // Tenta Fullscreen API nativa (para esconder barra do navegador)
   try {
     if (overlay.requestFullscreen) await overlay.requestFullscreen();
     else if (overlay.webkitRequestFullscreen) overlay.webkitRequestFullscreen();
     else if (overlay.msRequestFullscreen) overlay.msRequestFullscreen();
-  } catch (e) { /* Fullscreen pode falhar se não vier de gesto do usuário */ }
-
+  } catch (e) {}
   setTimeout(() => { if (loading) loading.style.display = 'none'; }, 3000);
 }
-
 function fecharJogo() {
   const overlay = document.getElementById('game-launcher-overlay');
   const iframe = document.getElementById('game-launcher-iframe');
-  // Sai do fullscreen nativo se estiver ativo
   try {
     if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
     else if (document.webkitFullscreenElement && document.webkitExitFullscreen) document.webkitExitFullscreen();
@@ -5053,31 +5032,31 @@ function fecharJogo() {
   document.body.style.overflow = '';
 }
 
-/* ═══════════════ Uploads de imagem ═══════════════ */
+/* ═══════════════ Uploads → Firebase Storage ═══════════════ */
 document.getElementById('album-new-image-file')?.addEventListener('change', async function (e) {
   const file = e.target.files[0]; if (!file) return;
   try {
-    const dataUrl = await comprimirImagem(file, 1200, 1200, 0.95);
-    document.getElementById('album-new-image').value = dataUrl;
-    document.getElementById('album-preview-img').src = dataUrl;
+    const url = await comprimirEEnviarImagem(file, 1200, 1200, 0.85, 'albuns');
+    document.getElementById('album-new-image').value = url;
+    document.getElementById('album-preview-img').src = url;
     document.getElementById('album-image-preview').style.display = 'block';
   } catch (err) { alert('Erro: ' + err); this.value = ''; }
 });
 document.getElementById('album-new-back-image-file')?.addEventListener('change', async function (e) {
   const file = e.target.files[0]; if (!file) return;
   try {
-    const dataUrl = await comprimirImagem(file, 1000, 1400, 0.95);
-    document.getElementById('album-new-back-image').value = dataUrl;
-    document.getElementById('album-back-preview-img').src = dataUrl;
+    const url = await comprimirEEnviarImagem(file, 1000, 1400, 0.85, 'albuns');
+    document.getElementById('album-new-back-image').value = url;
+    document.getElementById('album-back-preview-img').src = url;
     document.getElementById('album-back-image-preview').style.display = 'block';
   } catch (err) { alert('Erro: ' + err); this.value = ''; }
 });
 document.getElementById('card-img-file')?.addEventListener('change', async function (e) {
   const file = e.target.files[0]; if (!file) return;
   try {
-    const dataUrl = await comprimirImagem(file, 1000, 1400, 0.95);
-    document.getElementById('card-img').value = dataUrl;
-    document.getElementById('card-preview-img').src = dataUrl;
+    const url = await comprimirEEnviarImagem(file, 1000, 1400, 0.85, 'cartas');
+    document.getElementById('card-img').value = url;
+    document.getElementById('card-preview-img').src = url;
     document.getElementById('card-img-preview').style.display = 'block';
   } catch (err) { alert('Erro: ' + err); this.value = ''; }
 });
@@ -5167,7 +5146,6 @@ window.limparFormularioCarta = limparFormularioCarta;
 window.renderizarSlidesChamada = renderizarSlidesChamada;
 window.carregarSlideChamada = carregarSlideChamada;
 window.irParaGerenciarSlides = irParaGerenciarSlides;
-/* Jogos */
 window.salvarJogo = salvarJogo;
 window.editarJogo = editarJogo;
 window.deletarJogo = deletarJogo;
