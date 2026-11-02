@@ -2658,6 +2658,76 @@ body.has-mini-player{padding-bottom:130px!important}
 .music-player-host{width:70px!important;height:40px!important}
 }
 
+/* VOLUME-FAB-CSS-V2 */
+/* ═══ FAB wrapper ═══ */
+.vol-fab-wrap{position:fixed!important;bottom:60px!important;left:20px!important;z-index:860!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:8px!important;font-family:'Segoe UI',Tahoma,sans-serif!important;opacity:.45!important;transition:opacity .3s ease!important}
+.vol-fab-wrap:hover,.vol-fab-wrap:focus-within{opacity:1!important}
+.vol-fab-wrap[data-hidden="1"]{display:none!important}
+.vol-fab-wrap.stealth-mode{opacity:.15!important}
+.vol-fab-wrap.stealth-mode:hover{opacity:.45!important}
+.vol-fab-wrap.panel-open,
+.vol-fab-wrap.panel-open.stealth-mode{opacity:1!important}
+
+/* ═══ Botão circular ═══ */
+.vol-fab-btn{width:52px!important;height:52px!important;border-radius:50%!important;padding:0!important;background:linear-gradient(135deg,#7c3aed 0%,#a855f7 100%)!important;color:#fff!important;border:2px solid rgba(255,255,255,.25)!important;box-shadow:0 4px 18px rgba(124,58,237,.5)!important;cursor:pointer!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:1.4rem!important;transition:transform .2s,box-shadow .25s!important;line-height:1!important;position:relative!important}
+.vol-fab-btn::before,.vol-fab-btn::after{display:none!important}
+.vol-fab-btn:hover{transform:scale(1.08)!important;box-shadow:0 6px 26px rgba(124,58,237,.85)!important}
+.vol-fab-btn:active{transform:scale(.94)!important}
+.vol-fab-btn.muted{background:linear-gradient(135deg,#7f1d1d 0%,#dc2626 100%)!important;box-shadow:0 4px 18px rgba(220,38,38,.5)!important}
+.vol-fab-btn.playing::after{content:''!important;display:block!important;position:absolute!important;inset:-5px!important;border-radius:50%!important;border:1.5px solid rgba(168,85,247,.5)!important;animation:vol-playing-ring 2.4s ease-out infinite!important;pointer-events:none!important}
+@keyframes vol-playing-ring{0%{transform:scale(.95);opacity:.8}100%{transform:scale(1.4);opacity:0}}
+.vol-fab-icon{display:block!important;line-height:1!important;pointer-events:none!important}
+
+/* ═══ Painel popover ═══ */
+.vol-panel{display:none!important;background:linear-gradient(180deg,rgba(20,20,32,.98),rgba(10,10,20,.99))!important;border:1px solid rgba(212,175,55,.6)!important;border-radius:14px!important;padding:14px!important;box-shadow:0 8px 32px rgba(0,0,0,.85)!important;width:230px!important;animation:vol-panel-in .25s cubic-bezier(.34,1.56,.64,1)!important}
+.vol-panel.open{display:block!important}
+@keyframes vol-panel-in{0%{opacity:0;transform:translateY(12px) scale(.92)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.vol-panel-title{font-size:.72rem!important;color:#a8a8b3!important;text-transform:uppercase!important;letter-spacing:1px!important;margin-bottom:10px!important;display:flex!important;justify-content:space-between!important;align-items:center!important;gap:6px!important}
+.vol-panel-track{font-size:.7rem!important;color:#f4d67a!important;font-weight:700!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:130px!important}
+.vol-slider-row{display:flex!important;align-items:center!important;gap:10px!important;margin-bottom:10px!important}
+.vol-slider-icon{font-size:.9rem!important;color:#a8a8b3!important;flex-shrink:0!important;width:20px!important;text-align:center!important}
+.vol-slider{flex:1!important;-webkit-appearance:none!important;appearance:none!important;height:6px!important;border-radius:3px!important;background:linear-gradient(90deg,#a855f7 0%,#a855f7 var(--vol,70%),rgba(255,255,255,.15) var(--vol,70%),rgba(255,255,255,.15) 100%)!important;outline:none!important;cursor:pointer!important;padding:0!important;margin:0!important;border:none!important}
+.vol-slider::-webkit-slider-thumb{-webkit-appearance:none!important;width:16px!important;height:16px!important;border-radius:50%!important;background:#fff!important;box-shadow:0 2px 8px rgba(168,85,247,.8)!important;cursor:pointer!important;border:none!important}
+.vol-slider::-moz-range-thumb{width:16px!important;height:16px!important;border-radius:50%!important;background:#fff!important;box-shadow:0 2px 8px rgba(168,85,247,.8)!important;cursor:pointer!important;border:none!important}
+.vol-slider-val{font-size:.72rem!important;color:#f4d67a!important;font-weight:800!important;min-width:32px!important;text-align:right!important;flex-shrink:0!important}
+.vol-btn-row{display:flex!important;gap:6px!important;align-items:center!important}
+.vol-btn-row button{flex:1!important;padding:8px!important;border-radius:8px!important;border:1px solid rgba(255,255,255,.18)!important;background:linear-gradient(135deg,#1c1c28,#2a2a3a)!important;color:#fff!important;font-size:.9rem!important;cursor:pointer!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;transition:transform .15s,filter .15s!important;min-width:0!important;height:36px!important;margin:0!important;letter-spacing:0!important;text-transform:none!important}
+.vol-btn-row button:hover{transform:translateY(-1px)!important;filter:brightness(1.2)!important}
+.vol-btn-row button::before,.vol-btn-row button::after{display:none!important}
+.vol-btn-row .v-mute.active{background:linear-gradient(135deg,#7f1d1d,#dc2626)!important;border-color:rgba(220,38,38,.6)!important}
+.vol-btn-row .v-play.active{background:linear-gradient(135deg,#2a9d8f,#4cc9b8)!important;border-color:rgba(42,157,143,.6)!important}
+
+/* ═══ Esconder mini-player (removido) ═══ */
+#music-mini-player{display:none!important;visibility:hidden!important;pointer-events:none!important}
+
+/* ═══ Host oculto para o player (iframe/áudio) ═══ */
+.music-player-hidden,.music-player-hidden iframe,.music-player-hidden audio{position:fixed!important;bottom:0!important;left:0!important;width:1px!important;height:1px!important;opacity:.01!important;pointer-events:none!important;z-index:-9999!important;overflow:hidden!important;border:none!important}
+
+/* ═══ Admin seção Músicas ═══ */
+#sec-musicas .music-playlist-list{display:flex!important;flex-direction:column!important;gap:6px!important;max-height:400px!important;overflow-y:auto!important;padding:2px!important}
+#sec-musicas .music-track-item{display:grid!important;grid-template-columns:30px 30px 1fr auto auto!important;gap:8px!important;align-items:center!important;padding:10px 12px!important;background:linear-gradient(180deg,#1a1a24,#12121a)!important;border:1px solid #24243a!important;border-radius:8px!important;transition:all .15s!important}
+#sec-musicas .music-track-item:hover{border-color:#00e0ff!important}
+#sec-musicas .music-track-item.playing{border-color:#d4af37!important;background:linear-gradient(180deg,rgba(212,175,55,.15),rgba(212,175,55,.05))!important}
+#sec-musicas .music-track-num{text-align:center!important;color:#a8a8b3!important;font-size:.75rem!important;font-weight:700!important}
+#sec-musicas .music-track-icon{text-align:center!important;font-size:1.1rem!important}
+#sec-musicas .music-track-info{min-width:0!important;overflow:hidden!important}
+#sec-musicas .music-track-title{font-size:.85rem!important;color:#fff!important;font-weight:700!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#sec-musicas .music-track-author{font-size:.7rem!important;color:#a8a8b3!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;margin-top:2px!important}
+#sec-musicas .music-track-play,#sec-musicas .music-track-del{width:32px!important;height:32px!important;padding:0!important;font-size:.85rem!important;border-radius:50%!important;border:none!important;cursor:pointer!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;flex-shrink:0!important}
+#sec-musicas .music-track-play{background:linear-gradient(135deg,#2a9d8f,#4cc9b8)!important;color:#fff!important}
+#sec-musicas .music-track-del{background:rgba(255,56,96,.15)!important;color:#ff6b74!important;border:1px solid rgba(255,56,96,.3)!important}
+#sec-musicas .music-track-play::before,#sec-musicas .music-track-play::after,#sec-musicas .music-track-del::before,#sec-musicas .music-track-del::after{display:none!important}
+#sec-musicas .music-empty{text-align:center!important;padding:40px 20px!important;color:#8f8fa3!important;font-style:italic!important;font-size:.9rem!important}
+#sec-musicas .music-count-badge{display:inline-block!important;background:rgba(0,224,255,.15)!important;color:#00e0ff!important;padding:2px 10px!important;border-radius:12px!important;font-size:.7rem!important;font-weight:800!important;border:1px solid rgba(0,224,255,.3)!important;margin-left:6px!important}
+#sec-musicas .music-add-hint{font-size:.75rem!important;color:#8f8fa3!important;margin-top:12px!important;padding:8px 12px!important;background:rgba(0,224,255,.05)!important;border-left:3px solid #00e0ff!important;border-radius:4px!important;line-height:1.5!important}
+#sec-musicas .music-file-warning{background:rgba(255,183,3,.12)!important;border-left:3px solid #ffb703!important;padding:10px 14px!important;border-radius:6px!important;font-size:.78rem!important;color:#ffd60a!important;margin-bottom:12px!important;line-height:1.5!important}
+
+@media(max-width:640px){
+.vol-fab-wrap{bottom:70px!important;left:14px!important}
+.vol-fab-btn{width:46px!important;height:46px!important;font-size:1.2rem!important}
+.vol-panel{width:200px!important;padding:12px!important}
+}
+
 </style>
 </head>
 <body>
@@ -7673,32 +7743,49 @@ if (document.readyState === "loading") document.addEventListener("DOMContentLoad
 </script>
 
 
-<script>/* VOLUME-FAB-JS */
+
+<script>/* VOLUME-FAB-JS-V2 */
 (function(){
 'use strict';
-if(window.__volFabV1) return;
-window.__volFabV1 = true;
+if(window.__volFabV2) return;
+window.__volFabV2 = true;
 
 var IS_FILE = location.protocol === 'file:';
 var STORAGE_KEY = 'maker_labs_vol_fab';
 
-/* ═══ Estado persistente ═══ */
-var VS = { volume: 70, muted: false, currentIndex: -1 };
+/* ═══ Estado de volume (persiste) ═══ */
+var VS = { volume: 70, muted: false };
 try {
-  var saved = localStorage.getItem(STORAGE_KEY);
-  if(saved) {
-    var p = JSON.parse(saved);
-    if(typeof p.volume === 'number') VS.volume = Math.max(0, Math.min(100, p.volume));
-    if(typeof p.muted === 'boolean') VS.muted = p.muted;
-  }
+  var s = localStorage.getItem(STORAGE_KEY);
+  if(s) { var p = JSON.parse(s); if(typeof p.volume === 'number') VS.volume = Math.max(0, Math.min(100, p.volume)); if(typeof p.muted === 'boolean') VS.muted = p.muted; }
 } catch(e){}
-function saveVS(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify({volume: VS.volume, muted: VS.muted})); } catch(e){} }
+function saveVS(){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(VS)); } catch(e){} }
 
-/* ═══ Estado da playlist (não confundir com VS) ═══ */
+/* ═══ Estado da playlist ═══ */
 var M = { playlist: [], ytIframe: null, audioEl: null, playerType: null, isPlaying: false, currentIndex: -1, loop: false };
 var M_APP = null, M_DB = null, M_FS = null;
 
 function esc(s){ var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+/* ═══ Limpeza de elementos antigos ═══ */
+function cleanupOld(){
+  var oldMini = document.getElementById('music-mini-player');
+  if(oldMini) oldMini.remove();
+  var oldWrap = document.getElementById('vol-fab-wrap');
+  if(oldWrap) oldWrap.remove();
+  var oldPanel = document.getElementById('vol-panel');
+  if(oldPanel) oldPanel.remove();
+}
+
+/* ═══ Host oculto para o player ═══ */
+function ensureHiddenHost(){
+  var existing = document.getElementById('music-player-host');
+  if(existing) return;
+  var el = document.createElement('div');
+  el.id = 'music-player-host';
+  el.className = 'music-player-hidden';
+  document.body.appendChild(el);
+}
 
 /* ═══ Firebase ═══ */
 function loadFB(){
@@ -7712,7 +7799,7 @@ function loadFB(){
         snap.forEach(function(d){ M.playlist.push(Object.assign({id:d.id}, d.data())); });
         M.playlist.sort(function(a,b){ return (a.timestamp||0)-(b.timestamp||0); });
         renderAdminList();
-        updateVolPanelTitle();
+        updatePanelTitle();
       }, function(err){
         console.warn('[vol-fab] snapshot err:', err);
         loadLocal();
@@ -7724,28 +7811,18 @@ function loadFB(){
   });
 }
 function loadLocal(){
-  try {
-    var raw = localStorage.getItem('maker_labs_musicas_v12');
-    M.playlist = raw ? JSON.parse(raw) : [];
-  } catch(e){ M.playlist = []; }
+  try { var raw = localStorage.getItem('maker_labs_musicas_v12'); M.playlist = raw ? JSON.parse(raw) : []; }
+  catch(e){ M.playlist = []; }
   renderAdminList();
 }
 function saveLocal(){
   try { localStorage.setItem('maker_labs_musicas_v12', JSON.stringify(M.playlist)); } catch(e){}
 }
 
-/* ═══ Utilitários ═══ */
 function extractYT(url){
   if(!url) return null;
   var t = String(url).trim();
-  var pats = [
-    /(?:youtube\.com\/watch\?v=)([A-Za-z0-9_-]{11})/,
-    /(?:youtu\.be\/)([A-Za-z0-9_-]{11})/,
-    /(?:youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/,
-    /(?:youtube\.com\/shorts\/)([A-Za-z0-9_-]{11})/,
-    /(?:music\.youtube\.com\/watch\?v=)([A-Za-z0-9_-]{11})/,
-    /^([A-Za-z0-9_-]{11})$/
-  ];
+  var pats = [/(?:youtube\.com\/watch\?v=)([A-Za-z0-9_-]{11})/,/(?:youtu\.be\/)([A-Za-z0-9_-]{11})/,/(?:youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/,/(?:youtube\.com\/shorts\/)([A-Za-z0-9_-]{11})/,/(?:music\.youtube\.com\/watch\?v=)([A-Za-z0-9_-]{11})/,/^([A-Za-z0-9_-]{11})$/];
   for(var i=0;i<pats.length;i++){ var m = t.match(pats[i]); if(m) return m[1]; }
   return null;
 }
@@ -7759,7 +7836,7 @@ function playTrack(idx){
   M.currentIndex = idx;
   var track = M.playlist[idx];
   destroyCurrent();
-  updateVolPanelTitle();
+  updatePanelTitle();
 
   if(track.type === 'youtube' && track.videoId){
     var host = document.getElementById('music-player-host');
@@ -7770,7 +7847,7 @@ function playTrack(idx){
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('frameborder', '0');
     iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-    iframe.style.cssText = 'width:100%;height:100%;border:0;display:block';
+    iframe.style.cssText = 'width:1px;height:1px;border:0;display:block';
     var params = ['autoplay=1','enablejsapi=1','rel=0','modestbranding=1','playsinline=1','iv_load_policy=3'];
     if(location.protocol === 'http:' || location.protocol === 'https:'){
       params.push('origin=' + encodeURIComponent(location.origin));
@@ -7780,8 +7857,8 @@ function playTrack(idx){
     M.ytIframe = iframe;
     M.playerType = 'youtube';
     M.isPlaying = true;
-    setTimeout(function(){ applyVolumeToPlayer(); }, 800);
-    setTimeout(function(){ applyVolumeToPlayer(); }, 2000);
+    setTimeout(applyVolumeToPlayer, 600);
+    setTimeout(applyVolumeToPlayer, 1500);
   } else if(track.type === 'audio' && track.url){
     var host2 = document.getElementById('music-player-host');
     if(!host2) return;
@@ -7790,8 +7867,8 @@ function playTrack(idx){
     a.autoplay = true;
     a.src = track.url;
     a.onended = function(){ if(M.loop){ a.currentTime = 0; a.play(); } else nextTrack(); };
-    a.onplay = function(){ M.isPlaying = true; updateFAB(); updateMiniButtons(); };
-    a.onpause = function(){ M.isPlaying = false; updateFAB(); updateMiniButtons(); };
+    a.onplay = function(){ M.isPlaying = true; updateFAB(); };
+    a.onpause = function(){ M.isPlaying = false; updateFAB(); };
     a.onerror = function(){ showErr('Erro ao carregar áudio: ' + track.url); };
     host2.appendChild(a);
     M.audioEl = a;
@@ -7801,7 +7878,6 @@ function playTrack(idx){
     try { a.play(); } catch(e){}
   }
   updateFAB();
-  updateMini();
   highlightCurrent();
 }
 
@@ -7815,35 +7891,27 @@ function destroyCurrent(){
 function ytCmd(cmd, args){
   if(!M.ytIframe || !M.ytIframe.contentWindow) return;
   try {
-    M.ytIframe.contentWindow.postMessage(JSON.stringify({
-      event: 'command', func: cmd, args: args || []
-    }), '*');
+    M.ytIframe.contentWindow.postMessage(JSON.stringify({event:'command', func:cmd, args:args||[]}), '*');
   } catch(e){}
 }
 
-/* Aplica volume do estado VS ao player atual */
 function applyVolumeToPlayer(){
   var v = VS.muted ? 0 : VS.volume;
-  if(M.audioEl){
-    M.audioEl.volume = v / 100;
-    M.audioEl.muted = VS.muted;
-  }
+  if(M.audioEl){ M.audioEl.volume = v / 100; M.audioEl.muted = VS.muted; }
   if(M.playerType === 'youtube'){
     ytCmd('setVolume', [v]);
-    if(VS.muted) ytCmd('mute');
-    else ytCmd('unMute');
+    if(VS.muted) ytCmd('mute'); else ytCmd('unMute');
   }
 }
 
-/* ═══ Mensagens do YouTube ═══ */
 window.addEventListener('message', function(e){
   try {
     var d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
     if(!d) return;
     if(d.event === 'onStateChange'){
       if(d.info === 0){ if(M.loop) ytCmd('playVideo'); else nextTrack(); }
-      else if(d.info === 1){ M.isPlaying = true; updateFAB(); updateMiniButtons(); applyVolumeToPlayer(); }
-      else if(d.info === 2){ M.isPlaying = false; updateFAB(); updateMiniButtons(); }
+      else if(d.info === 1){ M.isPlaying = true; updateFAB(); applyVolumeToPlayer(); }
+      else if(d.info === 2){ M.isPlaying = false; updateFAB(); }
     }
     if(d.event === 'onError'){
       var code = d.info, msg = '';
@@ -7858,14 +7926,13 @@ window.addEventListener('message', function(e){
 
 function showErr(txt){
   var el = document.getElementById('vol-fab-error');
-  if(!el){
-    el = document.createElement('div');
-    el.id = 'vol-fab-error';
-    el.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1a0505;border:2px solid #dc2626;border-radius:12px;padding:16px 20px;color:#fecaca;font-size:.85rem;font-family:system-ui;box-shadow:0 8px 40px rgba(220,38,38,.6);z-index:99999;max-width:520px;line-height:1.5;white-space:pre-wrap';
-    document.body.appendChild(el);
-    setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 10000);
-  }
+  if(el && el.parentNode) el.parentNode.removeChild(el);
+  el = document.createElement('div');
+  el.id = 'vol-fab-error';
+  el.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1a0505;border:2px solid #dc2626;border-radius:12px;padding:16px 20px;color:#fecaca;font-size:.85rem;font-family:system-ui;box-shadow:0 8px 40px rgba(220,38,38,.6);z-index:99999;max-width:520px;line-height:1.5;white-space:pre-wrap';
   el.textContent = txt;
+  document.body.appendChild(el);
+  setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 10000);
 }
 
 function togglePlay(){
@@ -7875,13 +7942,11 @@ function togglePlay(){
     return;
   }
   if(M.playerType === 'audio' && M.audioEl){
-    if(M.audioEl.paused) M.audioEl.play();
-    else M.audioEl.pause();
+    if(M.audioEl.paused) M.audioEl.play(); else M.audioEl.pause();
   } else if(M.playerType === 'youtube'){
     if(M.isPlaying){ ytCmd('pauseVideo'); M.isPlaying = false; }
     else { ytCmd('playVideo'); M.isPlaying = true; }
     updateFAB();
-    updateMiniButtons();
   }
 }
 
@@ -7898,9 +7963,8 @@ function stopMusic(){
   M.currentIndex = -1;
   var h = document.getElementById('music-player-host');
   if(h) h.innerHTML = '';
-  updateVolPanelTitle();
+  updatePanelTitle();
   updateFAB();
-  updateMini();
   highlightCurrent();
 }
 
@@ -7918,7 +7982,8 @@ function updateFAB(){
   var icon = btn.querySelector('.vol-fab-icon');
   if(icon) icon.textContent = iconForVolume();
   btn.classList.toggle('muted', VS.muted || VS.volume === 0);
-  btn.title = (VS.muted ? 'Mudo' : 'Volume ' + VS.volume + '%') + ' — clique para ajustar';
+  btn.classList.toggle('playing', M.isPlaying);
+  btn.title = (VS.muted ? 'Mudo' : 'Volume ' + VS.volume + '%') + (M.isPlaying ? ' — tocando' : '');
 
   var slider = document.getElementById('vol-slider');
   if(slider){
@@ -7930,35 +7995,18 @@ function updateFAB(){
 
   var muteBtn = document.getElementById('vol-mute-btn');
   if(muteBtn) muteBtn.classList.toggle('active', VS.muted);
-
   var playBtn = document.getElementById('vol-play-btn');
-  if(playBtn) playBtn.classList.toggle('active', M.isPlaying);
+  if(playBtn){
+    playBtn.classList.toggle('active', M.isPlaying);
+    playBtn.textContent = M.isPlaying ? '⏸️' : '▶️';
+  }
 }
 
-function updateVolPanelTitle(){
+function updatePanelTitle(){
   var t = document.getElementById('vol-panel-track');
   if(!t) return;
   var track = M.playlist[M.currentIndex];
   t.textContent = track ? (track.titulo || 'Música') : 'Nenhuma música';
-}
-
-function updateMiniButtons(){
-  var mp = document.getElementById('music-mini-play');
-  if(mp) mp.textContent = M.isPlaying ? '⏸️' : '▶️';
-}
-
-function updateMini(){
-  var mini = document.getElementById('music-mini-player');
-  if(!mini) return;
-  var track = M.playlist[M.currentIndex];
-  var mt = document.getElementById('music-mini-title');
-  var ma = document.getElementById('music-mini-author');
-  if(mt && track) mt.textContent = track.titulo || 'Música';
-  if(ma && track) ma.textContent = track.autor || (track.type === 'youtube' ? 'YouTube' : 'Áudio');
-  var has = M.playerType !== null;
-  mini.classList.toggle('visible', has);
-  document.body.classList.toggle('has-mini-player', has);
-  updateMiniButtons();
 }
 
 function highlightCurrent(){
@@ -7967,25 +8015,55 @@ function highlightCurrent(){
   });
 }
 
-/* ═══ Constrói FAB ═══ */
+/* ═══ STEALTH MODE — detectar jogo/slide ═══ */
+function isInStealthContext(){
+  // Jogo aberto
+  var go = document.getElementById('game-launcher-overlay');
+  if(go && go.classList.contains('active')) return true;
+  // Tela de aula
+  var sa = document.getElementById('screen-aula');
+  if(sa && sa.classList.contains('active')) return true;
+  // Slides da turma
+  var sc = document.getElementById('screen-attendance');
+  var tab3 = document.getElementById('att-tab-content-3');
+  if(sc && sc.classList.contains('active') && tab3 && tab3.style.display !== 'none') return true;
+  return false;
+}
+
+function updateStealth(){
+  var wrap = document.getElementById('vol-fab-wrap');
+  if(!wrap) return;
+  if(isInStealthContext()) wrap.classList.add('stealth-mode');
+  else wrap.classList.remove('stealth-mode');
+}
+
+function updateVisibility(){
+  var wrap = document.getElementById('vol-fab-wrap');
+  if(!wrap) return;
+  var login = document.getElementById('screen-login');
+  if(login && login.classList.contains('active')) wrap.setAttribute('data-hidden','1');
+  else wrap.removeAttribute('data-hidden');
+}
+
+/* ═══ Construir FAB ═══ */
 function ensureFAB(){
   if(document.getElementById('vol-fab-wrap')) return;
-
   var wrap = document.createElement('div');
   wrap.id = 'vol-fab-wrap';
   wrap.className = 'vol-fab-wrap';
   wrap.innerHTML =
     '<div id="vol-panel" class="vol-panel">'+
-      '<div class="vol-panel-title"><span>🎵</span><span id="vol-panel-track">Nenhuma música</span></div>'+
+      '<div class="vol-panel-title"><span>🎵</span><span id="vol-panel-track" class="vol-panel-track">Nenhuma música</span></div>'+
       '<div class="vol-slider-row">'+
-        '<span class="vol-slider-icon" id="vol-slider-icon">🔉</span>'+
+        '<span class="vol-slider-icon">🔉</span>'+
         '<input type="range" id="vol-slider" class="vol-slider" min="0" max="100" value="'+(VS.muted?0:VS.volume)+'" style="--vol:'+(VS.muted?0:VS.volume)+'%">'+
         '<span class="vol-slider-val" id="vol-slider-val">'+(VS.muted?0:VS.volume)+'%</span>'+
       '</div>'+
       '<div class="vol-btn-row">'+
         '<button type="button" id="vol-mute-btn" class="v-mute" title="Mudo">🔇</button>'+
         '<button type="button" id="vol-play-btn" class="v-play" title="Play/Pause">▶️</button>'+
-        '<button type="button" id="vol-close-btn" title="Parar">✕</button>'+
+        '<button type="button" id="vol-prev-btn" title="Anterior">⏮️</button>'+
+        '<button type="button" id="vol-next-btn" title="Próxima">⏭️</button>'+
       '</div>'+
     '</div>'+
     '<button type="button" id="vol-fab-btn" class="vol-fab-btn" title="Volume">'+
@@ -7993,14 +8071,14 @@ function ensureFAB(){
     '</button>';
   document.body.appendChild(wrap);
 
-  /* Toggle do painel */
   document.getElementById('vol-fab-btn').onclick = function(e){
     e.stopPropagation();
     var panel = document.getElementById('vol-panel');
+    var opening = !panel.classList.contains('open');
     panel.classList.toggle('open');
+    wrap.classList.toggle('panel-open', opening);
   };
 
-  /* Slider */
   var slider = document.getElementById('vol-slider');
   slider.addEventListener('input', function(){
     VS.volume = parseInt(this.value) || 0;
@@ -8012,7 +8090,6 @@ function ensureFAB(){
     saveVS();
   });
 
-  /* Mute */
   document.getElementById('vol-mute-btn').onclick = function(){
     VS.muted = !VS.muted;
     applyVolumeToPlayer();
@@ -8020,75 +8097,35 @@ function ensureFAB(){
     saveVS();
   };
 
-  /* Play/Pause */
-  document.getElementById('vol-play-btn').onclick = function(){
-    togglePlay();
-  };
+  document.getElementById('vol-play-btn').onclick = togglePlay;
+  document.getElementById('vol-prev-btn').onclick = prevTrack;
+  document.getElementById('vol-next-btn').onclick = nextTrack;
 
-  /* Close (parar) */
-  document.getElementById('vol-close-btn').onclick = function(){
-    stopMusic();
-    document.getElementById('vol-panel').classList.remove('open');
-  };
-
-  /* Fecha painel ao clicar fora */
   document.addEventListener('click', function(e){
-    var wrap = document.getElementById('vol-fab-wrap');
-    if(!wrap) return;
-    if(!wrap.contains(e.target)){
+    var w = document.getElementById('vol-fab-wrap');
+    if(!w) return;
+    if(!w.contains(e.target)){
       var p = document.getElementById('vol-panel');
       if(p) p.classList.remove('open');
+      w.classList.remove('panel-open');
     }
   });
 
-  /* Fecha painel com ESC */
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape'){
       var p = document.getElementById('vol-panel');
       if(p) p.classList.remove('open');
+      var w = document.getElementById('vol-fab-wrap');
+      if(w) w.classList.remove('panel-open');
     }
   });
 
   updateFAB();
   updateVisibility();
+  updateStealth();
 }
 
-/* ═══ Mini player (só aparece quando tocando) ═══ */
-function ensureMini(){
-  var old = document.getElementById('music-mini-player');
-  if(old) old.remove();
-  var el = document.createElement('div');
-  el.id = 'music-mini-player';
-  el.className = 'music-mini-player';
-  el.innerHTML =
-    '<div id="music-player-host" class="music-player-host"></div>'+
-    '<div class="music-mini-info"><div class="music-mini-title" id="music-mini-title">—</div><div class="music-mini-author" id="music-mini-author">—</div></div>'+
-    '<div class="music-mini-controls">'+
-      '<button id="music-mini-prev" type="button" title="Anterior">⏮️</button>'+
-      '<button id="music-mini-play" type="button" title="Play/Pause">▶️</button>'+
-      '<button id="music-mini-next" type="button" title="Próxima">⏭️</button>'+
-      '<button id="music-mini-close" type="button" title="Parar">✕</button>'+
-    '</div>';
-  document.body.appendChild(el);
-  document.getElementById('music-mini-prev').onclick = prevTrack;
-  document.getElementById('music-mini-play').onclick = togglePlay;
-  document.getElementById('music-mini-next').onclick = nextTrack;
-  document.getElementById('music-mini-close').onclick = stopMusic;
-}
-
-/* ═══ Visibilidade do FAB (esconde no login) ═══ */
-function updateVisibility(){
-  var wrap = document.getElementById('vol-fab-wrap');
-  if(!wrap) return;
-  var login = document.getElementById('screen-login');
-  if(login && login.classList.contains('active')){
-    wrap.setAttribute('data-hidden', '1');
-  } else {
-    wrap.removeAttribute('data-hidden');
-  }
-}
-
-/* ═══ Remover botão de música do nav + tela antiga ═══ */
+/* ═══ Remover botão de música do nav ═══ */
 function removeOldMusic(){
   document.querySelectorAll('.nav-btn-musicas').forEach(function(b){ b.remove(); });
   var s = document.getElementById('screen-musicas');
@@ -8109,7 +8146,7 @@ function injectAdminMusic(){
   section.innerHTML =
     '<header class="admin-section-header">'+
       '<div class="icon">🎵</div>'+
-      '<div class="titles"><h2><span class="sec-num">06</span>Músicas</h2><p>Playlist compartilhada — controle pelo ícone de volume no canto inferior esquerdo</p></div>'+
+      '<div class="titles"><h2><span class="sec-num">06</span>Músicas</h2><p>Playlist — controle pelo ícone de volume no canto inferior esquerdo</p></div>'+
     '</header>'+
     '<div class="admin-grid">'+
       '<div class="admin-box">'+
@@ -8127,9 +8164,10 @@ function injectAdminMusic(){
       '</div>'+
     '</div>';
 
-  var last = container.querySelectorAll('.admin-section');
-  if(last.length > 0 && last[last.length - 1].parentNode){
-    last[last.length - 1].parentNode.insertBefore(section, last[last.length - 1].nextSibling);
+  var allSections = container.querySelectorAll('.admin-section');
+  if(allSections.length){
+    var last = allSections[allSections.length - 1];
+    last.parentNode.insertBefore(section, last.nextSibling);
   } else {
     container.appendChild(section);
   }
@@ -8225,23 +8263,32 @@ function deleteMusic(id){
   }
 }
 
-/* ═══ Init ═══ */
+/* ═══ INIT ═══ */
 function init(){
-  removeOldMusic();
+  cleanupOld();
+  ensureHiddenHost();
   ensureFAB();
-  ensureMini();
+  removeOldMusic();
   injectAdminMusic();
   loadFB();
 
+  // Observa mudanças no DOM
   new MutationObserver(function(){
     removeOldMusic();
     injectAdminMusic();
     updateVisibility();
+    updateStealth();
     if(!document.getElementById('vol-fab-wrap')) ensureFAB();
+    if(!document.getElementById('music-player-host')) ensureHiddenHost();
   }).observe(document.body, { childList: true, subtree: true });
 
+  // Observa classes de telas (para stealth)
+  document.querySelectorAll('.screen, #game-launcher-overlay, #att-tab-content-3').forEach(function(el){
+    new MutationObserver(updateStealth).observe(el, { attributes: true, attributeFilter: ['class','style'] });
+  });
+
   var orig = window.mudarTela;
-  if(orig && !orig._volFab){
+  if(orig && !orig._volFabV2){
     window.mudarTela = function(id){
       if(id === 'screen-musicas') id = 'screen-admin';
       var r = orig(id);
@@ -8249,19 +8296,22 @@ function init(){
         removeOldMusic();
         injectAdminMusic();
         updateVisibility();
+        updateStealth();
       }, 60);
       return r;
     };
-    window.mudarTela._volFab = true;
+    window.mudarTela._volFabV2 = true;
   }
 
+  // Fallback periódico
   setInterval(function(){
     removeOldMusic();
     injectAdminMusic();
     updateVisibility();
-  }, 1500);
+    updateStealth();
+  }, 800);
 
-  console.log('%c[vol-fab] FAB de volume + admin', 'color:#a855f7;font-weight:bold');
+  console.log('%c[vol-fab v2] FAB discreto + stealth em games/slides', 'color:#a855f7;font-weight:bold');
 }
 
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
