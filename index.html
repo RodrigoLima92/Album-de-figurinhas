@@ -2725,6 +2725,17 @@ body.has-mini-player{padding-bottom:130px!important}
 .vol-btn-row #vol-play-btn{font-size:1rem!important}
 }
 
+/* VOLUME-FAB-CSS-V5-PROGRESS */
+.vol-progress-container{margin-bottom:10px;margin-top:0;position:relative}
+.vol-progress-bar{position:relative;height:6px;background:rgba(255,255,255,.12);border-radius:3px;cursor:pointer;transition:height .15s;user-select:none;-webkit-user-select:none;touch-action:none}
+.vol-progress-bar:hover{height:9px}
+.vol-progress-fill{position:absolute;top:0;left:0;bottom:0;background:linear-gradient(90deg,#7c3aed,#c77dff);border-radius:3px;width:0%;transition:width .12s linear;box-shadow:0 0 8px rgba(168,85,247,.6);pointer-events:none}
+.vol-progress-thumb{position:absolute;top:50%;left:0%;width:14px;height:14px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 2px 8px rgba(168,85,247,.9);opacity:0;transition:opacity .15s;pointer-events:none}
+.vol-progress-bar:hover .vol-progress-thumb,.vol-progress-bar.dragging .vol-progress-thumb{opacity:1}
+.vol-progress-time{display:flex;justify-content:space-between;font-size:.66rem;color:#8f8fa3;margin-top:5px;font-family:'Courier New',monospace;letter-spacing:.5px}
+.vol-progress-time #vol-time-current{color:#c77dff;font-weight:700}
+.vol-progress-time #vol-time-total{color:#8f8fa3}
+
 </style>
 </head>
 <body>
@@ -8309,6 +8320,247 @@ function init(){
 
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
+})();
+</script>
+<script>/* VOLUME-FAB-JS-V5-PROGRESS */
+(function(){
+'use strict';
+if(window.__volFabV5Progress) return;
+window.__volFabV5Progress = true;
+
+var SEEK_PENDING_MS = 1500;
+var _lastSeekPos = -1;
+var _seekCooldownUntil = 0;
+
+/* ═══ 1. Patch YT.Player para expor instância ═══ */
+function patchYT(){
+  if(!window.YT || !window.YT.Player){ setTimeout(patchYT, 100); return; }
+  if(window.YT.Player.__v5patched) return;
+  var Orig = window.YT.Player;
+  function Patched(el, config){
+    var instance = new Orig(el, config);
+    window.__lastYTPlayer = instance;
+    console.log('[progress v5] YT.Player capturado');
+    return instance;
+  }
+  Patched.prototype = Orig.prototype;
+  Patched.__v5patched = true;
+  window.YT.Player = Patched;
+  console.log('[progress v5] YT.Player patcheado');
+}
+patchYT();
+
+/* ═══ 2. Helper de formatação ═══ */
+function formatTime(sec){
+  if(!isFinite(sec) || sec < 0 || isNaN(sec)) sec = 0;
+  sec = Math.max(0, Math.floor(sec));
+  var h = Math.floor(sec / 3600);
+  var m = Math.floor((sec % 3600) / 60);
+  var s = sec % 60;
+  if(h > 0) return h + ':' + (m<10?'0':'') + m + ':' + (s<10?'0':'') + s;
+  return m + ':' + (s<10?'0':'') + s;
+}
+
+/* ═══ 3. Acesso ao player ═══ */
+function getAudioEl(){
+  var host = document.getElementById('music-player-host');
+  if(!host) return null;
+  return host.querySelector('audio');
+}
+function getYTPlayer(){
+  return window.__lastYTPlayer || null;
+}
+function getDuration(){
+  var a = getAudioEl();
+  if(a && a.duration && isFinite(a.duration)) return a.duration;
+  var yt = getYTPlayer();
+  if(yt && typeof yt.getDuration === 'function'){
+    try { var d = yt.getDuration(); return (d && isFinite(d)) ? d : 0; } catch(e){}
+  }
+  return 0;
+}
+function getCurrentTime(){
+  var a = getAudioEl();
+  if(a && typeof a.currentTime === 'number') return a.currentTime;
+  var yt = getYTPlayer();
+  if(yt && typeof yt.getCurrentTime === 'function'){
+    try { var t = yt.getCurrentTime(); return (t && isFinite(t)) ? t : 0; } catch(e){}
+  }
+  return 0;
+}
+function doSeek(pct){
+  pct = Math.max(0, Math.min(1, pct));
+  var a = getAudioEl();
+  if(a && a.duration && isFinite(a.duration) && a.duration > 0){
+    try { a.currentTime = a.duration * pct; } catch(e){}
+    return;
+  }
+  var yt = getYTPlayer();
+  if(yt && typeof yt.seekTo === 'function'){
+    try {
+      var dur = yt.getDuration();
+      if(dur > 0) yt.seekTo(dur * pct, true);
+    } catch(e){}
+  }
+}
+
+/* ═══ 4. Injectar barra no painel ═══ */
+function injectProgressBar(){
+  var panel = document.getElementById('vol-panel');
+  if(!panel) return false;
+  if(panel.querySelector('#vol-progress-bar')) return true;
+
+  var sliderRow = panel.querySelector('.vol-slider-row');
+  if(!sliderRow){ return false; }
+
+  var html =
+    '<div class="vol-progress-container">'+
+      '<div class="vol-progress-bar" id="vol-progress-bar" role="slider" aria-label="Progresso da música">'+
+        '<div class="vol-progress-fill" id="vol-progress-fill"></div>'+
+        '<div class="vol-progress-thumb" id="vol-progress-thumb"></div>'+
+      '</div>'+
+      '<div class="vol-progress-time">'+
+        '<span id="vol-time-current">0:00</span>'+
+        '<span id="vol-time-total">0:00</span>'+
+      '</div>'+
+    '</div>';
+
+  sliderRow.insertAdjacentHTML('afterend', html);
+  setupDrag();
+  console.log('[progress v5] barra injetada no painel');
+  return true;
+}
+
+/* ═══ 5. Drag + click ═══ */
+function setupDrag(){
+  var bar = document.getElementById('vol-progress-bar');
+  if(!bar || bar.dataset.v5drag === '1') return;
+  bar.dataset.v5drag = '1';
+
+  var dragging = false;
+  var dragPct = 0;
+
+  function getPct(e){
+    var rect = bar.getBoundingClientRect();
+    var cx = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+    return Math.max(0, Math.min(1, (cx - rect.left) / rect.width));
+  }
+
+  function visualUpdate(pct){
+    var fill = document.getElementById('vol-progress-fill');
+    var thumb = document.getElementById('vol-progress-thumb');
+    if(fill) fill.style.width = (pct * 100) + '%';
+    if(thumb) thumb.style.left = (pct * 100) + '%';
+    var dur = getDuration();
+    var curEl = document.getElementById('vol-time-current');
+    if(curEl && dur > 0) curEl.textContent = formatTime(dur * pct);
+  }
+
+  function start(e){
+    dragging = true;
+    bar.classList.add('dragging');
+    dragPct = getPct(e);
+    visualUpdate(dragPct);
+    document.addEventListener('mousemove', move);
+    document.addEventListener('mouseup', end);
+    document.addEventListener('touchmove', move, { passive: true });
+    document.addEventListener('touchend', end);
+    if(e.preventDefault) e.preventDefault();
+  }
+  function move(e){
+    if(!dragging) return;
+    dragPct = getPct(e);
+    visualUpdate(dragPct);
+  }
+  function end(){
+    if(!dragging) return;
+    dragging = false;
+    bar.classList.remove('dragging');
+    document.removeEventListener('mousemove', move);
+    document.removeEventListener('mouseup', end);
+    document.removeEventListener('touchmove', move);
+    document.removeEventListener('touchend', end);
+    _lastSeekPos = dragPct;
+    _seekCooldownUntil = Date.now() + SEEK_PENDING_MS;
+    doSeek(dragPct);
+  }
+
+  bar.addEventListener('mousedown', start);
+  bar.addEventListener('touchstart', start, { passive: false });
+}
+
+/* ═══ 6. Ticker de atualização ═══ */
+var _tickerStarted = false;
+function startTicker(){
+  if(_tickerStarted) return;
+  _tickerStarted = true;
+  setInterval(function(){
+    var bar = document.getElementById('vol-progress-bar');
+    if(!bar) return;
+    if(bar.classList.contains('dragging')) return;
+
+    var fill = document.getElementById('vol-progress-fill');
+    var thumb = document.getElementById('vol-progress-thumb');
+    var curEl = document.getElementById('vol-time-current');
+    var totEl = document.getElementById('vol-time-total');
+    if(!fill) return;
+
+    /* Cooldown pós-seek (evita pular de volta) */
+    if(Date.now() < _seekCooldownUntil && _lastSeekPos >= 0){
+      fill.style.width = (_lastSeekPos * 100) + '%';
+      if(thumb) thumb.style.left = (_lastSeekPos * 100) + '%';
+      var durC = getDuration();
+      if(curEl && durC > 0) curEl.textContent = formatTime(durC * _lastSeekPos);
+      if(totEl) totEl.textContent = formatTime(durC);
+      return;
+    }
+    _lastSeekPos = -1;
+
+    var cur = getCurrentTime();
+    var dur = getDuration();
+    var pct = dur > 0 ? Math.min(100, (cur / dur) * 100) : 0;
+    fill.style.width = pct + '%';
+    if(thumb) thumb.style.left = pct + '%';
+    if(curEl) curEl.textContent = formatTime(cur);
+    if(totEl) totEl.textContent = formatTime(dur);
+  }, 400);
+}
+
+/* ═══ 7. Init ═══ */
+function init(){
+  startTicker();
+  // Tenta injetar imediatamente
+  var attempts = 0;
+  function tryInject(){
+    attempts++;
+    if(injectProgressBar()) return;
+    if(attempts < 40) setTimeout(tryInject, 250);
+  }
+  tryInject();
+
+  // Observa mudanças no DOM (painel pode ser recriado)
+  new MutationObserver(function(){
+    if(document.getElementById('vol-panel') && !document.getElementById('vol-progress-bar')){
+      injectProgressBar();
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+
+  // Reforça após mudar de tela
+  var origMudar = window.mudarTela;
+  if(origMudar && !origMudar._v5progress){
+    window.mudarTela = function(id){
+      var r = origMudar(id);
+      setTimeout(function(){ if(!document.getElementById('vol-progress-bar')) injectProgressBar(); }, 200);
+      return r;
+    };
+    window.mudarTela._v5progress = true;
+  }
+
+  console.log('%c[progress v5] instalado','color:#a855f7;font-weight:bold');
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
 })();
 </script>
 </body>
